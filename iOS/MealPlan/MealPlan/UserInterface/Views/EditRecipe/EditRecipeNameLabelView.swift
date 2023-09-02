@@ -14,7 +14,9 @@ struct EditRecipeNameLabelView: View {
         TextField(text: $name) {
             Text("Rezeptname")
                 .font(.largeTitle)
-        }.font(.largeTitle)
+        }
+        .uiTestIdentifier("recipeNameInput")
+        .font(.largeTitle)
     }
 }
 

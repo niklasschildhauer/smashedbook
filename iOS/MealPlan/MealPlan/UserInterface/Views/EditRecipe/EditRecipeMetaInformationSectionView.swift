@@ -20,14 +20,16 @@ struct EditRecipeMetaInformationSectionView: View {
     @State var selectedMeal = TestEnum.breakfast
     
     var body: some View {
-        ListSectionView() {
+        ListSectionView(title: "Meta Information") {
             OneLineTitleCustomElementListCellView(title: "Energie") {
                 ValueWithUnitInputFieldView(value: $energyTest, unit: "kcl", placeholder: "200")
             }
+            .uiTestIdentifierForStackWrapper("energyInput")
             Divider()
             OneLineTitleCustomElementListCellView(title: "Mahlzeit") {
                 ValuePickerView(values: TestEnum.allCases, selectedFlavor: $selectedMeal)
             }
+            .uiTestIdentifierForStackWrapper("mealInput")
         }
     }
 }

@@ -22,7 +22,8 @@ struct AddRecipePageView: View {
                                                            title: "Abbrechen",
                                                            type: .cancel))
                     })
-                }.background(Colors.backgroundColor)
+                }
+                .background(Colors.backgroundColor)
         }
     }
 }

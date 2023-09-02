@@ -11,7 +11,7 @@ import SwiftUI
 struct MealPlanApp: App {
     var body: some Scene {
         WindowGroup {
-            EditRecipeView()
+            RecipeOverviewPage()
         }
     }
 }

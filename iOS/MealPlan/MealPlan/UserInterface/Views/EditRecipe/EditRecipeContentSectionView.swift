@@ -12,10 +12,6 @@ struct EditRecipeContentSectionView: View {
     
     var body: some View {
         ListSectionView(title: title) {
-            EditRecipeImageListCellView()
-            Divider()
-            EditRecipeImageListCellView()
-            Divider()
             EditRecipeAddContentButtonListCellView()
         }
     }
