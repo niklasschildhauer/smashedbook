@@ -7,13 +7,24 @@
 
 import SwiftUI
 
+class EditRecipeViewModel: ObservableObject {
+    @Published var recipeName: String = ""
+    
+    func createRecipeModel() {
+        print("Create Recipe Model")
+    }
+}
+
+
 struct EditRecipeView: View {
     var body: some View {
         ScrollView {
             VStack(spacing: LayoutConstants.verticalPadding) {
                 EditRecipeNameLabelView()
                 EditRecipeMetaInformationSectionView()
-                EditRecipeContentSectionView(title: "Zutaten")
+                EditRecipeContentSectionView(title: "Zutaten") {
+                    EditRecipePortionCounterView()
+                }
                 EditRecipeContentSectionView(title: "Anleitung")
             }
             .padding(.horizontal, LayoutConstants.horizontalPadding)

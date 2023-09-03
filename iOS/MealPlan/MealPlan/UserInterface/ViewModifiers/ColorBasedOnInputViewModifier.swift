@@ -10,8 +10,6 @@ import SwiftUI
 struct ColorBasedOnInputViewModifier: ViewModifier {
     let input: String
     
-    @State private var offset: CGFloat = 0
-    
     func body(content: Content) -> some View {
         content
             .foregroundColor(ColorBasedOnInputGenerator.generateForegroundColorBasedOnInput(input: input))

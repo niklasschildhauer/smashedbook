@@ -7,13 +7,20 @@
 
 import SwiftUI
 
-struct EditRecipeContentSectionView: View {
+struct EditRecipeContentSectionView<TrailingAction: View>: View {
     var title: String
+    var trailingAction: () -> TrailingAction
+    
+    init(title: String,
+         @ViewBuilder trailingAction: @escaping () -> TrailingAction = { EmptyView() }) {
+        self.title = title
+        self.trailingAction = trailingAction
+    }
     
     var body: some View {
-        ListSectionView(title: title) {
-            EditRecipeAddContentButtonListCellView()
-        }
+        ListSectionView(title: title, content: {
+            EditRecipePickPhotoButtonListCellView()
+        }, trailingAction: trailingAction)
     }
 }
 

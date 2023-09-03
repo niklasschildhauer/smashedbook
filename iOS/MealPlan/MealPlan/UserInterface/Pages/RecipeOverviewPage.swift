@@ -29,6 +29,7 @@ struct RecipeOverviewPage: View {
                     AddRecipePageView()
                 }
         }
+        .uiTestIdentifier("recipeOverviewPageView")
     }
 }
 

@@ -7,21 +7,28 @@
 
 import SwiftUI
 
-struct ListSectionView<Content: View>: View {
+struct ListSectionView<Content: View, TrailingAction: View>: View {
     var title: String?
     var content: () -> Content
+    var trailingAction: () -> TrailingAction
     
-    init(title: String? = nil, @ViewBuilder content: @escaping () -> Content) {
+    init(title: String? = nil,
+         @ViewBuilder content: @escaping () -> Content,
+         @ViewBuilder trailingAction: @escaping () -> TrailingAction = { EmptyView() }) {
         self.content = content
+        self.trailingAction = trailingAction
         self.title = title
     }
     
     var body: some View {
         VStack(spacing: .zero) {
-            if let title = title {
-                Text(title.uppercased())
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .font(.footnote)
+            if let title {
+                HStack {
+                    Text(title.uppercased())
+                        .font(.footnote)
+                        Spacer()
+                        trailingAction()
+                }
             }
             LazyVStack(spacing: .zero) {
                 content()

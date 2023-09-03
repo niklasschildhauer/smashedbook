@@ -6,14 +6,28 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct EditRecipePickPhotoButtonListCellView: View {
+    @State private var showImagePicker = false
+    @State var pickedImage: PhotosPickerItem?
+    
     var body: some View {
-        ButtonListCellView(title: "Hinzufügen")
+        PhotosPicker(selection: $pickedImage, matching: .images, preferredItemEncoding: .compatible) {
+            IconLabelListCellView(title: "Foto hinzufügen", image: Image(systemName: "photo"))
+        }
+//        Button {
+//            showImagePicker.toggle()
+//        } label: {
+//            IconLabelListCellView(title: "Foto hinzufügen", image: Image(systemName: "photo"))
+//        }
+//        .popover(isPresented: $showImagePicker) {
+//            ImagePickerView()
+//        }
     }
 }
 
-struct EditRecipeAddContentButtonListCellView_Previews: PreviewProvider {
+struct EditRecipePickPhotoButtonListCellView_Previews: PreviewProvider {
     static var previews: some View {
         EditRecipePickPhotoButtonListCellView()
     }

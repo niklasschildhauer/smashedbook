@@ -25,6 +25,7 @@ struct AddRecipePageView: View {
                 }
                 .background(Colors.backgroundColor)
         }
+        .uiTestIdentifier("addRecipePageView")
     }
 }
 

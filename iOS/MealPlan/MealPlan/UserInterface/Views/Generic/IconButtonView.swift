@@ -8,13 +8,20 @@
 import SwiftUI
 
 struct IconButtonView: View {
+    let icon: Image
+    let action: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Button(action: action, label: {
+            icon
+        })
     }
 }
 
 struct IconButtonView_Previews: PreviewProvider {
     static var previews: some View {
-        IconButtonView()
+        IconButtonView(icon: Image(systemName: "plus"), action: {
+            print("Test")
+        })
     }
 }

@@ -12,17 +12,19 @@ struct IconLabelListCellView: View {
     let image: Image
     
     var body: some View {
-        HStack {
-            Spacer()
-            image
-            Text(title)
-            Spacer()
-        }
+        ListCellWrapperView {
+            HStack {
+                Spacer()
+                image
+                Text(title)
+                Spacer()
+            }
+        }.frame(height: LayoutConstants.listCellHeight)
     }
 }
 
-struct ButtonListCellView_Previews: PreviewProvider {
+struct IconLabelListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        IconLabelView(title: "Testüberschrift")
+        IconLabelListCellView(title: "Testüberschrift", image: Image(systemName: "pencil"))
     }
 }

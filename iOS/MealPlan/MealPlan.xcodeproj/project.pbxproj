@@ -9,11 +9,15 @@
 /* Begin PBXBuildFile section */
 		850A4C572A9F8AC5009C68CB /* ViewInspector in Frameworks */ = {isa = PBXBuildFile; productRef = 850A4C562A9F8AC5009C68CB /* ViewInspector */; };
 		850A4C592AA0F0C1009C68CB /* View+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850A4C582AA0F0C1009C68CB /* View+Extensions.swift */; };
+		85279F412AA47EF60031067B /* IconButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85279F402AA47EF60031067B /* IconButtonView.swift */; };
+		85279F432AA480210031067B /* EditRecipePortionCounterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85279F422AA480210031067B /* EditRecipePortionCounterView.swift */; };
+		85279F452AA488540031067B /* HideViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85279F442AA488540031067B /* HideViewModifier.swift */; };
+		85376D752AA4A439003CFEDB /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D742AA4A439003CFEDB /* ImagePickerView.swift */; };
 		855617752A9A36F300DD5877 /* ListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617742A9A36F300DD5877 /* ListSectionView.swift */; };
 		855617772A9A48E800DD5877 /* EditRecipeContentSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617762A9A48E800DD5877 /* EditRecipeContentSectionView.swift */; };
 		8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */; };
 		8556177C2A9A4D8C00DD5877 /* EditRecipeImageListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556177B2A9A4D8C00DD5877 /* EditRecipeImageListCellView.swift */; };
-		8556177E2A9B495C00DD5877 /* EditRecipeAddContentButtonListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556177D2A9B495C00DD5877 /* EditRecipeAddContentButtonListCellView.swift */; };
+		8556177E2A9B495C00DD5877 /* EditRecipePickPhotoButtonListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556177D2A9B495C00DD5877 /* EditRecipePickPhotoButtonListCellView.swift */; };
 		855617822A9B4F5400DD5877 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617812A9B4F5400DD5877 /* TagView.swift */; };
 		855617842A9B507200DD5877 /* ColorBasedOnInputViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617832A9B507200DD5877 /* ColorBasedOnInputViewModifier.swift */; };
 		855617872A9B511600DD5877 /* ColorBasedOnInputGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617862A9B511600DD5877 /* ColorBasedOnInputGenerator.swift */; };
@@ -41,7 +45,7 @@
 		858935FF2A92675300011D7F /* Colors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858935FE2A92675300011D7F /* Colors.swift */; };
 		858936012A9267AA00011D7F /* Colors.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858936002A9267AA00011D7F /* Colors.xcassets */; };
 		85BE2D0B2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */; };
-		85BE2D0D2A951AC1001E3551 /* ButtonListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0C2A951AC1001E3551 /* ButtonListCellView.swift */; };
+		85BE2D0D2A951AC1001E3551 /* IconLabelListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */; };
 		85BE2D0F2A951AF0001E3551 /* ListCellWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */; };
 /* End PBXBuildFile section */
 
@@ -64,11 +68,15 @@
 
 /* Begin PBXFileReference section */
 		850A4C582AA0F0C1009C68CB /* View+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extensions.swift"; sourceTree = "<group>"; };
+		85279F402AA47EF60031067B /* IconButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButtonView.swift; sourceTree = "<group>"; };
+		85279F422AA480210031067B /* EditRecipePortionCounterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipePortionCounterView.swift; sourceTree = "<group>"; };
+		85279F442AA488540031067B /* HideViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HideViewModifier.swift; sourceTree = "<group>"; };
+		85376D742AA4A439003CFEDB /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		855617742A9A36F300DD5877 /* ListSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionView.swift; sourceTree = "<group>"; };
 		855617762A9A48E800DD5877 /* EditRecipeContentSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeContentSectionView.swift; sourceTree = "<group>"; };
 		855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeGestureViewModifier.swift; sourceTree = "<group>"; };
 		8556177B2A9A4D8C00DD5877 /* EditRecipeImageListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeImageListCellView.swift; sourceTree = "<group>"; };
-		8556177D2A9B495C00DD5877 /* EditRecipeAddContentButtonListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipeAddContentButtonListCellView.swift; sourceTree = "<group>"; };
+		8556177D2A9B495C00DD5877 /* EditRecipePickPhotoButtonListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditRecipePickPhotoButtonListCellView.swift; sourceTree = "<group>"; };
 		855617812A9B4F5400DD5877 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		855617832A9B507200DD5877 /* ColorBasedOnInputViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBasedOnInputViewModifier.swift; sourceTree = "<group>"; };
 		855617862A9B511600DD5877 /* ColorBasedOnInputGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorBasedOnInputGenerator.swift; sourceTree = "<group>"; };
@@ -99,7 +107,7 @@
 		858935FE2A92675300011D7F /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
 		858936002A9267AA00011D7F /* Colors.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Colors.xcassets; sourceTree = "<group>"; };
 		85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTitleCustomElementListCellView.swift; sourceTree = "<group>"; };
-		85BE2D0C2A951AC1001E3551 /* ButtonListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonListCellView.swift; sourceTree = "<group>"; };
+		85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelListCellView.swift; sourceTree = "<group>"; };
 		85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellWrapperView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -146,8 +154,10 @@
 				855617882A9B53C500DD5877 /* ValueWithUnitInputFieldView.swift */,
 				8556178A2A9B565D00DD5877 /* ValuePickerView.swift */,
 				85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */,
-				85BE2D0C2A951AC1001E3551 /* ButtonListCellView.swift */,
+				85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */,
 				858935EE2A92120400011D7F /* LabelButtonView.swift */,
+				85279F402AA47EF60031067B /* IconButtonView.swift */,
+				85376D742AA4A439003CFEDB /* ImagePickerView.swift */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -157,6 +167,7 @@
 			children = (
 				855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */,
 				855617832A9B507200DD5877 /* ColorBasedOnInputViewModifier.swift */,
+				85279F442AA488540031067B /* HideViewModifier.swift */,
 			);
 			path = ViewModifiers;
 			sourceTree = "<group>";
@@ -284,9 +295,9 @@
 				858935F82A9256DF00011D7F /* EditRecipeNameLabelView.swift */,
 				858935FA2A92650F00011D7F /* EditRecipeMetaInformationSectionView.swift */,
 				855617762A9A48E800DD5877 /* EditRecipeContentSectionView.swift */,
-				8556177D2A9B495C00DD5877 /* EditRecipeAddContentButtonListCellView.swift */,
+				8556177D2A9B495C00DD5877 /* EditRecipePickPhotoButtonListCellView.swift */,
 				8556177B2A9A4D8C00DD5877 /* EditRecipeImageListCellView.swift */,
-				857AD85C2A93E74900259579 /* TestView.swift */,
+				85279F422AA480210031067B /* EditRecipePortionCounterView.swift */,
 			);
 			path = EditRecipe;
 			sourceTree = "<group>";
@@ -294,6 +305,7 @@
 		858935F72A92565900011D7F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				857AD85C2A93E74900259579 /* TestView.swift */,
 				85279F3D2AA33C390031067B /* Generic */,
 				8556178C2A9B7B4D00DD5877 /* RecipeListing */,
 				858935F42A9255A700011D7F /* EditRecipe */,
@@ -442,12 +454,15 @@
 				855617902A9B7C8800DD5877 /* RecipeListingView.swift in Sources */,
 				8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */,
 				855617842A9B507200DD5877 /* ColorBasedOnInputViewModifier.swift in Sources */,
+				85279F432AA480210031067B /* EditRecipePortionCounterView.swift in Sources */,
 				857AD85D2A93E74900259579 /* TestView.swift in Sources */,
+				85279F412AA47EF60031067B /* IconButtonView.swift in Sources */,
 				858935FD2A9265C200011D7F /* LayoutConstants.swift in Sources */,
-				85BE2D0D2A951AC1001E3551 /* ButtonListCellView.swift in Sources */,
+				85BE2D0D2A951AC1001E3551 /* IconLabelListCellView.swift in Sources */,
 				8556178B2A9B565D00DD5877 /* ValuePickerView.swift in Sources */,
-				8556177E2A9B495C00DD5877 /* EditRecipeAddContentButtonListCellView.swift in Sources */,
+				8556177E2A9B495C00DD5877 /* EditRecipePickPhotoButtonListCellView.swift in Sources */,
 				855617772A9A48E800DD5877 /* EditRecipeContentSectionView.swift in Sources */,
+				85376D752AA4A439003CFEDB /* ImagePickerView.swift in Sources */,
 				850A4C592AA0F0C1009C68CB /* View+Extensions.swift in Sources */,
 				855617872A9B511600DD5877 /* ColorBasedOnInputGenerator.swift in Sources */,
 				858935FF2A92675300011D7F /* Colors.swift in Sources */,
@@ -457,6 +472,7 @@
 				8556178E2A9B7B7F00DD5877 /* RecipeOverviewPage.swift in Sources */,
 				855617822A9B4F5400DD5877 /* TagView.swift in Sources */,
 				855617922A9B7CB600DD5877 /* RecipeCardView.swift in Sources */,
+				85279F452AA488540031067B /* HideViewModifier.swift in Sources */,
 				858935E82A910B0800011D7F /* RecipeModel.swift in Sources */,
 				858935FB2A92650F00011D7F /* EditRecipeMetaInformationSectionView.swift in Sources */,
 				855617892A9B53C500DD5877 /* ValueWithUnitInputFieldView.swift in Sources */,

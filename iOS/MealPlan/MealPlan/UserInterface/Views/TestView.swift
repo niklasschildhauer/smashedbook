@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct TestView: View {
     @State private var items = ["Item 1", "Item 2", "Item 3", "Item 4"]
@@ -15,10 +16,13 @@ struct TestView: View {
     @State private var dragAmount = CGSize.zero
     @State private var offset: CGFloat = 0
     
+    @State private var avatarItem: PhotosPickerItem?
+    
     var body: some View {
         NavigationView {
             ScrollView {
                 LazyVStack(spacing: 16) {
+                    PhotosPicker("Select avatar", selection: $avatarItem, matching: .images)
                     ForEach(1...50, id: \.self) { index in
                         Text("Item \(index)")
                             .frame(maxWidth: .infinity, alignment: .leading)

@@ -6,10 +6,22 @@
 //
 
 import SwiftUI
+import PhotosUI
 
 struct ImagePickerView: View {
+    @State var pickedImage: PhotosPickerItem?
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        if #available(iOS 17.0, *) {
+            PhotosPicker(selection: $pickedImage) {
+                EmptyView()
+            }
+            .photosPickerStyle(.inline)
+//            .photosPickerAccessoryVisibility(.hidden, edges: .all)
+            .ignoresSafeArea()
+        }
+        else {
+            Text("Not availale")
+        }
     }
 }
 
