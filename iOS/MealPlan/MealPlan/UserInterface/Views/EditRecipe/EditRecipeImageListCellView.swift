@@ -9,21 +9,22 @@ import SwiftUI
 
 struct EditRecipeImageListCellView: View {
     @State private var offset: CGFloat = 0
+    @State var image: Image
     
     var body: some View {
         ListCellWrapperView {
-            Image("ExampleRecipe")
+            image
                 .resizable()
                 .aspectRatio(contentMode: .fit)
-                .frame(height: 200)
+                .frame(height: 100)
         }
         .deleteSwipeGesture()
-        .frame(height: 200)
+        .frame(height: 100)
     }
 }
 
-struct EditRecipeImageListCellView_Previews: PreviewProvider {
+struct EditRecipeImageListCellView_Previews: PreviewProvider {    
     static var previews: some View {
-        EditRecipeImageListCellView()
+        EditRecipeImageListCellView(image: Image("ExampleRecipe"))
     }
 }

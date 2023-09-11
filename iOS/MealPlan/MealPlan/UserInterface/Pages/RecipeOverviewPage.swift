@@ -15,7 +15,6 @@ struct RecipeOverviewPage: View {
             RecipeListingView()
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing, content: {
-                        
                         LabelButtonView(viewModel: .create(action: {
                             showAddRecipePageView.toggle()
                         },

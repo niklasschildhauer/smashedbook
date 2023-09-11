@@ -8,12 +8,18 @@
 import SwiftUI
 
 struct AddRecipePageView: View {
+    @State var editRecipeViewModel = EditRecipeViewModel()
+    @Environment(\.presentationMode) var presentationMode
+
     var body: some View {
         NavigationStack {
-            EditRecipeView()
+            EditRecipeView(recipe: $editRecipeViewModel.recipe)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing, content: {
-                        LabelButtonView(viewModel: .create(action: {},
+                        LabelButtonView(viewModel: .create(action: {
+                            editRecipeViewModel.save()
+                            presentationMode.wrappedValue.dismiss()
+                        },
                                                            title: "Hinzufügen",
                                                            type: .primary))
                     })

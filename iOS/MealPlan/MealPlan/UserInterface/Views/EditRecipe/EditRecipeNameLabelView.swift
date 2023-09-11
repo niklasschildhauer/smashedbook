@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditRecipeNameLabelView: View {
-    @State var name = ""
+    @Binding var name: String
     
     var body: some View {
         TextField(text: $name) {
@@ -21,7 +21,8 @@ struct EditRecipeNameLabelView: View {
 }
 
 struct EditRecipeNameLabelView_Previews: PreviewProvider {
+    @State static var name = "Rezeptname"
     static var previews: some View {
-        EditRecipeNameLabelView()
+        EditRecipeNameLabelView(name: EditRecipeNameLabelView_Previews.$name)
     }
 }

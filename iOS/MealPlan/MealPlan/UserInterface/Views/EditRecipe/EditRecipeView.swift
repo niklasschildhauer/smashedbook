@@ -7,25 +7,36 @@
 
 import SwiftUI
 
-class EditRecipeViewModel: ObservableObject {
-    @Published var recipeName: String = ""
+@Observable class EditRecipeViewModel {
+    // add RecipeInteractor as Environment in here. Entweder als Dependency Injection oder als DIWrapper oder direkt als Environment. Je nachdem welcher Mechanismus besser funktioniert.
+    var recipe = Recipe()
     
-    func createRecipeModel() {
-        print("Create Recipe Model")
+    func save() {
+        print(recipe.title)
+        print(recipe.ingredients)
+    }
+    
+    static func create(from recipe: Recipe) -> EditRecipeViewModel {
+        let viewModel = EditRecipeViewModel()
+        viewModel.recipe = recipe
+        
+        return viewModel
     }
 }
 
 
 struct EditRecipeView: View {
+    @Binding var recipe: Recipe
+    
     var body: some View {
         ScrollView {
             VStack(spacing: LayoutConstants.verticalPadding) {
-                EditRecipeNameLabelView()
+                EditRecipeNameLabelView(name: $recipe.title)
                 EditRecipeMetaInformationSectionView()
-                EditRecipeContentSectionView(title: "Zutaten") {
+                EditRecipeContentSectionView(title: "Zutaten", content: $recipe.ingredients)  {
                     EditRecipePortionCounterView()
                 }
-                EditRecipeContentSectionView(title: "Anleitung")
+                EditRecipeContentSectionView(title: "Anleitung", content: $recipe.steps)
             }
             .padding(.horizontal, LayoutConstants.horizontalPadding)
             .padding(.vertical, LayoutConstants.verticalPadding)
@@ -34,7 +45,9 @@ struct EditRecipeView: View {
 }
 
 struct EditRecipeView_Previews: PreviewProvider {
+    @State static var recipe = recipeModelMock
     static var previews: some View {
-        EditRecipeView()
+        EditRecipeView(recipe: EditRecipeView_Previews.$recipe)
     }
 }
+
