@@ -8,8 +8,7 @@
 import SwiftUI
 
 struct EditRecipeImageListCellView: View {
-    @State private var offset: CGFloat = 0
-    @State var image: Image
+    let image: Image
     
     var body: some View {
         ListCellWrapperView {
@@ -23,7 +22,7 @@ struct EditRecipeImageListCellView: View {
     }
 }
 
-struct EditRecipeImageListCellView_Previews: PreviewProvider {    
+struct EditRecipeImageListCellView_Previews: PreviewProvider {
     static var previews: some View {
         EditRecipeImageListCellView(image: Image("ExampleRecipe"))
     }

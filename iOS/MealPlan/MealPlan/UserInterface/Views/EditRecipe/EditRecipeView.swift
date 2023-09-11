@@ -7,24 +7,6 @@
 
 import SwiftUI
 
-@Observable class EditRecipeViewModel {
-    // add RecipeInteractor as Environment in here. Entweder als Dependency Injection oder als DIWrapper oder direkt als Environment. Je nachdem welcher Mechanismus besser funktioniert.
-    var recipe = Recipe()
-    
-    func save() {
-        print(recipe.title)
-        print(recipe.ingredients)
-    }
-    
-    static func create(from recipe: Recipe) -> EditRecipeViewModel {
-        let viewModel = EditRecipeViewModel()
-        viewModel.recipe = recipe
-        
-        return viewModel
-    }
-}
-
-
 struct EditRecipeView: View {
     @Binding var recipe: Recipe
     

@@ -19,8 +19,8 @@ extension EditRecipeContent {
 
 struct EditRecipeContentSectionView<TrailingAction: View>: View {
     var title: String
-    @State var presentAddContent = false
     var trailingAction: () -> TrailingAction
+    @State var presentAddContent = false
     @Binding var content: [RecipeContent]
     
     init(title: String, content: Binding<[RecipeContent]>,
@@ -32,14 +32,18 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
     
     var body: some View {
         ListSectionView(title: title, content: {
-            ScrollViewReader { value in
-                ForEach(content, id: \.id) { item in
+            ForEach($content, id: \.id) { item in
+                switch item.type.wrappedValue {
+                case .description(let descriptionText):
+                    EditRecipeDescriptionListCellView(description: descriptionText)
+                case .image(let imageUrl):
                     EditRecipeImageListCellView(image: Image("ExampleRecipe"))
-                    Divider()
+                    
                 }
+                Divider()
             }
+            
             Button {
-                print("Open the view to select an image and save it in the array above!")
                 presentAddContent.toggle()
                 withAnimation {
                     content.append(RecipeContent(type: .description(descriptionText: "Das ist ein Test")))

@@ -7,17 +7,35 @@
 
 import SwiftUI
 
+@Observable class AddRecipePageViewModel {
+    // add RecipeInteractor as Environment in here. Entweder als Dependency Injection oder als DIWrapper oder direkt als Environment. Je nachdem welcher Mechanismus besser funktioniert.
+    let recipeInteractor = RecipeInteractor()
+    var recipe = Recipe()
+    
+    func save() {
+        print(recipe.title)
+        print(recipe.ingredients)
+    }
+    
+    static func create(from recipe: Recipe) -> AddRecipePageViewModel {
+        let viewModel = AddRecipePageViewModel()
+        viewModel.recipe = recipe
+        
+        return viewModel
+    }
+}
+
 struct AddRecipePageView: View {
-    @State var editRecipeViewModel = EditRecipeViewModel()
+    @State var viewModel = AddRecipePageViewModel()
     @Environment(\.presentationMode) var presentationMode
 
     var body: some View {
         NavigationStack {
-            EditRecipeView(recipe: $editRecipeViewModel.recipe)
+            EditRecipeView(recipe: $viewModel.recipe)
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing, content: {
                         LabelButtonView(viewModel: .create(action: {
-                            editRecipeViewModel.save()
+                            viewModel.save()
                             presentationMode.wrappedValue.dismiss()
                         },
                                                            title: "Hinzufügen",
