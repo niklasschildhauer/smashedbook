@@ -9,10 +9,7 @@ import SwiftUI
 
 struct EditRecipeContentView: View {
     var body: some View {
-        EditRecipeContentImagePickerView()
+        CameraView()
     }
 }
 
-#Preview {
-    EditRecipeContentView()
-}

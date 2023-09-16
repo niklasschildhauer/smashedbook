@@ -7,14 +7,27 @@
 
 import SwiftUI
 
+enum Route: Hashable {
+    case recipeDetail(Recipe)
+}
+
 struct ContentView: View {
+    @State var navigationPath: NavigationPath
+    
     var body: some View {
-        RecipeOverviewPage()
+        NavigationStack(path: $navigationPath) {
+            RecipeOverviewPageView()
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .recipeDetail(let recipe):
+                    RecipeDetailPageView(recipe: recipe)
+                }
+            }
+        }
+        .uiTestIdentifier("recipeOverviewPageView")
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
+#Preview {
+    ContentView(navigationPath: NavigationPath())
 }

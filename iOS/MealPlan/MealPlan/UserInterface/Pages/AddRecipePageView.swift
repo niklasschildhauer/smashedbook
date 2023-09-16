@@ -38,7 +38,7 @@ struct AddRecipePageView: View {
                             viewModel.save()
                             presentationMode.wrappedValue.dismiss()
                         },
-                                                           title: "Hinzufügen",
+                                                           title: "Speichern",
                                                            type: .primary))
                     })
                     ToolbarItem(placement: .navigationBarLeading, content: {

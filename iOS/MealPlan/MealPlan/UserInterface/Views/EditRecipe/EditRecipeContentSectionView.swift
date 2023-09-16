@@ -21,21 +21,26 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
     var title: String
     var trailingAction: () -> TrailingAction
     @State var presentAddContent = false
-    @Binding var content: [RecipeContent]
+    @Binding var recipeContent: [RecipeContent]
     
-    init(title: String, content: Binding<[RecipeContent]>,
+    init(title: String, recipeContent: Binding<[RecipeContent]>,
          @ViewBuilder trailingAction: @escaping () -> TrailingAction = {EmptyView()}) {
         self.title = title
-        self._content = content
+        self._recipeContent = recipeContent
         self.trailingAction = trailingAction
     }
     
     var body: some View {
         ListSectionView(title: title, content: {
-            ForEach($content, id: \.id) { item in
+            ForEach($recipeContent, id: \.id) { item in
                 switch item.type.wrappedValue {
                 case .description(let descriptionText):
-                    EditRecipeDescriptionListCellView(description: descriptionText)
+                    EditRecipeDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
+                        guard let index = recipeContent.firstIndex(of: item.wrappedValue) else {
+                            return
+                        }
+                        recipeContent[index].type = .description(descriptionText: editedDescription)
+                    })
                 case .image(let imageUrl):
                     EditRecipeImageListCellView(image: Image("ExampleRecipe"))
                     
@@ -46,7 +51,7 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
             Button {
                 presentAddContent.toggle()
                 withAnimation {
-                    content.append(RecipeContent(type: .description(descriptionText: "Das ist ein Test")))
+                    recipeContent.append(RecipeContent(type: .description(descriptionText: "Das ist ein Test")))
                     //content.append(.init())
                 }
             } label: {
@@ -56,6 +61,7 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
         }, trailingAction: trailingAction)
         .sheet(isPresented: $presentAddContent, content: {
             AddRecipeContentPageView()
+                .presentationDetents([.medium, .large])
         })
     }
 }
@@ -63,7 +69,7 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
 struct EditRecipeContentSectionView_Previews: PreviewProvider {
     @State static var content = [RecipeContent(type: .description(descriptionText: "Test"))]
     static var previews: some View {
-        EditRecipeContentSectionView(title: "Titel", content: $content)
+        EditRecipeContentSectionView(title: "Titel", recipeContent: $content)
     }
 }
 

@@ -8,11 +8,17 @@
 import SwiftUI
 
 struct EditRecipeDescriptionListCellView: View {
-    let description: String
+    @State var description: String
+    @State private var isEditing = false
+    var onEdit: (String) -> Void
+
     
     var body: some View {
         ListCellWrapperView {
-            Text(description)
+            TextField(description, text: $description, onCommit: {
+                onEdit(description)
+                isEditing = false
+            })
         }
         .deleteSwipeGesture()
         .frame(height: LayoutConstants.listCellHeight)

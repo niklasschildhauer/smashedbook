@@ -15,10 +15,10 @@ struct EditRecipeView: View {
             VStack(spacing: LayoutConstants.verticalPadding) {
                 EditRecipeNameLabelView(name: $recipe.title)
                 EditRecipeMetaInformationSectionView()
-                EditRecipeContentSectionView(title: "Zutaten", content: $recipe.ingredients)  {
+                EditRecipeContentSectionView(title: "Zutaten", recipeContent: $recipe.ingredients) {
                     EditRecipePortionCounterView()
                 }
-                EditRecipeContentSectionView(title: "Anleitung", content: $recipe.steps)
+                EditRecipeContentSectionView(title: "Anleitung", recipeContent: $recipe.steps)
             }
             .padding(.horizontal, LayoutConstants.horizontalPadding)
             .padding(.vertical, LayoutConstants.verticalPadding)

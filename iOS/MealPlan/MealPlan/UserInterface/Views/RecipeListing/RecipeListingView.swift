@@ -39,7 +39,9 @@ struct RecipeListingView: View {
             } else {
                 LazyVGrid(columns: twoColumnGrid, spacing: LayoutConstants.verticalPadding) {
                     ForEach(viewModel.recipiesList, id: \.id) { recipe in
-                        RecipeCardView()
+                        NavigationLink(value: Route.recipeDetail(recipe)) {
+                            RecipeCardView()
+                        }
                     }
                 }
                 .padding(.horizontal, LayoutConstants.horizontalPadding)
@@ -53,6 +55,8 @@ struct RecipeListingView: View {
 
 struct RecipeListingView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeListingView()
+        NavigationStack {
+            RecipeListingView()
+        }
     }
 }

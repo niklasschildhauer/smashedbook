@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Recipe: Codable {
+public struct Recipe: Codable, Hashable {
     var id = UUID()
     var title: String = ""
     var metaInformation = [RecipeMetaInformation]()
@@ -15,17 +15,17 @@ public struct Recipe: Codable {
     var steps = [RecipeContent]()
 }
 
-public struct RecipeMetaInformation: Codable {
+public struct RecipeMetaInformation: Codable, Hashable {
     var key: String
     var value: String
 }
 
-public struct RecipeContent: Codable {
+public struct RecipeContent: Codable, Hashable {
     var id = UUID()
     var type: RecipeContentType
 }
 
-public enum RecipeContentType: Codable {
+public enum RecipeContentType: Codable, Hashable {
     case image(imageUrl: URL)
     case description(descriptionText: String)
 }
