@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditRecipeImageListCellView: View {
+struct RecipeEditImageListCellView: View {
     let image: Image
     
     var body: some View {
@@ -22,8 +22,10 @@ struct EditRecipeImageListCellView: View {
     }
 }
 
-struct EditRecipeImageListCellView_Previews: PreviewProvider {
+//https://www.hackingwithswift.com/books/ios-swiftui/using-coordinators-to-manage-swiftui-view-controllers
+
+struct RecipeEditImageListCellView_Previews: PreviewProvider {
     static var previews: some View {
-        EditRecipeImageListCellView(image: Image("ExampleRecipe"))
+        RecipeEditImageListCellView(image: Image("ExampleRecipe"))
     }
 }

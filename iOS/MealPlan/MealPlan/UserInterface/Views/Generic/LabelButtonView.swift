@@ -41,7 +41,6 @@ struct LabelButtonViewModel {
     }
 }
 
-
 struct LabelButtonView: View {
     let viewModel: LabelButtonViewModel
     

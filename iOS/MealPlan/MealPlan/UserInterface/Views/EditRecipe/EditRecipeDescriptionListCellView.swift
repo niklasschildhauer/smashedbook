@@ -1,5 +1,5 @@
 //
-//  EditRecipeDescriptionListCellView.swift
+//  RecipeEditDescriptionListCellView.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 11.09.23.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditRecipeDescriptionListCellView: View {
+struct RecipeEditDescriptionListCellView: View {
     @State var description: String
     @State private var isEditing = false
     var onEdit: (String) -> Void

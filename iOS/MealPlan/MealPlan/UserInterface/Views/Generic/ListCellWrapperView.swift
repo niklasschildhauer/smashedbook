@@ -17,7 +17,7 @@ struct ListCellWrapperView<Content: View>: View {
     var body: some View {
         content
             .uiTestIdentifierForStackWrapper("listCell")
-            .padding(.horizontal, LayoutConstants.horizontalPadding)
+            .padding(.horizontal, LayoutConstants.horizontalSpacing)
     }
 }
 

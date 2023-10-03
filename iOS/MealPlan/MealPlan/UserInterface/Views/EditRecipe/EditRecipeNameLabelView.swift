@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct EditRecipeNameLabelView: View {
+struct RecipeEditNameLabelView: View {
     @Binding var name: String
     
     var body: some View {
@@ -20,9 +20,9 @@ struct EditRecipeNameLabelView: View {
     }
 }
 
-struct EditRecipeNameLabelView_Previews: PreviewProvider {
+struct RecipeEditNameLabelView_Previews: PreviewProvider {
     @State static var name = "Rezeptname"
     static var previews: some View {
-        EditRecipeNameLabelView(name: EditRecipeNameLabelView_Previews.$name)
+        RecipeEditNameLabelView(name: RecipeEditNameLabelView_Previews.$name)
     }
 }

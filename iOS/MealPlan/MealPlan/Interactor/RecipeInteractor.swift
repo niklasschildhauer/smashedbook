@@ -6,29 +6,23 @@
 //
 
 import Foundation
+import Combine
 
 protocol RecipeInteractoring {
-    func loadRecipies() async -> [Recipe]
+    func loadRecipes() async -> [RecipeModel]
+//    func test() -> AnyPublisher<[RecipeModel], aError>
 }
 
 class RecipeInteractor: RecipeInteractoring {
-    func loadRecipies() async -> [Recipe] {
+//    func test() -> AnyPublisher<[RecipeModel], Error> {
+//        return .Failure
+//    }
+    
+    func loadRecipes() async -> [RecipeModel] {
         sleep(1)
         
-        guard let fileURL = Bundle.main.url(forResource: "RecipeMock", withExtension: "json") else {
-            print("JSON file not found.")
-            return []
-        }
-        
-        do {
-            let jsonData = try Data(contentsOf: fileURL)
-            let decoder = JSONDecoder()
-            let decodeRecipies = try decoder.decode([Recipe].self, from: jsonData)
-            return decodeRecipies
-        } catch {
-            print("Error reading or decoding JSON file: \(error)")
-            return []
-        }
+        return [recipeModelMock]
     }
+    
 }
 

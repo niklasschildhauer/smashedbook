@@ -1,0 +1,23 @@
+{
+    "ingredients": [
+      {
+        "type": {
+          "image": {
+            "imageUrl": "www.test-image.de"
+          }
+        },
+        "id": "D383E574-75C3-4D2B-8CF1-2C5351DD64CB"
+      }
+    ],
+    "steps": [
+      {
+        "id": "B93DD9A7-FDEC-4AC9-861E-C4D22CEF55E6",
+        "type": {
+          "image": {
+            "imageUrl": "www.test-image.de"
+          }
+        }
+      }
+    ],
+    "id": "625610E1-4CCA-451C-B63D-21E7EBFF7237"
+}

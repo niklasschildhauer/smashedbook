@@ -1,5 +1,5 @@
 //
-//  EditRecipePortionCounterView.swift
+//  RecipeEditPortionCounterView.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 03.09.23.
@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-class EditRecipePortionCounterViewModel: ObservableObject {
+// TODO Umbauen!
+class RecipeEditPortionCounterViewModel: ObservableObject {
     @Published var portionCount: Int = 2 {
         didSet {
             hideDecreaseButton = portionCount <= 1
@@ -31,19 +32,19 @@ class EditRecipePortionCounterViewModel: ObservableObject {
     }
 }
 
-struct EditRecipePortionCounterView: View {
-    @StateObject var viewModel = EditRecipePortionCounterViewModel()
+struct RecipeEditPortionCounterView: View {
+    @StateObject var viewModel = RecipeEditPortionCounterViewModel()
     
     var body: some View {
         HStack {
             Spacer()
             HStack {
-                IconButtonView(icon: Image(systemName: "minus"), action: viewModel.decreasePotionCount)
+                IconFilledButtonView(icon: Image(systemName: "minus"), action: viewModel.decreasePotionCount)
                     .uiTestIdentifier("decreasePortionButton")
                     .isHidden($viewModel.hideDecreaseButton)
                 Text("\(viewModel.portionCount) \(viewModel.unitText)")
                     .font(.footnote)
-                IconButtonView(icon: Image(systemName: "plus"), action: viewModel.increasePotionCount)
+                IconFilledButtonView(icon: Image(systemName: "plus"), action: viewModel.increasePotionCount)
                     .uiTestIdentifier("increasePortionButton")
             }
         }
@@ -51,8 +52,8 @@ struct EditRecipePortionCounterView: View {
     }
 }
 
-struct EditRecipePortionCounterView_Previews: PreviewProvider {
+struct RecipeEditPortionCounterView_Previews: PreviewProvider {
     static var previews: some View {
-        EditRecipePortionCounterView()
+        RecipeEditPortionCounterView()
     }
 }

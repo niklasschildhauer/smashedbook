@@ -1,5 +1,5 @@
 //
-//  EditRecipeView.swift
+//  View.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 20.08.23.
@@ -7,29 +7,41 @@
 
 import SwiftUI
 
-struct EditRecipeView: View {
-    @Binding var recipe: Recipe
+@Observable 
+class RecipeEditViewModel: Identifiable {
+    let recipesDataSource: RecipesDataSource
+    
+    var recipeToEdit: RecipeModel
+    
+    init(recipesDataSource: RecipesDataSource, recipeToEdit: RecipeModel) {
+        self.recipesDataSource = recipesDataSource
+        self._recipeToEdit = recipeToEdit
+    }
+    
+    func save() async {
+        recipesDataSource.save(recipe: recipeToEdit)
+    }
+}
+
+struct RecipeEditView: View {
+    @Bindable var viewModel: RecipeEditViewModel
     
     var body: some View {
         ScrollView {
-            VStack(spacing: LayoutConstants.verticalPadding) {
-                EditRecipeNameLabelView(name: $recipe.title)
-                EditRecipeMetaInformationSectionView()
-                EditRecipeContentSectionView(title: "Zutaten", recipeContent: $recipe.ingredients) {
-                    EditRecipePortionCounterView()
+            VStack(spacing: LayoutConstants.verticalSpacing) {
+                RecipeEditNameLabelView(name: $viewModel.recipeToEdit.title)
+                RecipeEditMetaInformationSectionView()
+                RecipeEditContentSectionView(title: "Zutaten", recipeContent: .constant([])) {
+                    RecipeEditPortionCounterView()
                 }
-                EditRecipeContentSectionView(title: "Anleitung", recipeContent: $recipe.steps)
+                RecipeEditContentSectionView(title: "Anleitung", recipeContent: .constant([]))
             }
-            .padding(.horizontal, LayoutConstants.horizontalPadding)
-            .padding(.vertical, LayoutConstants.verticalPadding)
+            .padding(.horizontal, LayoutConstants.horizontalSpacing)
+            .padding(.vertical, LayoutConstants.verticalSpacing)
         }
     }
 }
 
-struct EditRecipeView_Previews: PreviewProvider {
-    @State static var recipe = recipeModelMock
-    static var previews: some View {
-        EditRecipeView(recipe: EditRecipeView_Previews.$recipe)
-    }
+#Preview {
+    RecipeEditView(viewModel: RecipeEditViewModel(recipesDataSource: RecipesDataSource(), recipeToEdit: recipeModelMock))
 }
-

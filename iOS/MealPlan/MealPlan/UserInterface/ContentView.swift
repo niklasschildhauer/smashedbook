@@ -1,33 +1,33 @@
+////
+////  ContentView.swift
+////  MealPlan
+////
+////  Created by Niklas Schildhauer on 19.08.23.
+////
 //
-//  ContentView.swift
-//  MealPlan
+//import SwiftUI
 //
-//  Created by Niklas Schildhauer on 19.08.23.
+//enum Route: Hashable {
+//    case recipeDetail(RecipeModel)
+//}
 //
-
-import SwiftUI
-
-enum Route: Hashable {
-    case recipeDetail(Recipe)
-}
-
-struct ContentView: View {
-    @State var navigationPath: NavigationPath
-    
-    var body: some View {
-        NavigationStack(path: $navigationPath) {
-            RecipeOverviewPageView()
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .recipeDetail(let recipe):
-                    RecipeDetailPageView(recipe: recipe)
-                }
-            }
-        }
-        .uiTestIdentifier("recipeOverviewPageView")
-    }
-}
-
-#Preview {
-    ContentView(navigationPath: NavigationPath())
-}
+//struct ContentView: View {
+//    @State var navigationPath: NavigationPath
+//    
+//    var body: some View {
+//        NavigationStack(path: $navigationPath) {
+//            RecipeOverviewPageView()
+//            .navigationDestination(for: Route.self) { route in
+//                switch route {
+//                case .recipeDetail(let recipe):
+//                    RecipeDetailPageView(recipe: .constant(recipe))
+//                }
+//            }
+//        }
+//        .uiTestIdentifier("recipeOverviewPageView")
+//    }
+//}
+//
+//#Preview {
+//    ContentView(navigationPath: NavigationPath())
+//}

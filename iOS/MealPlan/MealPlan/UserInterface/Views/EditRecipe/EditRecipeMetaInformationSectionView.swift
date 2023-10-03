@@ -1,5 +1,5 @@
 //
-//  EditRecipeMetaInformationView.swift
+//  RecipeEditMetaInformationView.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 20.08.23.
@@ -15,7 +15,7 @@ enum TestEnum: String, PickerValue {
     var id: String { self.rawValue }
 }
 
-struct EditRecipeMetaInformationSectionView: View {
+struct RecipeEditMetaInformationSectionView: View {
     @State var energyTest = ""
     @State var selectedMeal = TestEnum.breakfast
     
@@ -34,8 +34,8 @@ struct EditRecipeMetaInformationSectionView: View {
     }
 }
 
-struct EditRecipeMetaInformationView_Previews: PreviewProvider {
+struct RecipeEditMetaInformationView_Previews: PreviewProvider {
     static var previews: some View {
-        EditRecipeMetaInformationSectionView()
+        RecipeEditMetaInformationSectionView()
     }
 }

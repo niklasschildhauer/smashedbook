@@ -18,9 +18,9 @@ final class RecipeInteractorUnitTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testLoadRecipies() async throws {
+    func testLoadRecipes() async throws {
         let recipeInteractor = RecipeInteractor()
-        let result = await recipeInteractor.loadRecipies()
+        let result = await recipeInteractor.loadRecipes()
         XCTAssertEqual(result.count, 4)
     }
 

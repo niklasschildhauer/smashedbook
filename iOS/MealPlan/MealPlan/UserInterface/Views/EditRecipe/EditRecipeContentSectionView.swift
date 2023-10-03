@@ -1,5 +1,5 @@
 //
-//  EditRecipeIngredientsSectionView.swift
+//  RecipeEditIngredientsSectionView.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 26.08.23.
@@ -7,23 +7,22 @@
 
 import SwiftUI
 
-protocol EditRecipeContent: Identifiable {
+protocol RecipeEditContent: Identifiable {
     var id: UUID { get }
 }
 
-extension EditRecipeContent {
+extension RecipeEditContent {
     var id: UUID {
         UUID()
     }
 }
 
-struct EditRecipeContentSectionView<TrailingAction: View>: View {
+struct RecipeEditContentSectionView<TrailingAction: View>: View {
     var title: String
     var trailingAction: () -> TrailingAction
-    @State var presentAddContent = false
-    @Binding var recipeContent: [RecipeContent]
+    @Binding var recipeContent: [RecipeContentModel]
     
-    init(title: String, recipeContent: Binding<[RecipeContent]>,
+    init(title: String, recipeContent: Binding<[RecipeContentModel]>,
          @ViewBuilder trailingAction: @escaping () -> TrailingAction = {EmptyView()}) {
         self.title = title
         self._recipeContent = recipeContent
@@ -35,41 +34,39 @@ struct EditRecipeContentSectionView<TrailingAction: View>: View {
             ForEach($recipeContent, id: \.id) { item in
                 switch item.type.wrappedValue {
                 case .description(let descriptionText):
-                    EditRecipeDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
+                    RecipeEditDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
                         guard let index = recipeContent.firstIndex(of: item.wrappedValue) else {
                             return
                         }
                         recipeContent[index].type = .description(descriptionText: editedDescription)
                     })
                 case .image(let imageUrl):
-                    EditRecipeImageListCellView(image: Image("ExampleRecipe"))
-                    
+                    RecipeEditImageListCellView(image: Image("ExampleRecipe"))
+                case .ingredient(let value, let unit):
+                    HStack {
+                        Text(value)
+                        Text(unit.rawValue)
+                    }
                 }
                 Divider()
             }
             
             Button {
-                presentAddContent.toggle()
                 withAnimation {
-                    recipeContent.append(RecipeContent(type: .description(descriptionText: "Das ist ein Test")))
-                    //content.append(.init())
+                    recipeContent.append(RecipeContentModel(type: .ingredient(value: "200", unit: .gram)))
                 }
             } label: {
                 IconLabelListCellView(title: "Foto hinzufügen", image: Image(systemName: "photo"))
                     .background(.white)
             }
         }, trailingAction: trailingAction)
-        .sheet(isPresented: $presentAddContent, content: {
-            AddRecipeContentPageView()
-                .presentationDetents([.medium, .large])
-        })
     }
 }
 
-struct EditRecipeContentSectionView_Previews: PreviewProvider {
-    @State static var content = [RecipeContent(type: .description(descriptionText: "Test"))]
+struct RecipeEditContentSectionView_Previews: PreviewProvider {
+    @State static var content = [RecipeContentModel(type: .description(descriptionText: "Test"))]
     static var previews: some View {
-        EditRecipeContentSectionView(title: "Titel", recipeContent: $content)
+        RecipeEditContentSectionView(title: "Titel", recipeContent: $content)
     }
 }
 
