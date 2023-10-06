@@ -17,9 +17,9 @@ class RecipeCoordinator: Coordinator {
     
     var navigationPath = NavigationPath()
     var recipesDataSource: RecipesDataSource
-   
-    var detailRecipeCoordinator: DetailRecipeCoordinator? = nil
-    var newRecipeEditModel: RecipeEditViewModel? = nil
+    
+    var detailRecipeCoordinator: RecipeDetailCoordinator? = nil
+    var recipeEditCoordinator: RecipeEditCoordinator? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource()) {
         self.recipesDataSource = recipesDataSource
@@ -30,20 +30,20 @@ class RecipeCoordinator: Coordinator {
     }
     
     func didTapAddNewRecipe() {
-        newRecipeEditModel = RecipeEditViewModel(recipesDataSource: recipesDataSource, recipeToEdit: RecipeModel())
+        recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: RecipeModel())
     }
     
     func didTapCloseNewRecipe() {
-        newRecipeEditModel = nil
+        recipeEditCoordinator = nil
     }
     
     func didTapSaveNewRecipe() async {
-        await newRecipeEditModel?.save()
-        newRecipeEditModel = nil
+        await recipeEditCoordinator?.save()
+        recipeEditCoordinator = nil
     }
     
-    func didRecieveNavigationDestination(recipeModel: RecipeModel) -> DetailRecipeCoordinator {
-        return DetailRecipeCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
+    func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
+        return RecipeDetailCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
     }
 }
 
@@ -57,18 +57,31 @@ struct RecipeCoordinatorView: View {
                     coordinator.didRecieveNavigationDestination(recipeModel: recipe).rootView
                 }
         }
-        .sheet(item: $coordinator.newRecipeEditModel, content: { newRecipeEditModel in
+        .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {
-                addRecipeView(recipeEditViewModel: newRecipeEditModel)
+                ediitRecipeCoordinator.rootView
+                    .bottomToolbar {
+                        HStack {
+                            IconFilledButtonView(icon: Image(systemName: "xmark")) {
+                                coordinator.didTapCloseNewRecipe()
+                            }
+                            Spacer()
+                        }
+                        IconLabelFilledButtonView(title: "Speichern") {
+                            Task {
+                                await coordinator.didTapSaveNewRecipe()
+                            }
+                        }
+                    }
+                    .uiTestIdentifier("addRecipePageView")
                 // TODO: Presentation height based on content?
-                    .presentationDetents([.height(200)])
             }
         })
         .onAppear {
             coordinator.start()
         }
     }
-        
+    
     @ViewBuilder var recipeOverviewView: some View {
         RecipeListingView(recipes: $coordinator.recipesDataSource.recipes)
             .titleBar(title: "Meine Rezepte")
@@ -78,24 +91,6 @@ struct RecipeCoordinatorView: View {
                 }
             }
             .uiTestIdentifier("recipeOverviewPageView")
-    }
-        
-    @ViewBuilder func addRecipeView(recipeEditViewModel: RecipeEditViewModel) -> some View {
-        RecipeEditView(viewModel: recipeEditViewModel)
-            .bottomToolbar {
-                HStack {
-                    IconFilledButtonView(icon: Image(systemName: "xmark")) {
-                        coordinator.didTapCloseNewRecipe()
-                    }
-                    Spacer()
-                }
-                IconLabelFilledButtonView(title: "Speichern") {
-                    Task {
-                        await coordinator.didTapSaveNewRecipe()
-                    }
-                }
-            }
-            .uiTestIdentifier("addRecipePageView")
     }
 }
 

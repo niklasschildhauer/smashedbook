@@ -7,31 +7,26 @@
 
 import SwiftUI
 
-protocol RecipeEditContent: Identifiable {
-    var id: UUID { get }
-}
-
-extension RecipeEditContent {
-    var id: UUID {
-        UUID()
-    }
-}
-
-struct RecipeEditContentSectionView<TrailingAction: View>: View {
-    var title: String
-    var trailingAction: () -> TrailingAction
+struct RecipeEditContentSectionView<TrailingAction: View, AddButton: View>: View {
+    let title: String
+    @ViewBuilder var trailingAction: () -> TrailingAction
+    @ViewBuilder var addButton: () -> AddButton
     @Binding var recipeContent: [RecipeContentModel]
     
-    init(title: String, recipeContent: Binding<[RecipeContentModel]>,
-         @ViewBuilder trailingAction: @escaping () -> TrailingAction = {EmptyView()}) {
+    init(title: String, 
+         recipeContent: Binding<[RecipeContentModel]>,
+         @ViewBuilder trailingAction: @escaping () -> TrailingAction = {EmptyView()},
+         @ViewBuilder addButton: @escaping () -> AddButton = {EmptyView()}) {
         self.title = title
         self._recipeContent = recipeContent
         self.trailingAction = trailingAction
+        self.addButton = addButton
     }
     
     var body: some View {
         ListSectionView(title: title, content: {
-            ForEach($recipeContent, id: \.id) { item in
+            ForEach($recipeContent.indices, id: \.self) { index in
+                let item = $recipeContent[index]
                 switch item.type.wrappedValue {
                 case .description(let descriptionText):
                     RecipeEditDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
@@ -48,23 +43,15 @@ struct RecipeEditContentSectionView<TrailingAction: View>: View {
                         Text(unit.rawValue)
                     }
                 }
-                Divider()
             }
-            
-            Button {
-                withAnimation {
-                    recipeContent.append(RecipeContentModel(type: .ingredient(value: "200", unit: .gram)))
-                }
-            } label: {
-                IconLabelListCellView(title: "Foto hinzufügen", image: Image(systemName: "photo"))
-                    .background(.white)
-            }
+            addButton()  
         }, trailingAction: trailingAction)
     }
 }
 
+
 struct RecipeEditContentSectionView_Previews: PreviewProvider {
-    @State static var content = [RecipeContentModel(type: .description(descriptionText: "Test"))]
+    @State static var content = [RecipeContentModel(type: .description(descriptionText: "Test")), RecipeContentModel(type: .ingredient(value: "Test", unit: .gram))]
     static var previews: some View {
         RecipeEditContentSectionView(title: "Titel", recipeContent: $content)
     }

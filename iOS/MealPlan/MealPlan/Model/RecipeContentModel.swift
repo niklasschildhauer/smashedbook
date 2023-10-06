@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 public struct RecipeContentModel: Codable, Hashable {
     var id = UUID()
@@ -16,7 +17,7 @@ public struct RecipeContentModel: Codable, Hashable {
         case description(descriptionText: String)
         case ingredient(value: String, unit: IngredientUnit)
     }
-
+    
     public enum IngredientUnit: String, Codable, Hashable {
         case gram
         case kiloGram

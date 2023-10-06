@@ -7,51 +7,50 @@
 
 import SwiftUI
 
-@Observable class DetailRecipeCoordinator: Coordinator {
-    typealias CoordinatorView = DetailRecipeCoordinatorView
+@Observable class RecipeDetailCoordinator: Coordinator {
+    typealias CoordinatorView = RecipeDetailCoordinatorView
     
-    var rootView: DetailRecipeCoordinatorView {
-        DetailRecipeCoordinatorView(coordinator: self)
+    var rootView: RecipeDetailCoordinatorView {
+        RecipeDetailCoordinatorView(coordinator: self)
     }
     
+    // TODO: this recipesDataSource is only pass through. Use DI to avoid overhead
     var recipesDataSource: RecipesDataSource
     var recipeModel: RecipeModel
-    var recipeEditModel: RecipeEditViewModel? = nil
+    var recipeEditCoordinator: RecipeEditCoordinator? = nil
     
     var isEditing: Bool {
-        recipeEditModel != nil
+        recipeEditCoordinator != nil
     }
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
         self.recipeModel = recipeModel
     }
-
-    func start() {
-        
-    }
+    
+    func start() { }
     
     func didTapEditButton() async {
-        if let recipeEditModel = recipeEditModel {
-            await recipeEditModel.save()
-            // TODO: Is this a suitable solution?
-            recipeModel = recipeEditModel.recipeToEdit
-            self.recipeEditModel = nil
+        if let recipeEditCoordinator = recipeEditCoordinator {
+            await recipeEditCoordinator.save()
+            // TODO: Is this a suitable solution? Maybe we can use combine here
+            recipeModel = recipeEditCoordinator.recipeModel
+            self.recipeEditCoordinator = nil
         } else {
-            recipeEditModel = RecipeEditViewModel(recipesDataSource: recipesDataSource, recipeToEdit: recipeModel)
+            recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
         }
     }
 }
 
-struct DetailRecipeCoordinatorView: View {
-    @State var coordinator: DetailRecipeCoordinator
- 
+struct RecipeDetailCoordinatorView: View {
+    @State var coordinator: RecipeDetailCoordinator
+    
     var editButtonTitle: String {
         !coordinator.isEditing ? "Bearbeiten" : "Speichern"
     }
     
     var body: some View {
-        contentView()
+        contentView
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .bottomToolbar {
                 HStack(spacing: LayoutConstants.horizontalSpacing){
@@ -68,9 +67,10 @@ struct DetailRecipeCoordinatorView: View {
             }
     }
     
-    @ViewBuilder func contentView() -> some View {
-        if let recipeEditModel = coordinator.recipeEditModel {
-            RecipeEditView(viewModel: recipeEditModel)
+    @ViewBuilder var contentView: some View {
+        if let recipeEditCoordinator = coordinator.recipeEditCoordinator {
+            recipeEditCoordinator.rootView
+                .navigationBarBackButtonHidden()
         } else {
             RecipeDetailView(recipe: $coordinator.recipeModel)
         }
@@ -78,5 +78,5 @@ struct DetailRecipeCoordinatorView: View {
 }
 
 #Preview {
-    DetailRecipeCoordinatorView(coordinator: DetailRecipeCoordinator(recipeModel: recipeModelMock))
+    RecipeDetailCoordinatorView(coordinator: RecipeDetailCoordinator(recipeModel: recipeModelMock))
 }

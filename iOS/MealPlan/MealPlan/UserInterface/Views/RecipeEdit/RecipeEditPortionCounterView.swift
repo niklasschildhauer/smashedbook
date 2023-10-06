@@ -39,12 +39,12 @@ struct RecipeEditPortionCounterView: View {
         HStack {
             Spacer()
             HStack {
-                IconFilledButtonView(icon: Image(systemName: "minus"), action: viewModel.decreasePotionCount)
+                IconButtonView(icon: Image(systemName: "minus"), action: viewModel.decreasePotionCount)
                     .uiTestIdentifier("decreasePortionButton")
                     .isHidden($viewModel.hideDecreaseButton)
                 Text("\(viewModel.portionCount) \(viewModel.unitText)")
                     .font(.footnote)
-                IconFilledButtonView(icon: Image(systemName: "plus"), action: viewModel.increasePotionCount)
+                IconButtonView(icon: Image(systemName: "plus"), action: viewModel.increasePotionCount)
                     .uiTestIdentifier("increasePortionButton")
             }
         }

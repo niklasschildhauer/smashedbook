@@ -19,7 +19,7 @@ struct IconLabelListCellView: View {
                 Text(title)
                 Spacer()
             }
-        }.frame(height: LayoutConstants.listCellHeight)
+        }
     }
 }
 

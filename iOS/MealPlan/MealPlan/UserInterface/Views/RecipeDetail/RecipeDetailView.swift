@@ -9,9 +9,13 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: RecipeModel
+    
     var body: some View {
-        VStack {
+        VStack(alignment: .leading){
             Text(recipe.title)
+            Text("Kalorien: \(recipe.metaInformation.energy ?? 0)")
+            Text("Mahlzeit: \(recipe.metaInformation.meal.rawValue)")
+            Text("Steps: \(recipe.steps.count)")
         }
     }
 }

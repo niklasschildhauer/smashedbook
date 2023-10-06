@@ -24,7 +24,6 @@ struct OneLineTitleCustomElementListCellView<Element:View> : View {
                 customElement
             }
         }
-        .frame(height: LayoutConstants.listCellHeight)
     }
 }
 

@@ -21,6 +21,22 @@ struct ListSectionView<Content: View, TrailingAction: View>: View {
     }
     
     var body: some View {
+        Section {
+            content()
+        } header: {
+            if let title {
+                HStack {
+                    Text(title.uppercased())
+                        .font(.callout)
+                        Spacer()
+                        trailingAction()
+                }
+            }
+        }.uiTestIdentifierForStackWrapper("listSection")
+    }
+    
+    // TODO: Remove me!
+    var bodyOld: some View {
         VStack(spacing: .zero) {
             if let title {
                 HStack {
@@ -40,10 +56,9 @@ struct ListSectionView<Content: View, TrailingAction: View>: View {
     
 }
 
-struct ListSectionView_Previews: PreviewProvider {
-    static var previews: some View {
-        ListSectionView(title: "Test") {
-            Text("Test content")
-        }
+#Preview {
+    ListSectionView(title: "Test") {
+        Text("Test content")
     }
 }
+

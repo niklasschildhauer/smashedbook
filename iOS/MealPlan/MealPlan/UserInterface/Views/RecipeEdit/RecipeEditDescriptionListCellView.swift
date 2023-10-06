@@ -21,7 +21,6 @@ struct RecipeEditDescriptionListCellView: View {
             })
         }
         .deleteSwipeGesture()
-        .frame(height: LayoutConstants.listCellHeight)
     }
 }
 

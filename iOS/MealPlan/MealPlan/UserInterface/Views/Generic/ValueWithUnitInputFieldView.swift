@@ -8,15 +8,28 @@
 import SwiftUI
 
 struct ValueWithUnitInputFieldView: View {
-    @Binding var value: String
+    @Binding var value: Int?
     let unit: String
     var placeholder: String = ""
     
     var body: some View {
         HStack {
-            TextField(placeholder, text: $value)
-                .multilineTextAlignment(.trailing)
-                
+            TextField(placeholder, text: Binding(
+                get: {
+                    if let value {
+                        return String(value)
+                    } else {
+                        return ""
+                    }
+                },
+                set: {
+                    if let newValue = Int($0) {
+                        value = newValue
+                    }
+                }
+            ))
+            .keyboardType(.numberPad)
+            .multilineTextAlignment(.trailing)
             TagView(text: unit)
         }
     }
@@ -24,6 +37,6 @@ struct ValueWithUnitInputFieldView: View {
 
 struct ValueWithUnitInputFieldView_Previews: PreviewProvider {
     static var previews: some View {
-        ValueWithUnitInputFieldView(value: .constant("Test"), unit: "g")
+        ValueWithUnitInputFieldView(value: .constant(nil), unit: "g")
     }
 }

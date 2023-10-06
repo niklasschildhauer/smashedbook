@@ -8,6 +8,16 @@
 import Foundation
 
 public struct RecipeMetaInformationModel: Codable, Hashable {
-    var key: String
-    var value: String
+    enum Meal: String, Codable, PickerValue {
+        case breakfast
+        case lunch
+        case dinner
+        var id: String { self.rawValue }
+    }
+    
+    typealias Calories = Int
+    
+    // TODO: Should this be an array?
+    var meal: Meal = .lunch
+    var energy: Calories?
 }
