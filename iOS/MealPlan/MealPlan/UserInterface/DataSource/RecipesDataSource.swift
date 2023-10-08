@@ -24,9 +24,6 @@ import Foundation
             print("We did save")
 
             recipes[recipeIndex] = recipe
-            print(recipes.map({ model in
-                model.title
-            }))
         } else {
             print("We failed")
 

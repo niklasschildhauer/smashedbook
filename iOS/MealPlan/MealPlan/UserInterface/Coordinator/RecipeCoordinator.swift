@@ -60,19 +60,6 @@ struct RecipeCoordinatorView: View {
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {
                 ediitRecipeCoordinator.rootView
-                    .bottomToolbar {
-                        HStack {
-                            IconFilledButtonView(icon: Image(systemName: "xmark")) {
-                                coordinator.didTapCloseNewRecipe()
-                            }
-                            Spacer()
-                        }
-                        IconLabelFilledButtonView(title: "Speichern") {
-                            Task {
-                                await coordinator.didTapSaveNewRecipe()
-                            }
-                        }
-                    }
                     .uiTestIdentifier("addRecipePageView")
                 // TODO: Presentation height based on content?
             }
@@ -84,6 +71,7 @@ struct RecipeCoordinatorView: View {
     
     @ViewBuilder var recipeOverviewView: some View {
         RecipeListingView(recipes: $coordinator.recipesDataSource.recipes)
+            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             .titleBar(title: "Meine Rezepte")
             .bottomToolbar {
                 IconLabelFilledButtonView(title: "Hinzufügen") {

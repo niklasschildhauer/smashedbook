@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+enum RecipeAddContentType: String, CaseIterable {
+    case text
+    case ingredient
+    case image
+}
+
 @Observable class RecipeAddContentCoordinator: Coordinator, Identifiable {
     typealias CoordinatorView = RecipeAddContentCoordinatorView
     
@@ -16,6 +22,7 @@ import SwiftUI
     
     var recipeContent: RecipeContentModel? = RecipeContentModel(type: .description(descriptionText: "Test"))
     var didAddRecipeContent: (RecipeContentModel) -> Void
+    var navigationPath = NavigationPath()
     
     init(didAddRecipeContent: @escaping (RecipeContentModel) -> Void) {
         self.didAddRecipeContent = didAddRecipeContent
@@ -28,15 +35,29 @@ struct RecipeAddContentCoordinatorView: View {
     @State var coordinator: RecipeAddContentCoordinator
     
     var body: some View {
-        IconLabelFilledButtonView(title: "Text hinzufügen", action: {
-            // TODO: Clean this up
-            if let recipeContent = coordinator.recipeContent {
-                coordinator.didAddRecipeContent(recipeContent)
+        NavigationStack(path: $coordinator.navigationPath) {
+            RecipeContentSelectionView { contentType in
+                coordinator.navigationPath.append(contentType)
             }
-        })
-            .onAppear{
-                coordinator.start()
+            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
+            .navigationDestination(for: RecipeAddContentType.self) { contentType in
+                switch contentType {
+                case .image:
+                    Text("Das ist ein Bild")
+                case .ingredient:
+                    Text("Das ist eine Zutat")
+                case .text:
+                    Text("Das ist ein Text")
+                    Button("Hinzufügen") {
+                        coordinator.didAddRecipeContent(RecipeContentModel(type: .description(descriptionText: "Das ist ein Test")))
+                    }
+                }
             }
+        }
+        .presentationDetents([.medium])
+        .onAppear{
+            coordinator.start()
+        }
     }
 }
 

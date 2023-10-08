@@ -29,6 +29,7 @@ struct RecipeEditContentSectionView<TrailingAction: View, AddButton: View>: View
                 let item = $recipeContent[index]
                 switch item.type.wrappedValue {
                 case .description(let descriptionText):
+                    // TODO: On edit not neccessary
                     RecipeEditDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
                         guard let index = recipeContent.firstIndex(of: item.wrappedValue) else {
                             return

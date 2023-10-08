@@ -51,7 +51,7 @@ import SwiftUI
         
         guard !recipeModel.steps.isEmpty else {
             validateErrorMessage = "Das Rezept ist leer"
-            return false
+            return true
         }
         
         validateErrorMessage = ""
@@ -61,6 +61,7 @@ import SwiftUI
 
 struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel,
@@ -77,6 +78,20 @@ struct RecipeEditCoordinatorView: View {
                 coordinator.addContentCoordinator = nil
             })
         })
+        .bottomToolbar {
+            HStack {
+                IconFilledButtonView(icon: Image(systemName: "xmark")) {
+                    dismiss()
+                }
+                Spacer()
+            }
+            IconLabelFilledButtonView(title: "Speichern") {
+                Task {
+                    await coordinator.save()
+                    dismiss()
+                }
+            }
+        }
         .onAppear {
             coordinator.start()
         }

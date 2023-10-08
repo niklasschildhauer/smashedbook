@@ -30,6 +30,10 @@ import SwiftUI
     
     func start() { }
     
+    func reload() {
+        recipeModel = recipesDataSource.recipes.first { $0.id == recipeModel.id } ?? recipeModel
+    }
+    
     func didTapEditButton() async {
         if let recipeEditCoordinator = recipeEditCoordinator {
             await recipeEditCoordinator.save()
@@ -50,11 +54,12 @@ struct RecipeDetailCoordinatorView: View {
     }
     
     var body: some View {
-        contentView
+        RecipeDetailView(recipe: $coordinator.recipeModel)
+            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .bottomToolbar {
                 HStack(spacing: LayoutConstants.horizontalSpacing){
-                    IconLabelFilledButtonView(title: editButtonTitle) {
+                    IconLabelFilledButtonView(title: "Bearbeiten") {
                         Task {
                             await coordinator.didTapEditButton()
                         }
@@ -62,18 +67,16 @@ struct RecipeDetailCoordinatorView: View {
                     .uiTestIdentifier("editRecipeButton")
                 }
             }
+            .sheet(item: $coordinator.recipeEditCoordinator, 
+                   onDismiss: {
+                coordinator.reload()
+            },
+                   content: { coordinator in
+                coordinator.rootView
+            })
             .onAppear {
                 coordinator.start()
             }
-    }
-    
-    @ViewBuilder var contentView: some View {
-        if let recipeEditCoordinator = coordinator.recipeEditCoordinator {
-            recipeEditCoordinator.rootView
-                .navigationBarBackButtonHidden()
-        } else {
-            RecipeDetailView(recipe: $coordinator.recipeModel)
-        }
     }
 }
 
