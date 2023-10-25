@@ -35,13 +35,8 @@ import SwiftUI
     }
     
     func didTapEditButton() async {
-        if let recipeEditCoordinator = recipeEditCoordinator {
-            await recipeEditCoordinator.save()
-            // TODO: Is this a suitable solution? Maybe we can use combine here
-            recipeModel = recipeEditCoordinator.recipeModel
-            self.recipeEditCoordinator = nil
-        } else {
-            recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
+        recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel) { updatedRecipe in
+            self.recipeModel = updatedRecipe
         }
     }
 }
@@ -55,7 +50,6 @@ struct RecipeDetailCoordinatorView: View {
     
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel)
-            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .bottomToolbar {
                 HStack(spacing: LayoutConstants.horizontalSpacing){
@@ -67,11 +61,7 @@ struct RecipeDetailCoordinatorView: View {
                     .uiTestIdentifier("editRecipeButton")
                 }
             }
-            .sheet(item: $coordinator.recipeEditCoordinator, 
-                   onDismiss: {
-                coordinator.reload()
-            },
-                   content: { coordinator in
+            .sheet(item: $coordinator.recipeEditCoordinator, content: { coordinator in
                 coordinator.rootView
             })
             .onAppear {

@@ -32,16 +32,7 @@ class RecipeCoordinator: Coordinator {
     func didTapAddNewRecipe() {
         recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: RecipeModel())
     }
-    
-    func didTapCloseNewRecipe() {
-        recipeEditCoordinator = nil
-    }
-    
-    func didTapSaveNewRecipe() async {
-        await recipeEditCoordinator?.save()
-        recipeEditCoordinator = nil
-    }
-    
+
     func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
         return RecipeDetailCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
     }
@@ -60,25 +51,24 @@ struct RecipeCoordinatorView: View {
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {
                 ediitRecipeCoordinator.rootView
-                    .uiTestIdentifier("addRecipePageView")
                 // TODO: Presentation height based on content?
             }
         })
         .onAppear {
             coordinator.start()
         }
+        .uiTestIdentifier("recipeCoordinatorView")
     }
     
     @ViewBuilder var recipeOverviewView: some View {
         RecipeListingView(recipes: $coordinator.recipesDataSource.recipes)
-            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             .titleBar(title: "Meine Rezepte")
             .bottomToolbar {
                 IconLabelFilledButtonView(title: "Hinzufügen") {
                     coordinator.didTapAddNewRecipe()
                 }
+                .uiTestIdentifier("addRecipeButton")
             }
-            .uiTestIdentifier("recipeOverviewPageView")
     }
 }
 

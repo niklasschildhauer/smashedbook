@@ -10,14 +10,9 @@ import Combine
 
 protocol RecipeInteractoring {
     func loadRecipes() async -> [RecipeModel]
-//    func test() -> AnyPublisher<[RecipeModel], aError>
 }
 
 class RecipeInteractor: RecipeInteractoring {
-//    func test() -> AnyPublisher<[RecipeModel], Error> {
-//        return .Failure
-//    }
-    
     func loadRecipes() async -> [RecipeModel] {
         sleep(1)
         

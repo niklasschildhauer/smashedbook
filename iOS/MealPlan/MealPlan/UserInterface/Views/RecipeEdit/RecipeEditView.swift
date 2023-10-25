@@ -15,6 +15,7 @@ protocol RecipeEditViewDelegate {
 struct RecipeEditView: View {
     @Binding var recipe: RecipeModel
     // TODO: Normally I would use a delegate pattern, but is this suitable here? Are there any other ways? As of seperation of concernc i do not want to present an other view within this view.
+    // Rename the function to onAdd... instead of didTap...
     var didTapAddIngredient: (() -> Void)? = nil
     var didTapAddStep: (() -> Void)? = nil
     
@@ -39,7 +40,6 @@ struct RecipeEditView: View {
             }
                    , label: {
                 IconLabelListCellView(title: "Zutat hinzufügen", image: Image(systemName: "plus"))
-                    .background(.white)
             })
         }
     }
@@ -51,7 +51,6 @@ struct RecipeEditView: View {
             }
                    , label: {
                 IconLabelListCellView(title: "Schritt hinzufügen", image: Image(systemName: "plus"))
-                    .background(.white)
             })
         }
     }

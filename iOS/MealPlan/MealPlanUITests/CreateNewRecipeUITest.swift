@@ -20,7 +20,7 @@ final class CreateNewRecipeUITest: XCTestCase {
     }
 
     func testCreateBasicRecipe() throws {
-        XCTAssertTrue(app.otherElements["recipeOverviewPageView"].exists)
+        XCTAssertTrue(app.otherElements["recipeCoordinatorView"].exists)
         
         createNewRecipe()
         setNameOfRecipe(name: "Basisrezept")
@@ -74,7 +74,7 @@ final class CreateNewRecipeUITest: XCTestCase {
     private func createNewRecipe() {
         let addRecipeButton = app.buttons["addRecipeButton"]
         addRecipeButton.tap()
-        XCTAssertTrue(app.otherElements["addRecipePageView"].exists)
+        XCTAssertTrue(app.collectionViews["recipeEditCoordinator"].exists)
     }
     
     private func setNameOfRecipe(name: String) {

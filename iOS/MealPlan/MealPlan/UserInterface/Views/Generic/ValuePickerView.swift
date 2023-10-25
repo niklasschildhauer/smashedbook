@@ -21,7 +21,7 @@ struct ValuePickerView<Value: PickerValue>: View {
                 TagView(text: flavor.rawValue.capitalized)
             }
         }
-        .pickerStyle(.navigationLink)
+        .pickerStyle(.menu)
     }
 }
 

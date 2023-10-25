@@ -42,7 +42,6 @@
 		857463A62AD28B9300864AAA /* RecipeContentSelectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857463A52AD28B9300864AAA /* RecipeContentSelectionView.swift */; };
 		857AD85D2A93E74900259579 /* TestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 857AD85C2A93E74900259579 /* TestView.swift */; };
 		858935BD2A90FEE200011D7F /* MealPlanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858935BC2A90FEE200011D7F /* MealPlanApp.swift */; };
-		858935BF2A90FEE200011D7F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858935BE2A90FEE200011D7F /* ContentView.swift */; };
 		858935C12A90FEE300011D7F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858935C02A90FEE300011D7F /* Assets.xcassets */; };
 		858935C42A90FEE300011D7F /* PreviewAssets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 858935C32A90FEE300011D7F /* PreviewAssets.xcassets */; };
 		858935CE2A90FEE300011D7F /* MealPlanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 858935CD2A90FEE300011D7F /* MealPlanTests.swift */; };
@@ -61,7 +60,6 @@
 		859236132ACAF63E00015B41 /* RecipeDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859236122ACAF63E00015B41 /* RecipeDetailCoordinator.swift */; };
 		859236162ACC0EED00015B41 /* RecipesDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859236152ACC0EED00015B41 /* RecipesDataSource.swift */; };
 		859236182ACC67BF00015B41 /* Coordinator+Protocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 859236172ACC67BF00015B41 /* Coordinator+Protocol.swift */; };
-		85ABDEB62AD2B29B001FB3CC /* RecipeDetailDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85ABDEB52AD2B29B001FB3CC /* RecipeDetailDataSource.swift */; };
 		85BE2D0B2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */; };
 		85BE2D0D2A951AC1001E3551 /* IconLabelListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */; };
 		85BE2D0F2A951AF0001E3551 /* ListCellWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */; };
@@ -129,7 +127,6 @@
 		857AD85C2A93E74900259579 /* TestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestView.swift; sourceTree = "<group>"; };
 		858935B92A90FEE200011D7F /* MealPlan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MealPlan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		858935BC2A90FEE200011D7F /* MealPlanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MealPlanApp.swift; sourceTree = "<group>"; };
-		858935BE2A90FEE200011D7F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		858935C02A90FEE300011D7F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		858935C32A90FEE300011D7F /* PreviewAssets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = PreviewAssets.xcassets; sourceTree = "<group>"; };
 		858935C92A90FEE300011D7F /* MealPlanTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MealPlanTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -150,7 +147,6 @@
 		859236122ACAF63E00015B41 /* RecipeDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailCoordinator.swift; sourceTree = "<group>"; };
 		859236152ACC0EED00015B41 /* RecipesDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipesDataSource.swift; sourceTree = "<group>"; };
 		859236172ACC67BF00015B41 /* Coordinator+Protocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Coordinator+Protocol.swift"; sourceTree = "<group>"; };
-		85ABDEB52AD2B29B001FB3CC /* RecipeDetailDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailDataSource.swift; sourceTree = "<group>"; };
 		85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTitleCustomElementListCellView.swift; sourceTree = "<group>"; };
 		85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelListCellView.swift; sourceTree = "<group>"; };
 		85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellWrapperView.swift; sourceTree = "<group>"; };
@@ -352,7 +348,6 @@
 		858935E92A92109900011D7F /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
-				858935BE2A90FEE200011D7F /* ContentView.swift */,
 				858935F72A92565900011D7F /* Views */,
 				859236142ACC0EDE00015B41 /* DataSource */,
 				8592360B2ACABEC800015B41 /* Coordinator */,
@@ -419,7 +414,6 @@
 			isa = PBXGroup;
 			children = (
 				859236152ACC0EED00015B41 /* RecipesDataSource.swift */,
-				85ABDEB52AD2B29B001FB3CC /* RecipeDetailDataSource.swift */,
 			);
 			path = DataSource;
 			sourceTree = "<group>";
@@ -597,7 +591,6 @@
 				85D5583F2AB74B84006AE155 /* RecipeRepository+Protocol.swift in Sources */,
 				855617902A9B7C8800DD5877 /* RecipeListingView.swift in Sources */,
 				8521589C2AAF7FA200A354F1 /* RecipeEditDescriptionListCellView.swift in Sources */,
-				85ABDEB62AD2B29B001FB3CC /* RecipeDetailDataSource.swift in Sources */,
 				8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */,
 				855617842A9B507200DD5877 /* ColorViewModifier.swift in Sources */,
 				85279F432AA480210031067B /* RecipeEditPortionCounterView.swift in Sources */,
@@ -614,7 +607,6 @@
 				855617872A9B511600DD5877 /* ColorGenerator.swift in Sources */,
 				85D558412AB74C00006AE155 /* RecipeContentModel.swift in Sources */,
 				858935FF2A92675300011D7F /* Colors.swift in Sources */,
-				858935BF2A90FEE200011D7F /* ContentView.swift in Sources */,
 				858935EF2A92120400011D7F /* LabelButtonView.swift in Sources */,
 				858935BD2A90FEE200011D7F /* MealPlanApp.swift in Sources */,
 				85145C782AC1FC8900219D1D /* IconLabelFilledButtonView.swift in Sources */,

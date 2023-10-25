@@ -19,8 +19,7 @@ enum RecipeAddContentType: String, CaseIterable {
     var rootView: RecipeAddContentCoordinatorView {
         RecipeAddContentCoordinatorView(coordinator: self)
     }
-    
-    var recipeContent: RecipeContentModel? = RecipeContentModel(type: .description(descriptionText: "Test"))
+
     var didAddRecipeContent: (RecipeContentModel) -> Void
     var navigationPath = NavigationPath()
     

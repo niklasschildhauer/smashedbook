@@ -19,10 +19,17 @@ struct RecipeCardView: View {
                 .frame(height: 100)
                 .clipShape(RoundedRectangle(cornerRadius: 10))
                 .contentShape(RoundedRectangle(cornerRadius: 10))
+                .shadow(radius: 5)
             Text(recipe.title)
                 .font(.title3)
                 .multilineTextAlignment(.leading)
-        }.background(.green)
+            HStack {
+                TagView(text: recipe.metaInformation.meal.rawValue)
+                if let energyString = recipe.metaInformation.energy?.formatted() {
+                    TagView(text: "\(energyString) kcl")
+                }
+            }
+        }
     }
 }
 

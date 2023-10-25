@@ -19,10 +19,13 @@ import SwiftUI
     var recipeModel: RecipeModel
     var validateErrorMessage: String?
     var addContentCoordinator: RecipeAddContentCoordinator? = nil
+    // TODO: how to avoid this overhead of saving the recipe twice?
+    var didEditRecipeModel: ((RecipeModel) -> Void)?
     
-    init(recipesDataSource: RecipesDataSource, recipeModel: RecipeModel) {
+    init(recipesDataSource: RecipesDataSource, recipeModel: RecipeModel, onSaveRecipe: ((RecipeModel) -> Void)? = nil) {
         self.recipesDataSource = recipesDataSource
         self._recipeModel = recipeModel
+        self.didEditRecipeModel = onSaveRecipe
     }
     
     func start() { }
@@ -31,6 +34,7 @@ import SwiftUI
         if isRecipeValid() {
             // TODO: It does not reset the binded value!
             recipesDataSource.save(recipe: recipeModel)
+            didEditRecipeModel?(recipeModel)
         } else {
             // TODO: Handle this!
             print("I am not gonna save it!")
@@ -78,6 +82,7 @@ struct RecipeEditCoordinatorView: View {
                 coordinator.addContentCoordinator = nil
             })
         })
+        .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
             HStack {
                 IconFilledButtonView(icon: Image(systemName: "xmark")) {

@@ -17,7 +17,6 @@ struct RecipeListingView: View {
         self._recipes = recipes
     }
     
-    
     var body: some View {
         ScrollView {
             if recipes.count == 0 {
@@ -34,6 +33,7 @@ struct RecipeListingView: View {
                         }
                     }
                 }
+                .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             }
         }
     }

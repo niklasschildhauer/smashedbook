@@ -19,8 +19,6 @@ class RecipeEditPortionCounterViewModel: ObservableObject {
         portionCount == 1 ? "Portion" : "Portionen"
     }
     
-    
-    
     func increasePotionCount() {
         portionCount += 1
     }
