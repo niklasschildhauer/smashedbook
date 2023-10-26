@@ -84,6 +84,8 @@ struct RecipeDetailView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
+            
             .coordinateSpace(name: CoordinateSpaces.scrollView)
             .edgesIgnoringSafeArea(.top)
         }

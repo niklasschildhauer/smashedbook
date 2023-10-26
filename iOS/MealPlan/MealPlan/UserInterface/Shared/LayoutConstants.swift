@@ -13,7 +13,7 @@ struct LayoutConstants {
     static var safeAreaSpacing = 30.0
     static var listCellHeight = 50.0
     static var cornerRadius = 10.0
-    static var bottomBarHeight = 100.0
+    static var bottomBarHeight = buttonHeight + 2 * safeAreaSpacing
     static var topBarHeight = 60.0
     static var buttonHeight = 26.0
 }

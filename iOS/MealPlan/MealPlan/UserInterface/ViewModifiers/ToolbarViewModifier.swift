@@ -8,31 +8,17 @@
 import SwiftUI
 
 struct BottomToolbarViewModifier<ToolbarContent: View>: ViewModifier {
-    //    @Environment(\.dismiss) private var dismiss
-        @Environment(\.isPresented) private var isPresented
+    @Environment(\.isPresented) private var isPresented
     @ViewBuilder var toolbarContent: () -> ToolbarContent
     
     func body(content: Content) -> some View {
         content
-                    //            .navigationBarHidden(true)
             .safeAreaInset(edge: .bottom, content: {
-                HStack(spacing: LayoutConstants.horizontalSpacing) {
-                    // TODO: This does not work or is not suitable...
-                    //                    if isPresented {
-                    //                        HStack {
-                    //                            IconFilledButtonView(icon: Image(systemName: "arrow.left")) {
-                    //                                dismiss()
-                    //                            }
-                    //                            .accentColor(.gray)
-                    //                            Spacer()
-                    //                        }
-                    //                    }
-                    toolbarContent()
-                    
-                }
+                toolbarContent()
                 .padding(.horizontal, LayoutConstants.safeAreaSpacing)
                 .frame(height: LayoutConstants.bottomBarHeight)
             })
+            .ignoresSafeArea(.keyboard)
     }
 }
 

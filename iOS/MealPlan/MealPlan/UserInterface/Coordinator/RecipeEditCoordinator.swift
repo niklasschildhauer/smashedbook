@@ -13,17 +13,19 @@ import SwiftUI
     var rootView: RecipeEditCoordinatorView {
         RecipeEditCoordinatorView(coordinator: self)
     }
-    
-    let recipesDataSource: RecipesDataSource
-    
-    var recipeModel: RecipeModel
+        
+    var recipeModel: RecipeModel {
+        didSet {
+            isRecipeEdited = true
+        }
+    }
     var validateErrorMessage: String?
     var addContentCoordinator: RecipeAddContentCoordinator? = nil
     // TODO: how to avoid this overhead of saving the recipe twice?
     var didEditRecipeModel: ((RecipeModel) -> Void)?
+    var isRecipeEdited = false
     
-    init(recipesDataSource: RecipesDataSource, recipeModel: RecipeModel, onSaveRecipe: ((RecipeModel) -> Void)? = nil) {
-        self.recipesDataSource = recipesDataSource
+    init(recipeModel: RecipeModel, onSaveRecipe: ((RecipeModel) -> Void)? = nil) {
         self._recipeModel = recipeModel
         self.didEditRecipeModel = onSaveRecipe
     }
@@ -33,7 +35,6 @@ import SwiftUI
     func save() async {
         if isRecipeValid() {
             // TODO: It does not reset the binded value!
-            recipesDataSource.save(recipe: recipeModel)
             didEditRecipeModel?(recipeModel)
         } else {
             // TODO: Handle this!
@@ -89,11 +90,10 @@ struct RecipeEditCoordinatorView: View {
                     dismiss()
                 }
                 Spacer()
-            }
-            IconLabelFilledButtonView(title: "Speichern") {
-                Task {
-                    await coordinator.save()
-                    dismiss()
+                IconLabelFilledButtonView(title: "Speichern") {
+                    Task {
+                        await coordinator.save()
+                    }
                 }
             }
         }
@@ -103,6 +103,8 @@ struct RecipeEditCoordinatorView: View {
         .sheet(item: $coordinator.addContentCoordinator) { coordinator in
             coordinator.rootView
         }
+        .interactiveDismissDisabled(coordinator.isRecipeEdited)
+        .scrollDismissesKeyboard(.interactively)
         // TODO: Does this work?
         if let validateErrorMessage = coordinator.validateErrorMessage {
             Text(validateErrorMessage)
@@ -111,5 +113,5 @@ struct RecipeEditCoordinatorView: View {
 }
 
 #Preview {
-    RecipeEditCoordinatorView(coordinator: .init(recipesDataSource: .init(), recipeModel: recipeModelMock))
+    RecipeEditCoordinatorView(coordinator: .init(recipeModel: recipeModelMock))
 }

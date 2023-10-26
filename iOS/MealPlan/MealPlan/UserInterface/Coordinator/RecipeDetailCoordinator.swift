@@ -35,8 +35,10 @@ import SwiftUI
     }
     
     func didTapEditButton() async {
-        recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel) { updatedRecipe in
+        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: recipeModel) { updatedRecipe in
             self.recipeModel = updatedRecipe
+            self.recipesDataSource.save(recipe: updatedRecipe)
+            self.recipeEditCoordinator = nil
         }
     }
 }

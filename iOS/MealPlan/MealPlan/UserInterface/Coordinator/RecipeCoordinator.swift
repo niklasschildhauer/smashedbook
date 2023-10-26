@@ -30,7 +30,10 @@ class RecipeCoordinator: Coordinator {
     }
     
     func didTapAddNewRecipe() {
-        recipeEditCoordinator = RecipeEditCoordinator(recipesDataSource: recipesDataSource, recipeModel: RecipeModel())
+        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: RecipeModel()) { newRecipe in
+            self.recipesDataSource.save(recipe: newRecipe)
+            self.detailRecipeCoordinator = nil
+        }
     }
 
     func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
