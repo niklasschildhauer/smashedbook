@@ -23,7 +23,6 @@ struct IconLabelFilledButtonView: View {
                 Spacer()
                 Image(systemName: "trash.fill")
             }
-            .frame(height: LayoutConstants.buttonHeight)
         }
         .buttonStyle(ScaleAnimationFilledButtonStyle(backgroundColor: .accentColor))
     }

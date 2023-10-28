@@ -52,16 +52,13 @@ struct RecipeDetailCoordinatorView: View {
     
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             .bottomToolbar {
-                HStack(spacing: LayoutConstants.horizontalSpacing){
-                    IconLabelFilledButtonView(title: "Bearbeiten") {
-                        Task {
-                            await coordinator.didTapEditButton()
-                        }
+                IconLabelFilledButtonView(title: "Bearbeiten") {
+                    Task {
+                        await coordinator.didTapEditButton()
                     }
-                    .uiTestIdentifier("editRecipeButton")
                 }
+                .uiTestIdentifier("editRecipeButton")
             }
             .sheet(item: $coordinator.recipeEditCoordinator, content: { coordinator in
                 coordinator.rootView

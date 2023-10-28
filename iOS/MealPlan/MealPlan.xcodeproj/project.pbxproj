@@ -72,6 +72,8 @@
 		85D558462AB75591006AE155 /* Mockingbird in Frameworks */ = {isa = PBXBuildFile; productRef = 85D558452AB75591006AE155 /* Mockingbird */; };
 		85D558492AB7605B006AE155 /* LoadingResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D558482AB7605B006AE155 /* LoadingResult.swift */; };
 		85D5584B2AB76147006AE155 /* LoadingDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85D5584A2AB76147006AE155 /* LoadingDataView.swift */; };
+		85E151382AED05A700FB55CC /* ParallaxHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151372AED05A700FB55CC /* ParallaxHeaderView.swift */; };
+		85E1513A2AED3AC000FB55CC /* RecipeMetaInformationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151392AED3AC000FB55CC /* RecipeMetaInformationView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -158,6 +160,8 @@
 		85D558422AB75374006AE155 /* RecipeRepositoryUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeRepositoryUnitTests.swift; sourceTree = "<group>"; };
 		85D558482AB7605B006AE155 /* LoadingResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingResult.swift; sourceTree = "<group>"; };
 		85D5584A2AB76147006AE155 /* LoadingDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingDataView.swift; sourceTree = "<group>"; };
+		85E151372AED05A700FB55CC /* ParallaxHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParallaxHeaderView.swift; sourceTree = "<group>"; };
+		85E151392AED3AC000FB55CC /* RecipeMetaInformationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeMetaInformationView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -221,6 +225,7 @@
 				85376D742AA4A439003CFEDB /* ImagePickerView.swift */,
 				85D5584A2AB76147006AE155 /* LoadingDataView.swift */,
 				85145C792AC34C7C00219D1D /* BottomNavigationBarView.swift */,
+				85E151372AED05A700FB55CC /* ParallaxHeaderView.swift */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -422,6 +427,7 @@
 			isa = PBXGroup;
 			children = (
 				85CA5B612AB4CFE300F33EB0 /* RecipeDetailView.swift */,
+				85E151392AED3AC000FB55CC /* RecipeMetaInformationView.swift */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
@@ -591,6 +597,7 @@
 				85D5583F2AB74B84006AE155 /* RecipeRepository+Protocol.swift in Sources */,
 				855617902A9B7C8800DD5877 /* RecipeListingView.swift in Sources */,
 				8521589C2AAF7FA200A354F1 /* RecipeEditDescriptionListCellView.swift in Sources */,
+				85E151382AED05A700FB55CC /* ParallaxHeaderView.swift in Sources */,
 				8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */,
 				855617842A9B507200DD5877 /* ColorViewModifier.swift in Sources */,
 				85279F432AA480210031067B /* RecipeEditPortionCounterView.swift in Sources */,
@@ -615,6 +622,7 @@
 				85D558492AB7605B006AE155 /* LoadingResult.swift in Sources */,
 				8592360F2ACABEF800015B41 /* RecipeCoordinator.swift in Sources */,
 				85CA5B692AB4E07E00F33EB0 /* CameraView.swift in Sources */,
+				85E1513A2AED3AC000FB55CC /* RecipeMetaInformationView.swift in Sources */,
 				85145C822AC7466900219D1D /* UINavigationViewController+Extensions.swift in Sources */,
 				85145C7E2AC72BE900219D1D /* HapticFeedbackInteractor.swift in Sources */,
 				855617822A9B4F5400DD5877 /* TagView.swift in Sources */,

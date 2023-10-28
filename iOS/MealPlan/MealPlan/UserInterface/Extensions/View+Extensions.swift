@@ -21,5 +21,9 @@ public extension View {
         self
             .accessibilityIdentifier(identifier)
     }
+    
+    var identifier: String {
+        String(describing: RecipeDetailView.self)
+    }
 }
 
