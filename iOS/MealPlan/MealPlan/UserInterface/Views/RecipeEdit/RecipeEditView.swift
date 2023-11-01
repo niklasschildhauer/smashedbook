@@ -16,50 +16,32 @@ struct RecipeEditView: View {
     @Binding var recipe: RecipeModel
     // TODO: Normally I would use a delegate pattern, but is this suitable here? Are there any other ways? As of seperation of concernc i do not want to present an other view within this view.
     // Rename the function to onAdd... instead of didTap...
-    var didTapAddIngredient: (() -> Void)? = nil
-    var didTapAddStep: (() -> Void)? = nil
+    var didTapAddAttachment: (() -> Void)? = nil
     
     var body: some View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
-            RecipeEditContentSectionView(title: "Zutaten",
-                                         recipeContent: $recipe.ingredients,
-                                         trailingAction: { RecipeEditPortionCounterView() },
-                                         addButton:  { addIngredientButton })
-            RecipeEditContentSectionView(title: "Anleitung",
+            RecipeEditContentSectionView(title: "Anhänge",
                                          recipeContent: $recipe.steps,
-                                         addButton:  { addStepButton })
+                                         addButton:  { addAttachment })
         }
     }
     
-    @ViewBuilder var addIngredientButton: some View {
-        if let didTapAddIngredient {
+    @ViewBuilder var addAttachment: some View {
+        if let didTapAddAttachment {
             Button(action: {
-                didTapAddIngredient()
+                didTapAddAttachment()
             }
                    , label: {
-                IconLabelListCellView(title: "Zutat hinzufügen", image: Image(systemName: "plus"))
-            })
-        }
-    }
-    
-    @ViewBuilder var addStepButton: some View {
-        if let didTapAddStep {
-            Button(action: {
-                didTapAddStep()
-            }
-                   , label: {
-                IconLabelListCellView(title: "Schritt hinzufügen", image: Image(systemName: "plus"))
+                IconLabelListCellView(title: "Anhang hinzufügen", image: Image(systemName: "plus"))
             })
         }
     }
 }
 
 #Preview {
-    RecipeEditView(recipe: .constant(recipeModelMock), didTapAddIngredient:  {
-        print("Add step")
-    }, didTapAddStep: {
-        print("Add ingredient")
+    RecipeEditView(recipe: .constant(recipeModelMock), didTapAddAttachment:  {
+        print("Add attachment")
     })
 }

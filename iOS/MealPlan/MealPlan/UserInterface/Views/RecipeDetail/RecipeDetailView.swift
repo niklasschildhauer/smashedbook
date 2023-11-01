@@ -18,15 +18,16 @@ struct RecipeDetailView: View {
                 Image("ExamplePicture")
                     .resizable()
                     .scaledToFill()
-            }, metaInfo: {
-                HStack(spacing: 0) {
-                    RecipeMetaInformationView(emoji: "🔥", value: "\(recipe.metaInformation.energy?.description ?? "--")")
-                    Divider()
-                    RecipeMetaInformationView(emoji: "⏲️", value: "\(recipe.metaInformation.duration?.description ?? "--")")
-                    Divider()
-                    RecipeMetaInformationView(emoji: "🍽️", value: "\(recipe.metaInformation.meal.rawValue)")
-                }
-            })
+                }, topView: {
+                    Text("Lachsrezept")
+                        .font(.largeTitle)
+                        .fontWeight(.black)
+                        .fontDesign(.monospaced)
+                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
+                        .foregroundStyle(.white)
+                }, bottomView: {
+                    RecipeMetainformationView(metainformation: recipe.metaInformation)
+                })
             ZStack {
                 RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
                     .foregroundColor(.white)

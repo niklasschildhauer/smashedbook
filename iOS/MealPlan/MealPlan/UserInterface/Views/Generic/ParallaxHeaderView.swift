@@ -7,31 +7,42 @@
 
 import SwiftUI
 
-struct ParallaxHeader<Background: View, MetaInformation: View, Space: Hashable>: View {
+struct ParallaxHeader<Background: View, BottomView: View, TopView: View, Space: Hashable>: View {
     private let distanceToScrollWithParallaxEffect: CGFloat = 300
-    private let relativeScrollingSpeedForBackground = 0.7
+    private let slowScrollingSpeed = 0.7
+    private let noScrollingSpeed = 1.0
     private let relativeScrollingSpeedForTitle = 0.85
     private let metaInformationHeight = 100.0
+    private let screenHeight = UIScreen.main.bounds.height
     
     let background: () -> Background
-    let metaInformation: () -> MetaInformation
+    let bottomView: () -> BottomView
+    let topView: () -> TopView
     let coordinateSpace: Space
     
     init(
         coordinateSpace: Space,
         @ViewBuilder background: @escaping () -> Background,
-        @ViewBuilder metaInfo: @escaping () -> MetaInformation
+        @ViewBuilder topView: @escaping () -> TopView,
+        @ViewBuilder bottomView: @escaping () -> BottomView
     ) {
         self.background = background
         self.coordinateSpace = coordinateSpace
-        self.metaInformation = metaInfo
+        self.bottomView = bottomView
+        self.topView = topView
     }
     
     var body: some View {
         GeometryReader { proxy in
-            let backgroundOffset = offset(for: relativeScrollingSpeedForBackground, distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect, proxy: proxy)
-            let titleOffset = offset(for: 1, distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect, proxy: proxy)
-            let metaInformationOffset = offset(for: 1, distanceToScrollWithParallaxEffect: LayoutConstants.bottomBarHeight,
+            let backgroundOffset = offset(for: slowScrollingSpeed, 
+                                          distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect,
+                                          proxy: proxy)
+            let titleOffset = offset(for: noScrollingSpeed, 
+                                     distanceToScrollWithParallaxEffect: // TODO: magic number -> should be the title height
+                                        screenHeight - metaInformationHeight - 220,
+                                     proxy: proxy)
+            let metaInformationOffset = offset(for: noScrollingSpeed, 
+                                               distanceToScrollWithParallaxEffect: LayoutConstants.bottomBarHeight,
                                                proxy: proxy)
             let overScrollingValue = overScrollingValue(for: proxy)
             let blurRadius = min(
@@ -60,31 +71,20 @@ struct ParallaxHeader<Background: View, MetaInformation: View, Space: Hashable>:
                     .blur(radius: blurRadius)
                 
                 VStack {
-                    Text("Lachsrezept")
+                    topView()
                         .offset(y: titleOffset)
-                        .padding(.top, 120)
-                        .font(.largeTitle)
-                        .fontWeight(.black)
-                        .fontDesign(.monospaced)
-                        .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-                        .foregroundStyle(.white)
+                        .padding(.top, 100)
                         .scaleEffect(textScaleEffect(overScrollingValue), anchor: .top)
-                    
                     Spacer()
-                    
-                    ZStack {
-                        RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
-                            .fill(.thinMaterial)
-                        metaInformation()
-                    }
-                    .frame(height: metaInformationHeight)
-                    .padding(.horizontal, LayoutConstants.safeAreaSpacing)
+                    bottomView()
+                        .frame(height: metaInformationHeight)
+                        .padding(.horizontal, LayoutConstants.safeAreaSpacing)
                     // TODO: not suitable for iPhone SE -> Maybe make a ParallaxScrollView https://www.youtube.com/watch?v=GQaF3PHwaas
-                    .offset(y: -LayoutConstants.bottomBarHeight - 34 + metaInformationOffset - overScrollingValue)
+                        .offset(y: -LayoutConstants.bottomBarHeight - 34 + metaInformationOffset - overScrollingValue)
                 }
             }
         }
-        .frame(minHeight: UIScreen.main.bounds.height)
+        .frame(minHeight: screenHeight)
     }
     
     private func offset(for relativeScrollingSpeed: CGFloat, distanceToScrollWithParallaxEffect: CGFloat, proxy: GeometryProxy) -> CGFloat {

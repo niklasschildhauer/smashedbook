@@ -70,18 +70,12 @@ struct RecipeEditCoordinatorView: View {
     
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel,
-                       didTapAddIngredient: {
+                       didTapAddAttachment: {
             coordinator.addContentCoordinator = RecipeAddContentCoordinator(didAddRecipeContent: {
                 recipeContentModel in
                 coordinator.recipeModel.ingredients.append(recipeContentModel)
                 coordinator.addContentCoordinator = nil
                 })
-        },
-                       didTapAddStep:  {
-            coordinator.addContentCoordinator = RecipeAddContentCoordinator( didAddRecipeContent: { recipeContentModel in
-                coordinator.recipeModel.steps.append(recipeContentModel)
-                coordinator.addContentCoordinator = nil
-            })
         })
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {

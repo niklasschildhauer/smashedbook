@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct RecipeEditMetaInformationSectionView: View {
-    @Binding var metaInformationModel: RecipeMetaInformationModel
+    @Binding var metaInformationModel: RecipeMetainformationModel
     
     var body: some View {
         ListSectionView(title: "Meta Information") {
@@ -16,12 +16,12 @@ struct RecipeEditMetaInformationSectionView: View {
                 ValueWithUnitInputFieldView(value: $metaInformationModel.energy, unit: "kcl", placeholder: "200")
             }
             OneLineTitleCustomElementListCellView(title: "Mahlzeit") {
-                ValuePickerView(values: RecipeMetaInformationModel.Meal.allCases, selectedFlavor: $metaInformationModel.meal)
+                ValuePickerView(values: RecipeMetainformationModel.Meal.allCases, selectedFlavor: $metaInformationModel.meal)
             }
         }
     }
 }
 
 #Preview {
-    RecipeEditMetaInformationSectionView(metaInformationModel: .constant(RecipeMetaInformationModel()))
+    RecipeEditMetaInformationSectionView(metaInformationModel: .constant(RecipeMetainformationModel()))
 }
