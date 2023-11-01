@@ -14,9 +14,9 @@ struct IconFilledButtonView: View {
     var body: some View {
         Button(action: action, label: {
             icon
-                .frame(width: LayoutConstants.buttonHeight, height: LayoutConstants.buttonHeight)
         })
         .buttonStyle(ScaleAnimationFilledButtonStyle(backgroundColor: .accentColor))
+        .frame(height: LayoutConstants.buttonHeight)
     }
 }
 

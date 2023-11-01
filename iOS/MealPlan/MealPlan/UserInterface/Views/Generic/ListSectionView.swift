@@ -9,27 +9,27 @@ import SwiftUI
 
 struct ListSectionView<Content: View, TrailingAction: View>: View {
     var title: String?
-    var content: () -> Content
-    var trailingAction: () -> TrailingAction
+    var content: Content
+    var trailingAction: TrailingAction
     
     init(title: String? = nil,
          @ViewBuilder content: @escaping () -> Content,
          @ViewBuilder trailingAction: @escaping () -> TrailingAction = { EmptyView() }) {
-        self.content = content
-        self.trailingAction = trailingAction
+        self.content = content()
+        self.trailingAction = trailingAction()
         self.title = title
     }
     
     var body: some View {
         Section {
-            content()
+            content
         } header: {
             if let title {
                 HStack {
                     Text(title.uppercased())
                         .font(.callout)
                         Spacer()
-                        trailingAction()
+                        trailingAction
                 }
             }
         }.uiTestIdentifierForStackWrapper("listSection")
@@ -43,11 +43,11 @@ struct ListSectionView<Content: View, TrailingAction: View>: View {
                     Text(title.uppercased())
                         .font(.footnote)
                         Spacer()
-                        trailingAction()
+                        trailingAction
                 }
             }
             LazyVStack(spacing: .zero) {
-                content()
+                content
             }
             .background(Color.green.opacity(0.2))
             .clipShape(RoundedRectangle(cornerRadius: 10))

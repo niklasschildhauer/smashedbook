@@ -14,7 +14,6 @@ struct IconButtonView: View {
     var body: some View {
         Button(action: action, label: {
             icon
-                .frame(width: LayoutConstants.buttonHeight, height: LayoutConstants.buttonHeight)
         })
     }
 }

@@ -5,8 +5,6 @@
 //  Created by Niklas Schildhauer on 03.09.23.
 //
 
-import Foundation
-
 import SwiftUI
 
 struct HideViewModifier: ViewModifier {

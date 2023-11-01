@@ -18,6 +18,7 @@ struct ParallaxHeader<Background: View, BottomView: View, TopView: View, Space: 
     let background: () -> Background
     let bottomView: () -> BottomView
     let topView: () -> TopView
+    // TODO: Do I need the coordinate space here?
     let coordinateSpace: Space
     
     init(
@@ -68,6 +69,7 @@ struct ParallaxHeader<Background: View, BottomView: View, TopView: View, Space: 
                         height: proxy.size.height + overScrollingValue
                     )
                     .offset(y: backgroundOffset)
+                    .clipShape(Rectangle().offset(y: -overScrollingValue))
                     .blur(radius: blurRadius)
                 
                 VStack {
