@@ -53,12 +53,7 @@ import SwiftUI
             validateErrorMessage = "Kalorien ausfüllen"
             return false
         }
-        
-        guard !recipeModel.steps.isEmpty else {
-            validateErrorMessage = "Das Rezept ist leer"
-            return true
-        }
-        
+                
         validateErrorMessage = ""
         return true
     }
@@ -73,7 +68,7 @@ struct RecipeEditCoordinatorView: View {
                        didTapAddAttachment: {
             coordinator.addContentCoordinator = RecipeAddContentCoordinator(didAddRecipeContent: {
                 recipeContentModel in
-                coordinator.recipeModel.ingredients.append(recipeContentModel)
+                
                 coordinator.addContentCoordinator = nil
                 })
         })

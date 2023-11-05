@@ -14,14 +14,6 @@ public struct RecipeContentModel: Codable, Hashable {
     
     public enum ContentType: Codable, Hashable {
         case image(imageUrl: URL)
-        case description(descriptionText: String)
-        case ingredient(value: String, unit: IngredientUnit)
-    }
-    
-    public enum IngredientUnit: String, Codable, Hashable {
-        case gram
-        case kiloGram
     }
 }
-
 

@@ -80,6 +80,7 @@
 		85E151442AF260D200FB55CC /* FillFrameViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151432AF260D200FB55CC /* FillFrameViewModifier.swift */; };
 		85E151462AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */; };
 		85E151482AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */; };
+		85E1514A2AF7B11A00FB55CC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151492AF7B11A00FB55CC /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,7 @@
 		85E151432AF260D200FB55CC /* FillFrameViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FillFrameViewModifier.swift; sourceTree = "<group>"; };
 		85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentsView.swift; sourceTree = "<group>"; };
 		85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentImageView.swift; sourceTree = "<group>"; };
+		85E151492AF7B11A00FB55CC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +240,7 @@
 				85D5584A2AB76147006AE155 /* LoadingDataView.swift */,
 				85E151372AED05A700FB55CC /* ParallaxHeaderView.swift */,
 				85E151412AF25C4B00FB55CC /* SectionView.swift */,
+				85E151492AF7B11A00FB55CC /* ImagePicker.swift */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -630,6 +633,7 @@
 				85BE2D0D2A951AC1001E3551 /* IconLabelListCellView.swift in Sources */,
 				8556178B2A9B565D00DD5877 /* ValuePickerView.swift in Sources */,
 				855617772A9A48E800DD5877 /* RecipeEditContentSectionView.swift in Sources */,
+				85E1514A2AF7B11A00FB55CC /* ImagePicker.swift in Sources */,
 				85376D752AA4A439003CFEDB /* ImagePickerView.swift in Sources */,
 				850A4C592AA0F0C1009C68CB /* View+Extensions.swift in Sources */,
 				855617872A9B511600DD5877 /* ColorGenerator.swift in Sources */,

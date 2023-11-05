@@ -22,9 +22,9 @@ struct RecipeEditView: View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
-            RecipeEditContentSectionView(title: "Anhänge",
-                                         recipeContent: $recipe.steps,
-                                         addButton:  { addAttachment })
+//            RecipeEditContentSectionView(title: "Anhänge",
+//                                         recipeContent: ,
+//                                         addButton:  { addAttachment })
         }
     }
     

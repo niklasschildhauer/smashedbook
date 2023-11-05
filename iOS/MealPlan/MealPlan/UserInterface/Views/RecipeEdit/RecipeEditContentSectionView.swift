@@ -28,33 +28,19 @@ struct RecipeEditContentSectionView<TrailingAction: View, AddButton: View>: View
             ForEach($recipeContent.indices, id: \.self) { index in
                 let item = $recipeContent[index]
                 switch item.type.wrappedValue {
-                case .description(let descriptionText):
-                    // TODO: On edit not neccessary
-                    RecipeEditDescriptionListCellView(description: descriptionText, onEdit: { editedDescription in
-                        guard let index = recipeContent.firstIndex(of: item.wrappedValue) else {
-                            return
-                        }
-                        recipeContent[index].type = .description(descriptionText: editedDescription)
-                    })
                 case .image(let imageUrl):
                     RecipeEditImageListCellView(image: Image("ExampleRecipe"))
-                case .ingredient(let value, let unit):
-                    HStack {
-                        Text(value)
-                        Text(unit.rawValue)
-                    }
                 }
             }
-            addButton()  
+            addButton()
         }, trailingAction: trailingAction)
     }
 }
 
 
 struct RecipeEditContentSectionView_Previews: PreviewProvider {
-    @State static var content = [RecipeContentModel(type: .description(descriptionText: "Test")), RecipeContentModel(type: .ingredient(value: "Test", unit: .gram))]
     static var previews: some View {
-        RecipeEditContentSectionView(title: "Titel", recipeContent: $content)
+        RecipeEditContentSectionView(title: "Titel", recipeContent: .constant([]))
     }
 }
 

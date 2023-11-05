@@ -4,6 +4,8 @@ import { AzurermProvider } from "@cdktf/provider-azurerm/lib/provider";
 import { Environment } from "./helpers/Environment";
 import { AzureResourceGroup } from "./resources/AzureResourceGroup";
 import { AzureStorageAccount } from "./resources/AzureStorageAccount";
+import { AzureServicePlan } from "./resources/AzureServicePlan";
+import { AzureFunctionApp } from "./resources/AzureFunctionApp";
 
 class AppStack extends TerraformStack {
   static makeForEnv = (
@@ -29,7 +31,13 @@ class AppStack extends TerraformStack {
     });
 
     const rg = AzureResourceGroup(this, parameters.environment).create();
-    AzureStorageAccount(this, parameters.environment, rg.name).create();
+    const storageAccount = AzureStorageAccount(this, parameters.environment, rg.name).create();
+    const servicePlan = AzureServicePlan(this, parameters.environment, rg).create();
+    AzureFunctionApp(this, parameters.environment, storageAccount, rg, servicePlan).create();
+
+
+    storageAccount.name
+    storageAccount.sharedAccessKeyEnabled
   }
 }
 
