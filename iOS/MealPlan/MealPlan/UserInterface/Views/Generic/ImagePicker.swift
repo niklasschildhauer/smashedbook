@@ -8,79 +8,15 @@
 import SwiftUI
 import PhotosUI
 
-//@MainActor final class ImageAttachment: ObservableObject, Identifiable {
-//    enum Status {
-//        case loading
-//        case finished(Image)
-//        case failed(Error)
-//        
-//        var isFailed: Bool {
-//            return switch self {
-//            case .failed: true
-//            default: false
-//            }
-//        }
-//    }
-//    
-//    enum LoadingError: Error {
-//        case contentTypeNotSupported
-//    }
-//    
-//    private let pickerItem: PhotosPickerItem
-//    var imageStatus: Status?
-//    var imageDescription: String = ""
-//    
-//    nonisolated var id: String {
-//        pickerItem.identifier
-//    }
-//    
-//    init(pickerItem: PhotosPickerItem) {
-//        self.pickerItem = pickerItem
-//    }
-//    
-//    func loadImage() async {
-//        guard imageStatus == nil || imageStatus?.isFailed == true else {
-//            return
-//        }
-//        imageStatus = .loading
-//        do {
-//            if let data = try await pickerItem.loadTransferable(type: Data.self),
-//               let uiImage = UIImage(data: data) {
-//                imageStatus = .finished(Image(uiImage: uiImage))
-//            } else {
-//                throw LoadingError.contentTypeNotSupported
-//            }
-//        } catch {
-//            imageStatus = .failed(error)
-//        }
-//    }
-//}
-
 struct ImagePicker: View {
-//    @MainActor @State var selection = [PhotosPickerItem]() {
-//        didSet {
-//            let newAttachments = selection.map { item in
-//                attachmentByIdentifier[item.identifier] ?? ImageAttachment(pickerItem: item)
-//            }
-//            let newAttachmentByIdentifier = newAttachments.reduce(into: [:]) { partialResult, attachment in
-//                partialResult[attachment.id] = attachment
-//            }
-//            // To support asynchronous access, assign new arrays to the instance properties rather than updating the existing arrays.
-//            attachments = newAttachments
-//            attachmentByIdentifier = newAttachmentByIdentifier
-//        }
-//    }
-//    
-    @State var selection = [PhotosPickerItem]()
-    
-//    @State var attachments = [ImageAttachment]()
-//    @State private var attachmentByIdentifier = [String: ImageAttachment]()
-    @State private var loadedImagesByIdentifier = [String: Image]() {
+    @State private var selection = [PhotosPickerItem]()
+    @State private var loadedImageDataByIdentifier = [String: Data]() {
         didSet {
-            didSelectImages(Array(loadedImagesByIdentifier.values))
+            selectedImageData = Array(loadedImageDataByIdentifier.values)
         }
     }
-    var didSelectImages: (([Image]) -> Void)
+    
+    @Binding var selectedImageData: [Data]
     
     var body: some View {
         PhotosPicker(
@@ -98,14 +34,13 @@ struct ImagePicker: View {
         .ignoresSafeArea()
         .onChange(of: selection) { oldValue, newValue in
             let newImages = selection.filter { pickerItem in
-                loadedImagesByIdentifier[pickerItem.identifier] == nil
+                loadedImageDataByIdentifier[pickerItem.identifier] == nil
             }
             Task {
                 for pickerItem in newImages {
                     do {
-                        if let data = try await pickerItem.loadTransferable(type: Data.self),
-                           let uiImage = UIImage(data: data) {
-                            loadedImagesByIdentifier[pickerItem.identifier] = Image(uiImage: uiImage)
+                        if let data = try await pickerItem.loadTransferable(type: Data.self) {
+                            loadedImageDataByIdentifier[pickerItem.identifier] = data
                         } else {
                             throw LoadingError.contentTypeNotSupported
                         }
@@ -137,7 +72,5 @@ private extension PhotosPickerItem {
 
 
 #Preview {
-    ImagePicker(didSelectImages: { images in
-        print(images.count)
-    })
+    ImagePicker(selectedImageData: .constant([]))
 }

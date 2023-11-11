@@ -14,7 +14,7 @@ struct RecipeDetailView: View {
         ScrollView(showsIndicators: false) {
             VStack (spacing: LayoutConstants.verticalSpacing) {
                 RecipeDetailHeaderView(recipe: recipe)
-                RecipeDetailAttachmentsView()
+                RecipeDetailAttachmentsView(attachments: $recipe.attachments)
             }
             .padding(.bottom, LayoutConstants.safeAreaSpacing)
         }

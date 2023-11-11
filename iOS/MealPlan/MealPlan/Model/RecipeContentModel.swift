@@ -13,7 +13,7 @@ public struct RecipeContentModel: Codable, Hashable {
     var type: ContentType
     
     public enum ContentType: Codable, Hashable {
-        case image(imageUrl: URL)
+        case text
     }
 }
 

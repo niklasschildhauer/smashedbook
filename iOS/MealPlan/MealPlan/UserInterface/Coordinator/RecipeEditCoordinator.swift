@@ -20,7 +20,7 @@ import SwiftUI
         }
     }
     var validateErrorMessage: String?
-    var addContentCoordinator: RecipeAddContentCoordinator? = nil
+    var addAttachmentCoordinator: RecipeAddAttachmentCoordinator? = nil
     // TODO: how to avoid this overhead of saving the recipe twice?
     var didEditRecipeModel: ((RecipeModel) -> Void)?
     var isRecipeEdited = false
@@ -63,14 +63,15 @@ struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
     @Environment(\.dismiss) private var dismiss
     
+    
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel,
                        didTapAddAttachment: {
-            coordinator.addContentCoordinator = RecipeAddContentCoordinator(didAddRecipeContent: {
-                recipeContentModel in
+            coordinator.addAttachmentCoordinator = RecipeAddAttachmentCoordinator(didAddRecipeAttachment: { newAttachments in
+                coordinator.recipeModel.attachments.append(contentsOf: newAttachments)
+                coordinator.addAttachmentCoordinator = nil
                 
-                coordinator.addContentCoordinator = nil
-                })
+            })
         })
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
@@ -89,7 +90,7 @@ struct RecipeEditCoordinatorView: View {
         .onAppear {
             coordinator.start()
         }
-        .sheet(item: $coordinator.addContentCoordinator) { coordinator in
+        .sheet(item: $coordinator.addAttachmentCoordinator) { coordinator in
             coordinator.rootView
         }
         .interactiveDismissDisabled(coordinator.isRecipeEdited)
