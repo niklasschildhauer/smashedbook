@@ -6,7 +6,7 @@ import { ServicePlan } from "@cdktf/provider-azurerm/lib/service-plan";
 import { LinuxFunctionApp } from "@cdktf/provider-azurerm/lib/linux-function-app";
 import { TerraformOutput } from "cdktf";
 
-export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan) => {
+export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan, cosmosDbConnectionString: string = "") => {
     const name = `mealplan-cdktf-${environment}-function-app`;
     const location = "germanywestcentral";
 
@@ -24,6 +24,7 @@ export const AzureFunctionApp = (scope: Construct, environment: Environment, sto
             appSettings: {
                 "FUNCTIONS_WORKER_RUNTIME": "node",
                 "WEBSITE_NODE_DEFAULT_VERSION": "14",
+                "CosmosDbConnectionString": cosmosDbConnectionString
             }
           });
 
