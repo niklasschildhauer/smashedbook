@@ -45,6 +45,7 @@ import SwiftUI
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
+    @Environment(\.dismiss) private var dismiss
     
     var editButtonTitle: String {
         !coordinator.isEditing ? "Bearbeiten" : "Speichern"
@@ -53,12 +54,17 @@ struct RecipeDetailCoordinatorView: View {
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel)
             .bottomToolbar {
-                IconLabelFilledButtonView(title: "Bearbeiten") {
-                    Task {
-                        await coordinator.didTapEditButton()
+                HStack {
+                    IconFilledButtonView(icon: Image(systemName: "arrow.backward")) {
+                        dismiss()
                     }
+                    IconLabelFilledButtonView(title: "Bearbeiten") {
+                        Task {
+                            await coordinator.didTapEditButton()
+                        }
+                    }
+                    .uiTestIdentifier("editRecipeButton")
                 }
-                .uiTestIdentifier("editRecipeButton")
             }
             .sheet(item: $coordinator.recipeEditCoordinator, content: { coordinator in
                 coordinator.rootView

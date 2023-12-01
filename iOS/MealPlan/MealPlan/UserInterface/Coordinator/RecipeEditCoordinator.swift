@@ -13,17 +13,19 @@ import SwiftUI
     var rootView: RecipeEditCoordinatorView {
         RecipeEditCoordinatorView(coordinator: self)
     }
-        
+    
     var recipeModel: RecipeModel {
         didSet {
             isRecipeEdited = true
         }
     }
     var validateErrorMessage: String?
-    var addAttachmentCoordinator: RecipeAddAttachmentCoordinator? = nil
+    var addImageCoordinator: RecipeAddImageCoordinator? = nil
     // TODO: how to avoid this overhead of saving the recipe twice?
     var didEditRecipeModel: ((RecipeModel) -> Void)?
     var isRecipeEdited = false
+    
+    private var attachmentDataSource = FileSystemAttachmentDataSource()
     
     init(recipeModel: RecipeModel, onSaveRecipe: ((RecipeModel) -> Void)? = nil) {
         self._recipeModel = recipeModel
@@ -53,9 +55,21 @@ import SwiftUI
             validateErrorMessage = "Kalorien ausfüllen"
             return false
         }
-                
+        
         validateErrorMessage = ""
         return true
+    }
+    
+    func addNewAttachmentData(data: [Data]) {
+        recipeModel.attachments.append(contentsOf: data.compactMap { attachmentData in
+            attachmentDataSource.save(attachmentData: attachmentData)
+        })
+        addImageCoordinator = nil
+    }
+    
+    func addNewTitleImage(data: Data) {
+        print(data.count)
+        addImageCoordinator = nil
     }
 }
 
@@ -67,10 +81,12 @@ struct RecipeEditCoordinatorView: View {
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel,
                        didTapAddAttachment: {
-            coordinator.addAttachmentCoordinator = RecipeAddAttachmentCoordinator(didAddRecipeAttachment: { newAttachments in
-                coordinator.recipeModel.attachments.append(contentsOf: newAttachments)
-                coordinator.addAttachmentCoordinator = nil
-                
+            coordinator.addImageCoordinator = RecipeAddImageCoordinator(selectionCount: .multiple, didAddImageData: coordinator.addNewAttachmentData)
+        }, didTapSelectTitleImage: {
+            coordinator.addImageCoordinator = RecipeAddImageCoordinator(selectionCount: .one, didAddImageData: { data in
+                if let data = data.first {
+                    coordinator.addNewTitleImage(data: data)
+                }
             })
         })
         .uiTestIdentifier("recipeEditCoordinator")
@@ -90,15 +106,12 @@ struct RecipeEditCoordinatorView: View {
         .onAppear {
             coordinator.start()
         }
-        .sheet(item: $coordinator.addAttachmentCoordinator) { coordinator in
+        .sheet(item: $coordinator.addImageCoordinator) { coordinator in
             coordinator.rootView
         }
         .interactiveDismissDisabled(coordinator.isRecipeEdited)
         .scrollDismissesKeyboard(.interactively)
         // TODO: Does this work?
-        if let validateErrorMessage = coordinator.validateErrorMessage {
-            Text(validateErrorMessage)
-        }
     }
 }
 

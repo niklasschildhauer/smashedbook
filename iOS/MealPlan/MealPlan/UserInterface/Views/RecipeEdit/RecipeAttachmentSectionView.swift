@@ -22,6 +22,9 @@ struct RecipeEditAttachmentSectionView: View {
                     Text("Image could not be loaded")
                 }
             }
+            .onDelete { indexSet in
+                attachments.remove(atOffsets: indexSet)
+            }
             Button(action: {
                 didTapAddAttachment()
             }, label: {

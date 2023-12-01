@@ -12,15 +12,20 @@ struct ImagePicker: View {
     @State private var selection = [PhotosPickerItem]()
     @State private var loadedImageDataByIdentifier = [String: Data]() {
         didSet {
-            selectedImageData = Array(loadedImageDataByIdentifier.values)
+            // TODO: delete the unselected values!
+            selectedImageData = Array(loadedImageDataByIdentifier.filter { (key: String, value: Data) in
+                selection.contains { $0.identifier == key }
+            }.values)
         }
     }
+    let selectionCount: Int
     
     @Binding var selectedImageData: [Data]
     
     var body: some View {
         PhotosPicker(
             selection: $selection,
+            maxSelectionCount: selectionCount,
             selectionBehavior: .continuousAndOrdered,
             matching: .images,
             preferredItemEncoding: .current,
@@ -36,6 +41,10 @@ struct ImagePicker: View {
             let newImages = selection.filter { pickerItem in
                 loadedImageDataByIdentifier[pickerItem.identifier] == nil
             }
+            
+            // TODO: delete the unselected values!
+            let deletedItems = newValue.difference(from: oldValue)
+            
             Task {
                 for pickerItem in newImages {
                     do {
@@ -72,5 +81,5 @@ private extension PhotosPickerItem {
 
 
 #Preview {
-    ImagePicker(selectedImageData: .constant([]))
+    ImagePicker(selectionCount: 3, selectedImageData: .constant([]))
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeDetailAttachmentsView: View {
     @Binding var attachments: [RecipeAttachmentModel]
-    
+        
     private static let attachmentHeight = 220.0
     private static let attachmentWidth = 125.0
     
@@ -18,9 +18,11 @@ struct RecipeDetailAttachmentsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: LayoutConstants.horizontalSpacing) {
                     ForEach($attachments) { attachment in
-                        RecipeDetailAttachmentImageView(attachment: attachment)
-                            .frame(width: RecipeDetailAttachmentsView.attachmentWidth, height: RecipeDetailAttachmentsView.attachmentHeight)
-                            .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
+                        NavigationLink(value: attachment.wrappedValue) {
+                            RecipeDetailAttachmentImageView(attachment: attachment)
+                                .frame(width: RecipeDetailAttachmentsView.attachmentWidth, height: RecipeDetailAttachmentsView.attachmentHeight)
+                                .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
+                        }
                     }
                 }
             }

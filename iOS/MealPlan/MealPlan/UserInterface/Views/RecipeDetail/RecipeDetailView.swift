@@ -9,17 +9,17 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: RecipeModel
-    
+        
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack (spacing: LayoutConstants.verticalSpacing) {
                 RecipeDetailHeaderView(recipe: recipe)
                 RecipeDetailAttachmentsView(attachments: $recipe.attachments)
+                    .padding(.bottom, LayoutConstants.safeAreaSpacing)
             }
-            .padding(.bottom, LayoutConstants.safeAreaSpacing)
+            .navigationBarBackButtonHidden(true)
+            .edgesIgnoringSafeArea(.top)
         }
-        .navigationBarBackButtonHidden(true)
-        .edgesIgnoringSafeArea(.top)
     }
 }
 

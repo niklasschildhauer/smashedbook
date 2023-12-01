@@ -35,7 +35,7 @@ class RecipeCoordinator: Coordinator {
             self.detailRecipeCoordinator = nil
         }
     }
-
+    
     func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
         return RecipeDetailCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
     }
@@ -43,12 +43,16 @@ class RecipeCoordinator: Coordinator {
 
 struct RecipeCoordinatorView: View {
     @State var coordinator: RecipeCoordinator
+    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack(path: $coordinator.navigationPath) {
             recipeOverviewView
                 .navigationDestination(for: RecipeModel.self) { recipe in
                     coordinator.didRecieveNavigationDestination(recipeModel: recipe).rootView
+                }
+                .navigationDestination(for: RecipeAttachmentModel.self) { attachment in
+                    Text(attachment.fileName)
                 }
         }
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in

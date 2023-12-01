@@ -9,13 +9,15 @@ import SwiftUI
 
 struct RecipeEditView: View {
     @Binding var recipe: RecipeModel
-    // TODO: Normally I would use a delegate pattern, but is this suitable here? Are there any other ways? As of seperation of concernc i do not want to present an other view within this view.
+    // TODO: Normally I would use a delegate pattern, but is this suitable here? Are there any other ways? As of seperation of concerns i do not want to present an other view within this view.
     // Rename the function to onAdd... instead of didTap...
-    var didTapAddAttachment: (() -> Void)
+    var didTapAddAttachment: () -> Void
+    var didTapSelectTitleImage: () -> Void
     
     var body: some View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
+            RecipeEditTitleImageSectionView(didTapSelectTitleImage: didTapSelectTitleImage)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
             RecipeEditAttachmentSectionView(attachments: $recipe.attachments, didTapAddAttachment: didTapAddAttachment)
         }
@@ -25,5 +27,7 @@ struct RecipeEditView: View {
 #Preview {
     RecipeEditView(recipe: .constant(recipeModelMock), didTapAddAttachment:  {
         print("Add attachment")
+    }, didTapSelectTitleImage: {
+        print("Add title image")
     })
 }

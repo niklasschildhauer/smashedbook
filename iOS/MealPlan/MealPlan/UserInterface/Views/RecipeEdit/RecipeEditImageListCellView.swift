@@ -17,7 +17,6 @@ struct RecipeEditAttachmentPreviewListCellView: View {
                 .aspectRatio(contentMode: .fit)
                 .frame(height: 100)
         }
-        .deleteSwipeGesture()
         .frame(height: 100)
     }
 }

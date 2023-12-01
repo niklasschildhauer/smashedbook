@@ -13,7 +13,7 @@ enum HapticFeedbackEvents  {
 
 struct HapticFeedbackInteractor {
     static func hapticFeedback(for event: HapticFeedbackEvents) {
-        switch event{
+        switch event {
         case .buttonClick: executeHapticFeedback(for: .soft)
         }
     }

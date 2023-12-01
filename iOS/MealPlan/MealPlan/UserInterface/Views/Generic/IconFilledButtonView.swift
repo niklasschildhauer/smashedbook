@@ -10,20 +10,26 @@ import SwiftUI
 struct IconFilledButtonView: View {
     let icon: Image
     let action: () -> Void
+    @State var pressing = false
     
     var body: some View {
-        Button(action: action, label: {
+        Button(action: {
+            HapticFeedbackInteractor.hapticFeedback(for: .buttonClick)
+            action()
+        }, label: {
             icon
         })
         .buttonStyle(ScaleAnimationFilledButtonStyle(backgroundColor: .accentColor))
-        .frame(height: LayoutConstants.buttonHeight)
     }
 }
 
-struct IconButtonView_Previews: PreviewProvider {
-    static var previews: some View {
-        IconFilledButtonView(icon: Image(systemName: "plus"), action: {
+#Preview {
+    HStack {
+        IconFilledButtonView(icon: Image(systemName: "trash")) {
             print("Test")
-        })
+        }
+        IconLabelFilledButtonView(title: "Titel") {
+            print("Test2")
+        }
     }
 }
