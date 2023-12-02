@@ -39,9 +39,6 @@ export const AzureStorageAccount = (scope: Construct, environment: Environment, 
 
     const uploadStaticWebsite = (storageAccount: StorageAccount) => {
         const container = "$web";
-        // read from file ../../StaticWebsite/index.html and parse it to string
-
-
         const filePath = path.join(__dirname, '../../../StaticWebsite/index.html');
         const indexContent = fs.readFileSync(filePath, 'utf8');
         const indexDocument = "index.html";

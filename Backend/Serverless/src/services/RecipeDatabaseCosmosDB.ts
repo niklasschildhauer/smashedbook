@@ -2,6 +2,7 @@ import { Container, CosmosClient, Database, FeedResponse, Item, ItemResponse } f
 import { RecipeDatabase } from "./RecipeDatabase";
 import { HttpError } from "../model/HttpError";
 
+// TODO: implement error handling
 export class RecipeDatabaseCosmosDB implements RecipeDatabase {
 
     constructor(private cosmosDB: CosmosDB = new CosmosDB()) {
@@ -60,7 +61,7 @@ export class RecipeDatabaseCosmosDB implements RecipeDatabase {
 
 }
 
-export class CosmosDB {
+class CosmosDB {
     private cosmosClient?: CosmosClient
     private database?: Database
     private container?: Container
