@@ -15,11 +15,11 @@ public struct RecipeMetainformationModel: Codable, Hashable {
         var id: String { self.rawValue }
     }
     
-    typealias Calories = Int
+    typealias Calories = String
     typealias DurationTime = Int
     
     // TODO: Should this be an array?
     var meal: Meal = .lunch
-    var energy: Calories?
+    var energy: Calories = ""
     var duration: DurationTime?
 }

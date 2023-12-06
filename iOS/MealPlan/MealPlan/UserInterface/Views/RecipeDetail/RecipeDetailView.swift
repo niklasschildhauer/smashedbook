@@ -14,12 +14,15 @@ struct RecipeDetailView: View {
         ScrollView(showsIndicators: false) {
             VStack (spacing: LayoutConstants.verticalSpacing) {
                 RecipeDetailHeaderView(recipe: recipe)
-                RecipeDetailAttachmentsView(attachments: $recipe.attachments)
-                    .padding(.bottom, LayoutConstants.safeAreaSpacing)
+                attachments
             }
-            .navigationBarBackButtonHidden(true)
-            .edgesIgnoringSafeArea(.top)
         }
+        .navigationBarBackButtonHidden(true)
+        .edgesIgnoringSafeArea(.top)
+    }
+    
+    var attachments: some View {
+        RecipeDetailAttachmentsView(attachments: $recipe.attachments)
     }
 }
 

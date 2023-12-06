@@ -22,7 +22,6 @@ struct RecipeDetailHeaderView: View {
             }, bottomView: {
                 RecipeDetailMetainformationView(metainformation: recipe.metaInformation)
             })
-        .padding(.bottom, LayoutConstants.horizontalSpacing)
     }
 }
 

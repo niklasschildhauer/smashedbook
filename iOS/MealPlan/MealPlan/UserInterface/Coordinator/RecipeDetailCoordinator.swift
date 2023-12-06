@@ -53,6 +53,17 @@ struct RecipeDetailCoordinatorView: View {
     
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel)
+            .navigationDestination(for: RecipeAttachmentModel.self) { attachment in
+                ImageDetailView(attachment: attachment)
+                    .bottomToolbar {
+                        HStack {
+                            IconFilledButtonView(icon: Image(systemName: "arrow.backward")) {
+                                dismiss()
+                            }
+                            Spacer()
+                        }
+                    }
+            }
             .bottomToolbar {
                 HStack {
                     IconFilledButtonView(icon: Image(systemName: "arrow.backward")) {

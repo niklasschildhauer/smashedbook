@@ -51,9 +51,6 @@ struct RecipeCoordinatorView: View {
                 .navigationDestination(for: RecipeModel.self) { recipe in
                     coordinator.didRecieveNavigationDestination(recipeModel: recipe).rootView
                 }
-                .navigationDestination(for: RecipeAttachmentModel.self) { attachment in
-                    Text(attachment.fileName)
-                }
         }
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {

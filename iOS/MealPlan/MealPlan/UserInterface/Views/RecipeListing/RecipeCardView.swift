@@ -25,9 +25,6 @@ struct RecipeCardView: View {
                 .multilineTextAlignment(.leading)
             HStack {
                 TagView(text: recipe.metaInformation.meal.rawValue)
-                if let energyString = recipe.metaInformation.energy?.formatted() {
-                    TagView(text: "\(energyString) kcl")
-                }
             }
         }
     }

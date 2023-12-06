@@ -15,7 +15,7 @@ struct RecipeDetailMetainformationView: View {
             RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
                 .fill(.thinMaterial)
             HStack(spacing: 0) {
-                RecipeDetailMetainformationTileView(emoji: "🔥", value: "\(metainformation.energy?.description ?? "--")")
+                RecipeDetailMetainformationTileView(emoji: "🔥", value: "\(metainformation.energy ?? "--")")
                 Divider()
                 RecipeDetailMetainformationTileView(emoji: "⏲️", value: "\(metainformation.duration?.description ?? "--")")
                 Divider()
