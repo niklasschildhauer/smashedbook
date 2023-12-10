@@ -5,12 +5,22 @@ import { ResourceGroup } from "@cdktf/provider-azurerm/lib/resource-group";
 import { ServicePlan } from "@cdktf/provider-azurerm/lib/service-plan";
 import { LinuxFunctionApp } from "@cdktf/provider-azurerm/lib/linux-function-app";
 import { TerraformOutput } from "cdktf";
+import { AzureUserAssignedManagedId } from "./AzureUserAssignedManagedId";
+import { RoleAssignment } from "@cdktf/provider-azurerm/lib/role-assignment";
 
-export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan, cosmosDbConnectionString: string = "") => {
+export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan) => {
     const name = `mealplan-cdktf-${environment}-function-app`;
     const location = "germanywestcentral";
 
     const create = () => {
+        const managedId = AzureUserAssignedManagedId(scope, environment, resourceGroup).create()
+
+        new RoleAssignment(scope, "storage-account-role-assignment", {
+          scope: storageAccount.id,
+          principalId: managedId.principalId,
+          roleDefinitionName: "Storage Blob Data Contributor",
+        });
+
         const functionApp = new LinuxFunctionApp(scope, name, {
             name: name,
             location: location,
@@ -18,13 +28,20 @@ export const AzureFunctionApp = (scope: Construct, environment: Environment, sto
             storageAccountAccessKey: storageAccount.primaryAccessKey,
             resourceGroupName: resourceGroup.name,
             servicePlanId: servicePlan.id,
+            functionsExtensionVersion: "~4",
+            identity: {
+              type: "UserAssigned",
+              identityIds: [managedId.id],
+            },
             siteConfig: {
                 use32BitWorker : false,
+                applicationStack: {
+                  nodeVersion: "18",
+                },
             },
             appSettings: {
-                "FUNCTIONS_WORKER_RUNTIME": "node",
-                "WEBSITE_NODE_DEFAULT_VERSION": "14",
-                "CosmosDbConnectionString": cosmosDbConnectionString
+                "WEBSITE_RUN_FROM_PACKAGE": "1",
+                "MANAGED_IDENTITY_CLIENT_ID": managedId.clientId,
             }
           });
 

@@ -7,13 +7,15 @@ import { ContentType } from "../services/FileStorage";
 export async function SaveFile(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
     try {
+        context.log(`Create file storage`);
+
         const fileStorage = new FileStorageBlobService()
         const contentType = request.headers.get("content-type") as ContentType ?? ContentType.unknown
         const file = await request.arrayBuffer()
         const fileName = uuid()
 
-        await fileStorage.save(file, fileName, contentType)
-        
+        await fileStorage.save(file, fileName, contentType)   
+             
         return { status: 200, body: fileName }
     } catch (error) {
         if (error instanceof HttpError) {

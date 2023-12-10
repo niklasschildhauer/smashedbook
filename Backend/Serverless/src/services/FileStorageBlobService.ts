@@ -1,8 +1,8 @@
 import { BlobServiceClient, BlockBlobClient, ContainerClient } from "@azure/storage-blob";
 import { FileStorage, ContentType } from "./FileStorage";
-import { Writable } from "stream";
 import { HttpError } from "../model/HttpError";
-import { log } from "console";
+import { DefaultAzureCredential, DefaultAzureCredentialOptions } from "@azure/identity";
+
 
 export class FileStorageBlobService implements FileStorage {
     constructor(
@@ -27,7 +27,6 @@ export class FileStorageBlobService implements FileStorage {
         const downloadResponse = await blob.download();
 
         if (!downloadResponse.errorCode && downloadResponse?.readableStreamBody) {
-            console.log(`Download of ${name} succeeded`);
             const data = await this.streamToBuffer(downloadResponse.readableStreamBody);
             return {data: data, type: contentType};
         } else {
@@ -51,7 +50,10 @@ export class FileStorageBlobService implements FileStorage {
 }
 
 class BlobStorage {
-    constructor(private blobService = BlobServiceClient.fromConnectionString(process.env.BlobServiceConnectionString)) { }
+    constructor(private blobService = new BlobServiceClient(
+        `https://mealplandev.blob.core.windows.net`,
+        new DefaultAzureCredential({ managedIdentityClientId: process.env["MANAGED_IDENTITY_CLIENT_ID"]})
+      )) { }
 
     async getBlob(name: string, type: ContentType): Promise<BlockBlobClient> {
         const containerClient = await this.getContainer(this.getContainerName());
@@ -63,7 +65,6 @@ class BlobStorage {
         const blobs = containerClient.listBlobsFlat();
         for await (const blob of blobs) {
             if (blob.name.includes(name)) {
-                console.log(`Found blob ${name}`);  
                 return containerClient.getBlockBlobClient(blob.name);
             }
         }
