@@ -18,13 +18,14 @@ export const AzureFunctionApp = (scope: Construct, environment: Environment, sto
         new RoleAssignment(scope, "storage-account-role-assignment", {
           scope: storageAccount.id,
           principalId: managedId.principalId,
-          roleDefinitionName: "Storage Blob Data Contributor",
+          roleDefinitionName: "Storage Blob Data Owner",
         });
 
         const functionApp = new LinuxFunctionApp(scope, name, {
             name: name,
             location: location,
             storageAccountName: storageAccount.name,
+            // TODO: use managed identity instead of access key! 
             storageAccountAccessKey: storageAccount.primaryAccessKey,
             resourceGroupName: resourceGroup.name,
             servicePlanId: servicePlan.id,

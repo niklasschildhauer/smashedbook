@@ -2,14 +2,12 @@ import { app, HttpRequest, HttpResponseInit, InvocationContext } from "@azure/fu
 import { HttpError } from "../model/HttpError";
 import { FileStorageBlobService } from "../services/FileStorageBlobService";
 
-import { ContentType } from "../services/FileStorage";
-
 export async function GetFile(request: HttpRequest, context: InvocationContext): Promise<HttpResponseInit> {
     context.log(`Http function processed request for url "${request.url}"`);
     try {
         const fileStorage = new FileStorageBlobService()
         const fileName = request.params.fileName
-        const { data, type } = await fileStorage.get(fileName)
+        const { data, type } = await fileStorage.getFileData(fileName)
         
         return { status: 200, body: data, headers: { "content-type": type } }
     } catch (error) {
