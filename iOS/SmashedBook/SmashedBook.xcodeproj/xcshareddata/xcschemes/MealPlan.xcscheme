@@ -15,9 +15,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "858935B82A90FEE200011D7F"
-               BuildableName = "MealPlan.app"
-               BlueprintName = "MealPlan"
-               ReferencedContainer = "container:MealPlan.xcodeproj">
+               BuildableName = "SmashedBook.app"
+               BlueprintName = "SmashedBook"
+               ReferencedContainer = "container:SmashedBook.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -35,9 +35,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "858935C82A90FEE300011D7F"
-               BuildableName = "MealPlanTests.xctest"
-               BlueprintName = "MealPlanTests"
-               ReferencedContainer = "container:MealPlan.xcodeproj">
+               BuildableName = "SmashedBookTests.xctest"
+               BlueprintName = "SmashedBookTests"
+               ReferencedContainer = "container:SmashedBook.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -46,9 +46,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "858935D22A90FEE300011D7F"
-               BuildableName = "MealPlanUITests.xctest"
-               BlueprintName = "MealPlanUITests"
-               ReferencedContainer = "container:MealPlan.xcodeproj">
+               BuildableName = "SmashedBookUITests.xctest"
+               BlueprintName = "SmashedBookUITests"
+               ReferencedContainer = "container:SmashedBook.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -68,9 +68,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "858935B82A90FEE200011D7F"
-            BuildableName = "MealPlan.app"
-            BlueprintName = "MealPlan"
-            ReferencedContainer = "container:MealPlan.xcodeproj">
+            BuildableName = "SmashedBook.app"
+            BlueprintName = "SmashedBook"
+            ReferencedContainer = "container:SmashedBook.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "858935B82A90FEE200011D7F"
-            BuildableName = "MealPlan.app"
-            BlueprintName = "MealPlan"
-            ReferencedContainer = "container:MealPlan.xcodeproj">
+            BuildableName = "SmashedBook.app"
+            BlueprintName = "SmashedBook"
+            ReferencedContainer = "container:SmashedBook.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

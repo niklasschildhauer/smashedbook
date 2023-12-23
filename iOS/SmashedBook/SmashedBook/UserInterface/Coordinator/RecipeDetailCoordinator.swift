@@ -45,7 +45,7 @@ import SwiftUI
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
-    @Environment(\.dismiss) private var dismiss
+    @Environment(\.dismiss) var dismiss
     
     var editButtonTitle: String {
         !coordinator.isEditing ? "Bearbeiten" : "Speichern"
@@ -55,20 +55,9 @@ struct RecipeDetailCoordinatorView: View {
         RecipeDetailView(recipe: $coordinator.recipeModel)
             .navigationDestination(for: RecipeAttachmentModel.self) { attachment in
                 ImageDetailView(attachment: attachment)
-                    .bottomToolbar {
-                        HStack {
-                            IconFilledButtonView(icon: Image(systemName: "arrow.backward")) {
-                                dismiss()
-                            }
-                            Spacer()
-                        }
-                    }
             }
             .bottomToolbar {
                 HStack {
-                    IconFilledButtonView(icon: Image(systemName: "arrow.backward")) {
-                        dismiss()
-                    }
                     IconLabelFilledButtonView(title: "Bearbeiten") {
                         Task {
                             await coordinator.didTapEditButton()

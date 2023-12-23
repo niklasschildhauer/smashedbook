@@ -75,8 +75,6 @@ import SwiftUI
 
 struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
-    @Environment(\.dismiss) private var dismiss
-    
     
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel,
@@ -91,15 +89,9 @@ struct RecipeEditCoordinatorView: View {
         })
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
-            HStack {
-                IconFilledButtonView(icon: Image(systemName: "xmark")) {
-                    dismiss()
-                }
-                Spacer()
-                IconLabelFilledButtonView(title: "Speichern") {
-                    Task {
-                        await coordinator.save()
-                    }
+            IconLabelFilledButtonView(title: "Speichern") {
+                Task {
+                    await coordinator.save()
                 }
             }
         }

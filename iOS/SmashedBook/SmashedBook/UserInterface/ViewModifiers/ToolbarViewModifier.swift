@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct BottomToolbarViewModifier<ToolbarContent: View>: ViewModifier {
-    @Environment(\.isPresented) private var isPresented
     @ViewBuilder var toolbarContent: () -> ToolbarContent
     
     func body(content: Content) -> some View {
@@ -47,16 +46,8 @@ public extension View {
                 content()
             }))
     }
-    
-    //    func titleBar<Content: View>(@ViewBuilder _ content: @escaping () -> Content) -> some View {
-    //        self
-    //            .modifier(TitleBarViewModifier(titleBarContent: {
-    //                content()
-    //            }))
-    //    }
-    
+
     func titleBar(title: String) -> some View {
-        self
-            .modifier(TitleBarViewModifier(title: title))
+        self.navigationTitle(title)
     }
 }

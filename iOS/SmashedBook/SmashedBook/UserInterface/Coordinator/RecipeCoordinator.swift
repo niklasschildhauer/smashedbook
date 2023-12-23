@@ -43,7 +43,6 @@ class RecipeCoordinator: Coordinator {
 
 struct RecipeCoordinatorView: View {
     @State var coordinator: RecipeCoordinator
-    @Environment(\.dismiss) private var dismiss
     
     var body: some View {
         NavigationStack(path: $coordinator.navigationPath) {
@@ -55,7 +54,6 @@ struct RecipeCoordinatorView: View {
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {
                 ediitRecipeCoordinator.rootView
-                // TODO: Presentation height based on content?
             }
         })
         .onAppear {

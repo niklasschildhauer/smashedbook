@@ -17,8 +17,7 @@ struct RecipeDetailView: View {
                 attachments
             }
         }
-        .navigationBarBackButtonHidden(true)
-        .edgesIgnoringSafeArea(.top)
+//        .edgesIgnoringSafeArea(.top)
     }
     
     var attachments: some View {
