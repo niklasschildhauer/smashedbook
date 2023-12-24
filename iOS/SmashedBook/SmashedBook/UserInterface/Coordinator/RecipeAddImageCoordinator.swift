@@ -9,7 +9,7 @@ import SwiftUI
 import Photos
 import PDFKit
 
-@Observable class RecipeAddImageCoordinator: Coordinator, Identifiable {
+@Observable class RecipeAddImageCoordinator: Coordinator, Identifiable {    
     typealias CoordinatorView = RecipeAddImageCoordinatorView
     
     var rootView: RecipeAddImageCoordinatorView {

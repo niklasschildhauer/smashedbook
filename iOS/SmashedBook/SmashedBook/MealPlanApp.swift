@@ -13,7 +13,7 @@ struct MealPlanApp: App {
 
     var body: some Scene {
         WindowGroup {
-            RecipeCoordinator().rootView
+            AppCoordinator().rootView
         }
     }
 }

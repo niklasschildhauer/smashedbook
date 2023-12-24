@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+protocol RecipeCoordinatorDelegate: AnyObject {
+    func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeCoordinator)
+}
+
 @Observable
 class RecipeCoordinator: Coordinator {
     typealias CoordinatorView = RecipeCoordinatorView
@@ -17,6 +21,7 @@ class RecipeCoordinator: Coordinator {
     
     var navigationPath = NavigationPath()
     var recipesDataSource: RecipesDataSource
+    var delegate: RecipeCoordinatorDelegate?
     
     var detailRecipeCoordinator: RecipeDetailCoordinator? = nil
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
@@ -37,6 +42,7 @@ class RecipeCoordinator: Coordinator {
     }
     
     func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
+        delegate?.didTapShowRecipeDetail(recipe: recipeModel, in: self)
         return RecipeDetailCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
     }
 }

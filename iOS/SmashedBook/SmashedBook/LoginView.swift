@@ -27,7 +27,6 @@ struct LoginView: UIViewControllerRepresentable {
     func updateUIViewController(_ uiViewController: LoginViewController, context: Context) {
         // Updates the state of the specified view controller with new information from SwiftUI.
     }
-    
 }
 
 class LoginViewController: UIViewController {
