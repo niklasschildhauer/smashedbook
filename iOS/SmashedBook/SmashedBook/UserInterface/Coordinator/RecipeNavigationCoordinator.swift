@@ -8,22 +8,22 @@
 import Foundation
 import SwiftUI
 
-class AppCoordinator: UIKitCoordinator {
+class RecipeNavigationCoordinator: UIKitCoordinator {
     var rootViewController: UIViewController {
         navigationController
     }
     
-    let navigationController = UINavigationController()
+    let navigationController = CustomNavigationController()
     
     func start() {
         navigationController.viewControllers = [createRecipeCoordinatorViewController()]
     }
     
     func createRecipeCoordinatorViewController() -> UIViewController {
-        let recipeCoordinator = RecipeCoordinator()
-        recipeCoordinator.delegate = self
+        let recipeHomeCoordinator = RecipeHomeCoordinator()
+        recipeHomeCoordinator.delegate = self
         
-        return recipeCoordinator.rootViewController
+        return recipeHomeCoordinator.rootViewController
     }
     
     func createRecipeDetailViewController(recipe: RecipeModel) -> UIViewController {
@@ -42,13 +42,13 @@ class AppCoordinator: UIKitCoordinator {
     }
 }
 
-extension AppCoordinator: RecipeCoordinatorDelegate {
-    func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeCoordinator) {
+extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
+    func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator) {
         navigationController.pushViewController(createRecipeDetailViewController(recipe: recipe), animated: true)
     }
 }
 
-extension AppCoordinator: RecipeDetailCoordinatorDelegate {
+extension RecipeNavigationCoordinator: RecipeDetailCoordinatorDelegate {
     func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator) {
         navigationController.pushViewController(createRecipeAttachmentDetailViewController(recipeAttachment: attachment), animated: true)
     }

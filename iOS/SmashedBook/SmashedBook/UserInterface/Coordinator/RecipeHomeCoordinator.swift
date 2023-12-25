@@ -1,5 +1,5 @@
 //
-//  RecipeCoordinatorView.swift
+//  RecipeHomeCoordinator.swift
 //  MealPlan
 //
 //  Created by Niklas Schildhauer on 02.10.23.
@@ -7,23 +7,22 @@
 
 import SwiftUI
 
-protocol RecipeCoordinatorDelegate: AnyObject {
-    func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeCoordinator)
+protocol RecipeHomeCoordinatorDelegate: AnyObject {
+    func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator)
 }
 
 @Observable
-class RecipeCoordinator: Coordinator {
-    typealias CoordinatorView = RecipeCoordinatorView
+class RecipeHomeCoordinator: Coordinator {
+    typealias CoordinatorView = RecipeHomeCoordinatorView
     
-    weak var delegate: RecipeCoordinatorDelegate?
-    var rootView: RecipeCoordinatorView {
-        RecipeCoordinatorView(coordinator: self)
+    weak var delegate: RecipeHomeCoordinatorDelegate?
+    var rootView: RecipeHomeCoordinatorView {
+        RecipeHomeCoordinatorView(coordinator: self)
     }
     
     var navigationPath = NavigationPath()
     var recipesDataSource: RecipesDataSource
     
-    var detailRecipeCoordinator: RecipeDetailCoordinator? = nil
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource()) {
@@ -37,7 +36,6 @@ class RecipeCoordinator: Coordinator {
     func didTapAddNewRecipe() {
         recipeEditCoordinator = RecipeEditCoordinator(recipeModel: RecipeModel()) { newRecipe in
             self.recipesDataSource.save(recipe: newRecipe)
-            self.detailRecipeCoordinator = nil
         }
     }
     
@@ -46,8 +44,8 @@ class RecipeCoordinator: Coordinator {
     }
 }
 
-struct RecipeCoordinatorView: View {
-    @State var coordinator: RecipeCoordinator
+struct RecipeHomeCoordinatorView: View {
+    @State var coordinator: RecipeHomeCoordinator
     
     var body: some View {
         recipeOverviewView
@@ -76,5 +74,5 @@ struct RecipeCoordinatorView: View {
 }
 
 #Preview {
-    RecipeCoordinatorView(coordinator: RecipeCoordinator())
+    RecipeHomeCoordinatorView(coordinator: RecipeHomeCoordinator())
 }
