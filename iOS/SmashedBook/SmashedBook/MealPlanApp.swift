@@ -10,10 +10,15 @@ import SwiftUI
 @main
 struct MealPlanApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+    private let appCoordinator = AppCoordinator()
 
     var body: some Scene {
         WindowGroup {
-            AppCoordinator().rootView
+            appCoordinator.rootView
+                .ignoresSafeArea()
+                .onAppear {
+                    appCoordinator.start()
+                }
         }
     }
 }

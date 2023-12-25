@@ -8,17 +8,20 @@
 import SwiftUI
 
 struct RecipeDetailAttachmentsView: View {
-    @Binding var attachments: [RecipeAttachmentModel]
-        
     private static let attachmentHeight = 220.0
     private static let attachmentWidth = 125.0
+    
+    @Binding var attachments: [RecipeAttachmentModel]
+    var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)?
     
     var body: some View {
         SectionView(title: "Anhänge") {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: LayoutConstants.horizontalSpacing) {
                     ForEach($attachments) { attachment in
-                        NavigationLink(value: attachment.wrappedValue) {
+                        Button {
+                            didTapShowAttachment?(attachment.wrappedValue)
+                        } label: {
                             RecipeDetailAttachmentImageView(attachment: attachment)
                                 .frame(width: RecipeDetailAttachmentsView.attachmentWidth, height: RecipeDetailAttachmentsView.attachmentHeight)
                                 .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))

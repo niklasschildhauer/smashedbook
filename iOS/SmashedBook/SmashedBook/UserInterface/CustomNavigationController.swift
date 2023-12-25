@@ -9,24 +9,12 @@ import Foundation
 import UIKit
 import SwiftUI
 
-struct CustomNavigationControllerView: UIViewControllerRepresentable {
-    typealias UIViewType = CustomNavigationController
-    
-    let customNavigationController: CustomNavigationController
-  
-    func makeUIViewController(context: Context) -> CustomNavigationController {
-        return customNavigationController
-    }
-    
-    func updateUIViewController(_ uiViewController: CustomNavigationController, context: Context) {
-    }
-}
-
 class CustomNavigationController: UINavigationController {
     
     override func viewDidLoad() {
         view.backgroundColor = .red
-        
+        UINavigationBar.appearance().backIndicatorImage = UIImage(systemName: "arrow.backward.circle.fill")
+        UINavigationBar.appearance().backIndicatorTransitionMaskImage = UIImage(systemName: "arrow.backward.circle.fill")
     }
     
 }

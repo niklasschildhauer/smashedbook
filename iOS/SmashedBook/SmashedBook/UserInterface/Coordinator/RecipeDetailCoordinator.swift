@@ -7,9 +7,14 @@
 
 import SwiftUI
 
+protocol RecipeDetailCoordinatorDelegate: AnyObject {
+    func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator)
+}
+
 @Observable class RecipeDetailCoordinator: Coordinator {
     typealias CoordinatorView = RecipeDetailCoordinatorView
     
+    weak var delegate: RecipeDetailCoordinatorDelegate?
     var rootView: RecipeDetailCoordinatorView {
         RecipeDetailCoordinatorView(coordinator: self)
     }
@@ -19,49 +24,38 @@ import SwiftUI
     var recipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     
-    var isEditing: Bool {
-        recipeEditCoordinator != nil
-    }
-    
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
         self.recipeModel = recipeModel
     }
     
     func start() { }
-    
-    func reload() {
-        recipeModel = recipesDataSource.recipes.first { $0.id == recipeModel.id } ?? recipeModel
-    }
-    
-    func didTapEditButton() async {
+        
+    func didTapEditButton() {
         recipeEditCoordinator = RecipeEditCoordinator(recipeModel: recipeModel) { updatedRecipe in
             self.recipeModel = updatedRecipe
             self.recipesDataSource.save(recipe: updatedRecipe)
             self.recipeEditCoordinator = nil
         }
     }
+    
+    func didTapShowAttachment(recipeAttachment: RecipeAttachmentModel) {
+        delegate?.didTapShowAttachment(attachment: recipeAttachment, in: self)
+    }
 }
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
-    @Environment(\.dismiss) var dismiss
-    
-    var editButtonTitle: String {
-        !coordinator.isEditing ? "Bearbeiten" : "Speichern"
-    }
-    
+
     var body: some View {
-        RecipeDetailView(recipe: $coordinator.recipeModel)
-            .navigationDestination(for: RecipeAttachmentModel.self) { attachment in
-                ImageDetailView(attachment: attachment)
-            }
+        RecipeDetailView(recipe: $coordinator.recipeModel,
+                         didTapShowAttachment: {
+            coordinator.didTapShowAttachment(recipeAttachment: $0)
+        })
             .bottomToolbar {
                 HStack {
                     IconLabelFilledButtonView(title: "Bearbeiten") {
-                        Task {
-                            await coordinator.didTapEditButton()
-                        }
+                        coordinator.didTapEditButton()
                     }
                     .uiTestIdentifier("editRecipeButton")
                 }

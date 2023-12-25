@@ -17,7 +17,6 @@ struct RecipeEditView: View {
     var body: some View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
-            RecipeEditTitleImageSectionView(didTapSelectTitleImage: didTapSelectTitleImage)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
             RecipeEditAttachmentSectionView(attachments: $recipe.attachments, didTapAddAttachment: didTapAddAttachment)
         }

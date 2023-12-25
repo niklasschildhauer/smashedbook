@@ -9,19 +9,16 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: RecipeModel
+    var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)?
         
     var body: some View {
         ScrollView(showsIndicators: false) {
             VStack (spacing: LayoutConstants.verticalSpacing) {
                 RecipeDetailHeaderView(recipe: recipe)
-                attachments
+                RecipeDetailAttachmentsView(attachments: $recipe.attachments,
+                                            didTapShowAttachment: didTapShowAttachment)
             }
         }
-//        .edgesIgnoringSafeArea(.top)
-    }
-    
-    var attachments: some View {
-        RecipeDetailAttachmentsView(attachments: $recipe.attachments)
     }
 }
 

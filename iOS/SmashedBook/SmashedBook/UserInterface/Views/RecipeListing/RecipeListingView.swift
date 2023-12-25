@@ -12,9 +12,11 @@ struct RecipeListingView: View {
     @Binding var recipes: [RecipeModel]
     
     private var twoColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 2)
+    var didTapOpenRecipe: (RecipeModel) -> Void
     
-    init(recipes: Binding<[RecipeModel]>) {
+    init(recipes: Binding<[RecipeModel]>, didTapOpenRecipe: @escaping (RecipeModel) -> Void) {
         self._recipes = recipes
+        self.didTapOpenRecipe = didTapOpenRecipe
     }
     
     var body: some View {
@@ -28,9 +30,11 @@ struct RecipeListingView: View {
             } else {
                 LazyVGrid(columns: twoColumnGrid, spacing: LayoutConstants.verticalSpacing) {
                     ForEach(recipes) { recipe in
-                        NavigationLink(value: recipe) {
+                        Button(action: {
+                            didTapOpenRecipe(recipe)
+                        }, label: {
                             RecipeCardView(recipe: recipe)
-                        }
+                        })
                     }
                 }
                 .padding(.horizontal, LayoutConstants.safeAreaSpacing)
@@ -41,53 +45,8 @@ struct RecipeListingView: View {
 
 #Preview {
     NavigationStack {
-        RecipeListingView(recipes: .constant([recipeModelMock]))
+        RecipeListingView(recipes: .constant([recipeModelMock]), didTapOpenRecipe: { _ in
+            print("Recipe is clicked")
+        })
     }
 }
-
-//import Combine
-//
-//@Observable class RecipeListingViewModel {
-//    var recipesList = [RecipeModel]()
-//    private var recipeInteractor: RecipeInteractoring
-//    var cancellables = [AnyCancellable]()
-//    var recipes: LoadingData<[RecipeModel]> = .notStarted
-//
-//    let repoWeb = RecipeWebRepository()
-//    var cancellabels = [AnyCancellable]()
-//
-//    init(recipeInteractor: RecipeInteractoring) {
-//        self.recipeInteractor = recipeInteractor
-//        self.reload()
-//    }
-//
-//    func reload() {
-//        Task {
-//            let updatedRecipesList = await recipeInteractor.loadRecipes()
-//            DispatchQueue.main.sync {
-//                recipesList = updatedRecipesList
-//            }
-//        }
-//    }
-//
-////    func loadRecipes() {
-//        repoWeb.loadRecipes()
-//            .sink(receiveCompletion: { _ in
-//                print("Es funktioniert hier!")
-//            }, receiveValue: { [weak self] data in
-//                self?.recipesList = data
-//            })
-//            .store(in: &cancellabels)
-//    }
-//
-//    func loadRecipes2() {
-//        repoWeb.loadRecipes()
-//            .sink(receiveCompletion: { _ in
-//                print("Es funktioniert hier auch!")
-//            }, receiveValue: { [weak self] data in
-//                self?.recipesList = data
-//            })
-//            .store(in: &cancellabels)
-//    }
-//}
-

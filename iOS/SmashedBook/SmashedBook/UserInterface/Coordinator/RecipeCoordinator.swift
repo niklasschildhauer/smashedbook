@@ -15,13 +15,13 @@ protocol RecipeCoordinatorDelegate: AnyObject {
 class RecipeCoordinator: Coordinator {
     typealias CoordinatorView = RecipeCoordinatorView
     
+    weak var delegate: RecipeCoordinatorDelegate?
     var rootView: RecipeCoordinatorView {
         RecipeCoordinatorView(coordinator: self)
     }
     
     var navigationPath = NavigationPath()
     var recipesDataSource: RecipesDataSource
-    var delegate: RecipeCoordinatorDelegate?
     
     var detailRecipeCoordinator: RecipeDetailCoordinator? = nil
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
@@ -41,9 +41,8 @@ class RecipeCoordinator: Coordinator {
         }
     }
     
-    func didRecieveNavigationDestination(recipeModel: RecipeModel) -> RecipeDetailCoordinator {
+    func didRecieveNavigationDestination(recipeModel: RecipeModel) {
         delegate?.didTapShowRecipeDetail(recipe: recipeModel, in: self)
-        return RecipeDetailCoordinator(recipesDataSource: recipesDataSource, recipeModel: recipeModel)
     }
 }
 
@@ -51,12 +50,7 @@ struct RecipeCoordinatorView: View {
     @State var coordinator: RecipeCoordinator
     
     var body: some View {
-        NavigationStack(path: $coordinator.navigationPath) {
-            recipeOverviewView
-                .navigationDestination(for: RecipeModel.self) { recipe in
-                    coordinator.didRecieveNavigationDestination(recipeModel: recipe).rootView
-                }
-        }
+        recipeOverviewView
         .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
             NavigationStack {
                 ediitRecipeCoordinator.rootView
@@ -69,7 +63,8 @@ struct RecipeCoordinatorView: View {
     }
     
     @ViewBuilder var recipeOverviewView: some View {
-        RecipeListingView(recipes: $coordinator.recipesDataSource.recipes)
+        RecipeListingView(recipes: $coordinator.recipesDataSource.recipes, 
+                          didTapOpenRecipe: coordinator.didRecieveNavigationDestination)
             .titleBar(title: "Meine Rezepte")
             .bottomToolbar {
                 IconLabelFilledButtonView(title: "Hinzufügen") {
