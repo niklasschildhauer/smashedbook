@@ -8,7 +8,7 @@
 import SwiftUI
 import MSAL
 
-class LoginCoordinator: Coordinator {
+class LoginCoordinator: SwiftUICoordinator {    
     var rootView = LoginView()
     
     func start() {

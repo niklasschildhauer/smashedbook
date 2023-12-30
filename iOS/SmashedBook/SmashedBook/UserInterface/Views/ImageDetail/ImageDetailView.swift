@@ -15,10 +15,10 @@ struct ImageDetailView: View {
     var attachment: RecipeAttachmentModel
     
     // TODO: remove it?
-    private let test = FileSystemAttachmentDataSource()
+    private let filesystem = FileSystemAttachmentDataSource()
     
     var body: some View {
-        if let imageData = test.load(attachment: attachment),
+        if let imageData = filesystem.load(attachment: attachment),
            let uiImage = UIImage(data: imageData) {
             ZoomableScrollView {
                 Image(uiImage: uiImage)

@@ -12,7 +12,7 @@ protocol RecipeHomeCoordinatorDelegate: AnyObject {
 }
 
 @Observable
-class RecipeHomeCoordinator: Coordinator {
+class RecipeHomeCoordinator: SwiftUICoordinator {
     typealias CoordinatorView = RecipeHomeCoordinatorView
     
     weak var delegate: RecipeHomeCoordinatorDelegate?

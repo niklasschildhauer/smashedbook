@@ -11,7 +11,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator)
 }
 
-@Observable class RecipeDetailCoordinator: Coordinator {
+@Observable class RecipeDetailCoordinator: SwiftUICoordinator {
     typealias CoordinatorView = RecipeDetailCoordinatorView
     
     weak var delegate: RecipeDetailCoordinatorDelegate?

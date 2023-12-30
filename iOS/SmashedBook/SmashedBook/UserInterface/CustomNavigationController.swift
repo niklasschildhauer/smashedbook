@@ -60,6 +60,11 @@ extension CustomNavigationController: UINavigationControllerDelegate {
     }
 }
 
+protocol ZoomTransitionViewController {
+    func frame() -> CGRect
+    func imageView() -> UIImageView
+}
+
 class FadeAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
     private let presenting: Bool
@@ -82,6 +87,8 @@ class FadeAnimationController: NSObject, UIViewControllerAnimatedTransitioning {
 
         UIView.animate(withDuration: transitionDuration(using: transitionContext), animations: {
             if self.presenting {
+                print(toView.frame)
+                print(fromView.frame)
                 toView.alpha = 1.0
             } else {
                 fromView.alpha = 0.0

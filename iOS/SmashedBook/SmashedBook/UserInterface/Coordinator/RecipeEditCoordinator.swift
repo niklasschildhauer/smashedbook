@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-@Observable class RecipeEditCoordinator: Coordinator, Identifiable {
+@Observable class RecipeEditCoordinator: SwiftUICoordinator, Identifiable {
     typealias CoordinatorView = RecipeEditCoordinatorView
     
     var rootView: RecipeEditCoordinatorView {

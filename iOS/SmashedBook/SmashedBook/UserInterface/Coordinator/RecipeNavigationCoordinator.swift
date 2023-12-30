@@ -27,7 +27,7 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
     }
     
     func createRecipeDetailViewController(recipe: RecipeModel) -> UIViewController {
-        let recipeDetailCoordinator = RecipeDetailCoordinator(recipeModel: recipe)
+        let recipeDetailCoordinator = RecipeDetailInformationCoordinator(recipe: recipe)
         let recipeDetailViewController = recipeDetailCoordinator.rootViewController
         recipeDetailCoordinator.delegate = self
         
@@ -48,8 +48,8 @@ extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
     }
 }
 
-extension RecipeNavigationCoordinator: RecipeDetailCoordinatorDelegate {
-    func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator) {
+extension RecipeNavigationCoordinator: RecipeDetailInformationCoordinatorDelegate {
+    func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailInformationCoordinator) {
         navigationController.pushViewController(createRecipeAttachmentDetailViewController(recipeAttachment: attachment), animated: true)
     }
 }
