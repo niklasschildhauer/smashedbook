@@ -11,6 +11,10 @@ protocol RecipeDetailPresenterDelegate: AnyObject {
     func didTapShowAttachment(attachment: RecipeAttachmentModel, in presenter: RecipeDetailPresenting)
 }
 
+protocol RecipeDetailViewing: AnyObject {
+    var presenter: RecipeDetailPresenting? { get set }
+}
+
 protocol RecipeDetailPresenting {
     var view: RecipeDetailViewing? { get set }
     var numberOfAttachments: Int { get }

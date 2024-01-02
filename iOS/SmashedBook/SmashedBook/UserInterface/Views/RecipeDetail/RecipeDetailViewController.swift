@@ -8,10 +8,6 @@
 import UIKit
 import SwiftUI
 
-protocol RecipeDetailViewing: AnyObject {
-    var presenter: RecipeDetailPresenting? { get set }
-}
-
 class RecipeDetailViewController: UIViewController {
     private static let headerHeight = 500.0
     
@@ -21,7 +17,16 @@ class RecipeDetailViewController: UIViewController {
         }
     }
     
-    private var headerImageView: UIImageView = {
+    private var headerViewTopContraint: NSLayoutConstraint!
+
+    private lazy var headerView: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.clipsToBounds = true
+        return view
+    }()
+    
+    private lazy var headerImageView: UIImageView = {
         let imageView = UIImageView(frame: .zero)
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "ExamplePicture")
@@ -30,11 +35,11 @@ class RecipeDetailViewController: UIViewController {
         return imageView
     }()
     
-    private var headerView: UIView = {
-        let view = UIView(frame: .zero)
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.clipsToBounds = true
-        return view
+    private lazy var headerContentViewController: UIHostingController = {
+        let hostingController = UIHostingController(rootView: RecipeDetailTitleView())
+        hostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        hostingController.view.backgroundColor = .clear
+        return hostingController
     }()
     
     private lazy var scrollView: UIScrollView = {
@@ -46,7 +51,7 @@ class RecipeDetailViewController: UIViewController {
         return scrollView
     }()
     
-    private let containerStackView: UIStackView = {
+    private lazy var containerStackView: UIStackView = {
         let view = UIStackView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.axis = .vertical
@@ -96,14 +101,35 @@ class RecipeDetailViewController: UIViewController {
         view.addSubview(scrollView)
         scrollView.anchorToAllEdgesOfSuperview()
     }
-    
-    private var headerHeightConstraint: NSLayoutConstraint!
+        
+    private func setupHeader() {
+        scrollView.addSubview(headerView)
+        headerView.addSubview(headerImageView)
+        // Since the updating of the constraints results into flaky behaviour at the left edge, the header view overlaps the scrollview.
+        headerView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: -5).isActive = true
+        headerView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: 5).isActive = true
+        headerViewTopContraint = headerView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor)
+        headerViewTopContraint.isActive = true
+        let bottomConstraint = headerView.bottomAnchor.constraint(equalTo: containerStackView.topAnchor)
+        bottomConstraint.priority = UILayoutPriority(900)
+        bottomConstraint.isActive = true
+        headerImageView.anchorToAllEdgesOfSuperview()
+        
+        guard let headerContentView = headerContentViewController.view else { return }
+        addChild(headerContentViewController)
+        headerView.addSubview(headerContentView)
+        headerView.bottomAnchor.constraint(equalTo: headerContentView.bottomAnchor).isActive = true
+        headerView.leadingAnchor.constraint(equalTo: headerContentView.leadingAnchor).isActive = true
+        headerView.trailingAnchor.constraint(equalTo: headerContentView.trailingAnchor).isActive = true
+        headerContentViewController.view.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        headerContentView.didMoveToSuperview()
+        
+    }
     
     private func setupContentStackView() {
         scrollView.addSubview(containerStackView)
         containerStackView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor, constant: RecipeDetailViewController.headerHeight).isActive = true
         containerStackView.bottomAnchor.constraint(equalTo:  scrollView.contentLayoutGuide.bottomAnchor).isActive = true
-        
         containerStackView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor).isActive = true
         containerStackView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor).isActive = true
         
@@ -111,34 +137,16 @@ class RecipeDetailViewController: UIViewController {
         containerStackView.addArrangedSubview(subView2)
         containerStackView.addArrangedSubview(subView3)
     }
-    
-    private var topConstant: NSLayoutConstraint!
-    
-    private func setupHeader() {
-        scrollView.addSubview(headerView)
         
-        headerView.addSubview(headerImageView)
-        headerView.leadingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.leadingAnchor, constant: -5).isActive = true
-        headerView.trailingAnchor.constraint(equalTo: scrollView.frameLayoutGuide.trailingAnchor, constant: 5).isActive = true
-        topConstant = headerView.topAnchor.constraint(equalTo: scrollView.contentLayoutGuide.topAnchor)
-        topConstant.isActive = true
-        
-        let bottom = headerView.bottomAnchor.constraint(equalTo: containerStackView.topAnchor)
-        bottom.priority = UILayoutPriority(900)
-        bottom.isActive = true
-        
-//        let top = headerImageView.topAnchor.constraint(equalTo: view.topAnchor)
-//        top.priority = UILayoutPriority(900)
-//        top.isActive = true
-        headerImageView.anchorToAllEdgesOfSuperview()
-//        headerImageView.leadingAnchor.constraint(equalTo: headerView.leadingAnchor).isActive = true
-//        headerImageView.trailingAnchor.constraint(equalTo: headerView.trailingAnchor).isActive = true
-//        headerImageView.bottomAnchor.constraint(equalTo: headerView.bottomAnchor).isActive = true
-    }
+ 
     
     @objc func imageTapped(sender: UITapGestureRecognizer) {
         presenter?.didSelectAttachment(at: IndexPath(index: .zero))
     }
+}
+
+extension RecipeDetailViewController: RecipeDetailViewing {
+    
 }
 
 extension RecipeDetailViewController: UIScrollViewDelegate {
@@ -155,12 +163,11 @@ extension RecipeDetailViewController: UIScrollViewDelegate {
         }
         
         if offset.y < 0.0 {
-            self.topConstant.constant = offset.y
+            self.headerViewTopContraint.constant = offset.y
+        } else {
+            self.headerViewTopContraint.constant = 0
         }
     }
 }
 
-extension RecipeDetailViewController: RecipeDetailViewing {
-    
-}
 

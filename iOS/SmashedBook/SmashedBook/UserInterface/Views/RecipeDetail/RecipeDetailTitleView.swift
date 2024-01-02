@@ -9,15 +9,35 @@ import SwiftUI
 
 struct RecipeDetailTitleView: View {
     var body: some View {
-        Text("Lachsrezept")
-            .font(.largeTitle)
-            .fontWeight(.black)
-            .fontDesign(.monospaced)
-            .shadow(radius: /*@START_MENU_TOKEN@*/10/*@END_MENU_TOKEN@*/)
-            .foregroundStyle(.white)
+        VStack {
+            Spacer()
+            HStack {
+                Spacer()
+                Text("Lachsrezept")
+                    .font(.largeTitle)
+                    .fontWeight(.black)
+                    .fontDesign(.monospaced)
+                    .foregroundStyle(.white)
+                Spacer()
+            }
+            .padding()
+            .background(
+                LinearGradient(gradient: Gradient(colors: [.clear,
+                                                           Color(red: 0, green: 0, blue: 0, opacity: 0.3),
+                                                           Color(red: 0, green: 0, blue: 0, opacity: 0.6)
+                                                          ]),
+                               startPoint: .top,
+                               endPoint: .bottom)
+            )
+        }
+        .background(.clear)
     }
 }
 
 #Preview {
-    RecipeDetailTitleView()
+    ZStack {
+        Image("ExampleRecipe")
+            .frame(height: 400)
+        RecipeDetailTitleView()
+    }
 }
