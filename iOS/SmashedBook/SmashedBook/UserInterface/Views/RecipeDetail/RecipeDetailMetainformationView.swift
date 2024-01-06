@@ -13,7 +13,7 @@ struct RecipeDetailMetainformationView: View {
         
         ZStack {
             RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
-                .fill(.thinMaterial)
+                .fill(Color(uiColor: .lightGray))
             HStack(spacing: 0) {
                 RecipeDetailMetainformationTileView(emoji: "🔥", value: "\(metainformation.energy ?? "--")")
                 Divider()

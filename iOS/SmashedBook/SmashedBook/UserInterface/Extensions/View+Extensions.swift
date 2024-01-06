@@ -23,7 +23,7 @@ public extension View {
     }
     
     var identifier: String {
-        String(describing: RecipeDetailView.self)
+        String(describing: Self.self)
     }
 }
 

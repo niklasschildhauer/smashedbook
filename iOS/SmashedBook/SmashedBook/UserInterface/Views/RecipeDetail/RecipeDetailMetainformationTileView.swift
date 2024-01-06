@@ -19,6 +19,7 @@ struct RecipeDetailMetainformationTileView: View {
                 .fontWeight(.semibold)
                 .foregroundStyle(.secondary)
         }
+        .padding(.vertical, LayoutConstants.verticalSpacing)
         .frame(maxWidth: .infinity)
     }
 }

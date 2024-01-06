@@ -48,10 +48,7 @@ struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
 
     var body: some View {
-        RecipeDetailView(recipe: $coordinator.recipeModel,
-                         didTapShowAttachment: {
-            coordinator.didTapShowAttachment(recipeAttachment: $0)
-        })
+        RecipeDetailContentView(recipe: $coordinator.recipeModel)
             .bottomToolbar {
                 HStack {
                     IconLabelFilledButtonView(title: "Bearbeiten") {
