@@ -14,16 +14,15 @@ class CustomNavigationController: UINavigationController {
     private var interactionController: UIPercentDrivenInteractiveTransition?
     private var edgeSwipeGestureRecognizer: UIScreenEdgePanGestureRecognizer?
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // turn it on
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
 //        delegate = self
-
+//
 //        edgeSwipeGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
 //        edgeSwipeGestureRecognizer!.edges = .left
 //        view.addGestureRecognizer(edgeSwipeGestureRecognizer!)
-    }
-
+//    }
+//
 //    @objc func handleSwipe(_ gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
 //        let percent = gestureRecognizer.translation(in: gestureRecognizer.view!).x / gestureRecognizer.view!.bounds.size.width
 //

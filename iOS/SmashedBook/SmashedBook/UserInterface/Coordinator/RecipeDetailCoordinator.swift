@@ -23,6 +23,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     var recipesDataSource: RecipesDataSource
     var recipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
+    var recipeAttachment: RecipeAttachmentModel? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
@@ -38,17 +39,15 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
             self.recipeEditCoordinator = nil
         }
     }
-    
-    func didTapShowAttachment(recipeAttachment: RecipeAttachmentModel) {
-        delegate?.didTapShowAttachment(attachment: recipeAttachment, in: self)
-    }
 }
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
 
     var body: some View {
-        RecipeDetailContentView(recipe: $coordinator.recipeModel)
+        RecipeDetailContentView(recipe: $coordinator.recipeModel) { attachment in
+            coordinator.recipeAttachment = attachment
+        }
             .bottomToolbar {
                 HStack {
                     IconLabelFilledButtonView(title: "Bearbeiten") {
@@ -63,6 +62,9 @@ struct RecipeDetailCoordinatorView: View {
             .onAppear {
                 coordinator.start()
             }
+            .sheet(item: $coordinator.recipeAttachment, content: { attachment in
+                ImageDetailView(attachment: attachment)
+            })
     }
 }
 

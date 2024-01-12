@@ -7,8 +7,9 @@ import { LinuxFunctionApp } from "@cdktf/provider-azurerm/lib/linux-function-app
 import { TerraformOutput } from "cdktf";
 import { AzureUserAssignedManagedId } from "./AzureUserAssignedManagedId";
 import { RoleAssignment } from "@cdktf/provider-azurerm/lib/role-assignment";
+import { ApplicationInsights } from "@cdktf/provider-azurerm/lib/application-insights";
 
-export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan) => {
+export const AzureFunctionApp = (scope: Construct, environment: Environment, storageAccount: StorageAccount, resourceGroup: ResourceGroup, servicePlan: ServicePlan, applicationInsights: ApplicationInsights) => {
     const name = `mealplan-cdktf-${environment}-function-app`;
     const location = "germanywestcentral";
 
@@ -39,6 +40,8 @@ export const AzureFunctionApp = (scope: Construct, environment: Environment, sto
                 applicationStack: {
                   nodeVersion: "18",
                 },
+                applicationInsightsConnectionString: applicationInsights.connectionString,
+                applicationInsightsKey: applicationInsights.instrumentationKey,
             },
             appSettings: {
                 "WEBSITE_RUN_FROM_PACKAGE": "1",

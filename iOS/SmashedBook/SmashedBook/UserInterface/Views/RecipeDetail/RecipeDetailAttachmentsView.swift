@@ -8,9 +8,6 @@
 import SwiftUI
 
 struct RecipeDetailAttachmentsView: View {
-    private static let attachmentHeight = 220.0
-    private static let attachmentWidth = 125.0
-    
     @Binding var attachments: [RecipeAttachmentModel]
     var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)?
     
@@ -23,8 +20,6 @@ struct RecipeDetailAttachmentsView: View {
                             didTapShowAttachment?(attachment.wrappedValue)
                         } label: {
                             RecipeDetailAttachmentImageView(attachment: attachment)
-                                .frame(width: RecipeDetailAttachmentsView.attachmentWidth, height: RecipeDetailAttachmentsView.attachmentHeight)
-                                .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
                         }
                     }
                 }

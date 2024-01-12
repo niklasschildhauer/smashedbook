@@ -10,6 +10,8 @@ import SwiftUI
 struct RecipeDetailContentView: View {
     @Binding var recipe: RecipeModel
     
+    var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)? = nil
+    
     var body: some View {
         List {
             ParallaxHeader() {
@@ -21,24 +23,24 @@ struct RecipeDetailContentView: View {
             }
             .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
             .listRowSeparator(.hidden)
-            
-            VStack (spacing: LayoutConstants.verticalSpacing) {
-                RecipeDetailMetainformationView(metainformation: recipe.metaInformation)
-                //                    .padding(.vertical ,LayoutConstants.verticalSpacing)
-                //                    .padding(.horizontal ,LayoutConstants.horizontalSpacing)
-                
-                
-            }
-            .listRowSeparator(.hidden)
-            .listRowInsets(.init(top: LayoutConstants.verticalSpacing, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing, trailing: LayoutConstants.safeAreaSpacing))
+        
+            RecipeDetailMetainformationView(metainformation: recipe.metaInformation)
+                .padding(.vertical, 10)
+                .listRowSeparator(.hidden)
+                .listRowInsets(.init(top: LayoutConstants.verticalSpacing, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing, trailing: LayoutConstants.safeAreaSpacing))
             ForEach(0..<5) { _ in
                 Text("Das ist ein Test")
                     .listRowInsets(.init(top: LayoutConstants.verticalSpacing, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing, trailing: LayoutConstants.safeAreaSpacing))
             }
+            RecipeDetailAttachmentsView(attachments: $recipe.attachments) { attachment in
+                didTapShowAttachment?(attachment)
+            }
+            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+
         }
-        .edgesIgnoringSafeArea(.top)
+        .edgesIgnoringSafeArea(.top) // TODO: With or without? It looks nicer without this value...
         .listStyle(.plain)
-      
+        
     }
 }
 

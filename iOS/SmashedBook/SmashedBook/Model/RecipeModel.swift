@@ -11,7 +11,7 @@ public struct RecipeModel: Codable, Hashable, Identifiable {
     public var id = UUID()
     var title: String = ""
     var metaInformation = RecipeMetainformationModel()
-    var attachments = [RecipeAttachmentModel]()
+    var attachments = [RecipeAttachmentModel(fileName: "deleteme")]
 }
 
 public var recipeModelMock: RecipeModel {

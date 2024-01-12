@@ -8,20 +8,28 @@
 import SwiftUI
 
 struct RecipeDetailAttachmentImageView: View {
+    private static let attachmentHeight = 220.0
+    private static let attachmentWidth = 125.0
+    
     @Binding var attachment: RecipeAttachmentModel
     
     // TODO: remove it?
     private let test = FileSystemAttachmentDataSource()
     
     var body: some View {
-        if let imageData = test.load(attachment: attachment),
-           let uiImage = UIImage(data: imageData) {
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
-        } else {
-            Text("Not loadable")
-        }
+        Image("ExamplePicture")
+            .resizable()
+            .scaledToFill()
+            .frame(width: RecipeDetailAttachmentImageView.attachmentWidth, height: RecipeDetailAttachmentImageView.attachmentHeight)
+            .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
+//        if let imageData = test.load(attachment: attachment),
+//           let uiImage = UIImage(data: imageData) {
+//            Image(uiImage: uiImage)
+//                .resizable()
+//                .scaledToFill()
+//        } else {
+//            Text("Not loadable")
+//        }
     }
 }
 
