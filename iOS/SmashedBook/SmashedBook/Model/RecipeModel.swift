@@ -12,6 +12,8 @@ public struct RecipeModel: Codable, Hashable, Identifiable {
     var title: String = ""
     var metaInformation = RecipeMetainformationModel()
     var attachments = [RecipeAttachmentModel(fileName: "deleteme")]
+    var ingredients = [RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"), RecipeIngredientModel(name: "Mehr", value: "500", unit: "Gramm")]
+    var steps = [RecipeStepModel(description: "Test nummero uno"), .init(description: "Zeiter Eintrag")]
 }
 
 public var recipeModelMock: RecipeModel {

@@ -28,7 +28,6 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
     
     func createRecipeDetailViewController(recipe: RecipeModel) -> UIViewController {
         let recipeDetailCoordinator = RecipeDetailCoordinator(recipeModel: recipe)
-//        let recipeDetailCoordinator = RecipeDetailInformationCoordinator(recipe: recipe)
         let recipeDetailViewController = recipeDetailCoordinator.rootViewController
         recipeDetailCoordinator.delegate = self
         

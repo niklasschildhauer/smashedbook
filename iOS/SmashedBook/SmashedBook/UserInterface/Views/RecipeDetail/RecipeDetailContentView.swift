@@ -28,14 +28,11 @@ struct RecipeDetailContentView: View {
                 .padding(.vertical, 10)
                 .listRowSeparator(.hidden)
                 .listRowInsets(.init(top: LayoutConstants.verticalSpacing, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing, trailing: LayoutConstants.safeAreaSpacing))
-            ForEach(0..<5) { _ in
-                Text("Das ist ein Test")
-                    .listRowInsets(.init(top: LayoutConstants.verticalSpacing, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing, trailing: LayoutConstants.safeAreaSpacing))
-            }
+            RecipeDetailIngredientsView(ingredients: $recipe.ingredients)
+            RecipeDetailStepsView(steps: $recipe.steps)
             RecipeDetailAttachmentsView(attachments: $recipe.attachments) { attachment in
                 didTapShowAttachment?(attachment)
             }
-            .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
 
         }
         .edgesIgnoringSafeArea(.top) // TODO: With or without? It looks nicer without this value...

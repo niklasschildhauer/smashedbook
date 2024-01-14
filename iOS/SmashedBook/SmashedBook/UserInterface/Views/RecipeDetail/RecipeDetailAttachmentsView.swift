@@ -12,7 +12,7 @@ struct RecipeDetailAttachmentsView: View {
     var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)?
     
     var body: some View {
-        SectionView(title: "Anhänge") {
+        ListSectionView(title: "Anhänge") {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: LayoutConstants.horizontalSpacing) {
                     ForEach($attachments) { attachment in
@@ -23,7 +23,9 @@ struct RecipeDetailAttachmentsView: View {
                         }
                     }
                 }
+                .padding(.leading, LayoutConstants.safeAreaSpacing)
             }
+            .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
         }
     }
 }

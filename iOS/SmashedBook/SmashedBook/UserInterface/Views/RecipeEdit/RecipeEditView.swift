@@ -13,11 +13,15 @@ struct RecipeEditView: View {
     // Rename the function to onAdd... instead of didTap...
     var didTapAddAttachment: () -> Void
     var didTapSelectTitleImage: () -> Void
+    var didTapAddIngredient: () -> Void
     
     var body: some View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
+            RecipeEditIngredientSectionView(ingredients: $recipe.ingredients) {
+                didTapAddIngredient()
+            }
             RecipeEditAttachmentSectionView(attachments: $recipe.attachments, didTapAddAttachment: didTapAddAttachment)
         }
     }
@@ -28,5 +32,7 @@ struct RecipeEditView: View {
         print("Add attachment")
     }, didTapSelectTitleImage: {
         print("Add title image")
+    }, didTapAddIngredient: {
+        print("Add ingredient")
     })
 }

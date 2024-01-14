@@ -71,6 +71,10 @@ import SwiftUI
         print(data.count)
         addImageCoordinator = nil
     }
+    
+    func addNewIngredient() {
+        recipeModel.ingredients.append(.init(name: "", value: "", unit: ""))
+    }
 }
 
 struct RecipeEditCoordinatorView: View {
@@ -86,6 +90,8 @@ struct RecipeEditCoordinatorView: View {
                     coordinator.addNewTitleImage(data: data)
                 }
             })
+        }, didTapAddIngredient: {
+            coordinator.addNewIngredient()
         })
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {

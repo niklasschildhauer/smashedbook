@@ -7,6 +7,13 @@
 
 import SwiftUI
 
+enum LoadingData<DataModel> {
+    case loading
+    case success(DataModel)
+    case failure(Error)
+    case notStarted
+}
+
 struct LoadingDataView<DataModel, Content: View>: View {
     var data: LoadingData<DataModel>
     let content: (_ item: DataModel) -> Content
