@@ -10,7 +10,6 @@ import SwiftUI
 struct RecipeEditIngredientSectionView: View {
     @Binding var ingredients: [RecipeIngredientModel]
     
-    var didTapAddIngredient: () -> Void
     var body: some View {
         ListSectionView (content: {
             ForEach($ingredients.indices, id: \.self) { ingredientIndex in
@@ -31,7 +30,7 @@ struct RecipeEditIngredientSectionView: View {
             }
         }, bottomAction: {
             Button(action: {
-                didTapAddIngredient()
+                ingredients.append(RecipeIngredientModel(name: "", value: "", unit: ""))
             }, label: {
                 Text("Hinzufügen")
             })
@@ -40,5 +39,5 @@ struct RecipeEditIngredientSectionView: View {
 }
 
 #Preview {
-    RecipeEditIngredientSectionView(ingredients: .constant([RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"), RecipeIngredientModel(name: "Mehr", value: "500", unit: "Gramm")]), didTapAddIngredient: {})
+    RecipeEditIngredientSectionView(ingredients: .constant([RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"), RecipeIngredientModel(name: "Mehr", value: "500", unit: "Gramm")]))
 }

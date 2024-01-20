@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct RecipeListingView: View {
-    // TODO: How should i pass this in?
     @Binding var recipes: [RecipeModel]
     
     private var twoColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 2)

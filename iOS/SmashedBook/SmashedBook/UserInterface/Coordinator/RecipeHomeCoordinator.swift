@@ -20,7 +20,6 @@ class RecipeHomeCoordinator: SwiftUICoordinator {
         RecipeHomeCoordinatorView(coordinator: self)
     }
     
-    var navigationPath = NavigationPath()
     var recipesDataSource: RecipesDataSource
     
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
@@ -49,9 +48,9 @@ struct RecipeHomeCoordinatorView: View {
     
     var body: some View {
         recipeOverviewView
-        .sheet(item: $coordinator.recipeEditCoordinator, content: { ediitRecipeCoordinator in
+        .sheet(item: $coordinator.recipeEditCoordinator, content: { editRecipeCoordinator in
             NavigationStack {
-                ediitRecipeCoordinator.rootView
+                editRecipeCoordinator.rootView
             }
         })
         .onAppear {

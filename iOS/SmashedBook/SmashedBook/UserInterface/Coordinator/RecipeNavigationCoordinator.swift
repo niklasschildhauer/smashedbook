@@ -52,13 +52,5 @@ extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
 extension RecipeNavigationCoordinator: RecipeDetailCoordinatorDelegate {
     func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator) {
         navigationController.pushViewController(createRecipeAttachmentDetailViewController(recipeAttachment: attachment), animated: true)
-
-    }
-}
-
-extension RecipeNavigationCoordinator: RecipeDetailInformationCoordinatorDelegate {
-    func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailInformationCoordinator) {
-        navigationController.pushViewController(createRecipeAttachmentDetailViewController(recipeAttachment: attachment), animated: true)
-
     }
 }

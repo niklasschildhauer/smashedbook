@@ -8,13 +8,25 @@
 import SwiftUI
 
 struct AttachmentLoaderView: View  {
-    @Binding var attachment: RecipeAttachmentModel
+    @Binding var attachment: RecipeAttachmentModel?
+    
+    private let attachmentDataSource = FileSystemAttachmentDataSource()
     
     var body: some View {
-        Text("Das ist ein Test")
-        Button("Hier passiert etwas") {
-            
+        if let attachment,
+           let image = image(from: attachment) {
+            image
+                .resizable()
+                .scaledToFit()
         }
+    }
+    
+    private func image(from attachment: RecipeAttachmentModel) -> Image? {
+        guard let data = attachmentDataSource.load(attachment: attachment),
+              let uiImage = UIImage(data: data) else {
+            return nil
+        }
+        return Image(uiImage: uiImage)
     }
 }
 

@@ -9,22 +9,23 @@ import SwiftUI
 import Photos
 import PDFKit
 
-@Observable class RecipeAddImageCoordinator: SwiftUICoordinator, Identifiable {    
+
+@Observable class RecipeAddImageCoordinator: SwiftUICoordinator, Identifiable {
     typealias CoordinatorView = RecipeAddImageCoordinatorView
-    
-    var rootView: RecipeAddImageCoordinatorView {
-        RecipeAddImageCoordinatorView(coordinator: self)
-    }
-    
-    var didAddImageData: ([Data]) -> Void
-    var selectedData: [Data] = []
     
     enum SelctionCount {
         case multiple
         case one
     }
     
+    var rootView: RecipeAddImageCoordinatorView {
+        RecipeAddImageCoordinatorView(coordinator: self)
+    }
+    
+    var didAddRecipeAttachments: ([RecipeAttachmentModel]) -> Void
     private let selectionCount: SelctionCount
+    fileprivate var selectedData: [Data] = []
+    private let attachmentDataSource: AttachmentDataSource
     
     var maxSelection: Int {
         switch selectionCount {
@@ -36,16 +37,21 @@ import PDFKit
     }
     
     init(selectionCount: SelctionCount = .multiple,
-         didAddImageData: @escaping ([Data]) -> Void) {
+         didAddRecipeAttachments: @escaping ([RecipeAttachmentModel]) -> Void,
+         attachmentDataSource: AttachmentDataSource = FileSystemAttachmentDataSource()) {
         self.selectionCount = selectionCount
-        self.didAddImageData = didAddImageData
+        self.didAddRecipeAttachments = didAddRecipeAttachments
+        self.attachmentDataSource = attachmentDataSource
     }
     
     // TODO: do i need the start method?
     func start() { }
     
     fileprivate func didTapSave() {
-        didAddImageData(selectedData)
+        let recipeAttachments = selectedData.compactMap { data in
+            attachmentDataSource.save(attachmentData: data)
+        }
+        didAddRecipeAttachments(recipeAttachments)
     }
 }
 

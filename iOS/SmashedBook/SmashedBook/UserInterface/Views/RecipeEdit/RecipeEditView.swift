@@ -9,30 +9,19 @@ import SwiftUI
 
 struct RecipeEditView: View {
     @Binding var recipe: RecipeModel
-    // TODO: Normally I would use a delegate pattern, but is this suitable here? Are there any other ways? As of seperation of concerns i do not want to present an other view within this view.
-    // Rename the function to onAdd... instead of didTap...
-    var didTapAddAttachment: () -> Void
-    var didTapSelectTitleImage: () -> Void
-    var didTapAddIngredient: () -> Void
+    @Binding var addAttachmentCoordinator: RecipeAddImageCoordinator?
     
     var body: some View {
         List {
             RecipeEditNameLabelView(name: $recipe.title)
+            RecipeEditTitleImageSectionView(addAttachmentCoordinator: $addAttachmentCoordinator)
             RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
-            RecipeEditIngredientSectionView(ingredients: $recipe.ingredients) {
-                didTapAddIngredient()
-            }
-            RecipeEditAttachmentSectionView(attachments: $recipe.attachments, didTapAddAttachment: didTapAddAttachment)
+            RecipeEditIngredientSectionView(ingredients: $recipe.ingredients)
+            RecipeEditAttachmentSectionView(attachments: $recipe.attachments, addAttachmentCoordinator: $addAttachmentCoordinator)
         }
     }
 }
 
 #Preview {
-    RecipeEditView(recipe: .constant(recipeModelMock), didTapAddAttachment:  {
-        print("Add attachment")
-    }, didTapSelectTitleImage: {
-        print("Add title image")
-    }, didTapAddIngredient: {
-        print("Add ingredient")
-    })
+    RecipeEditView(recipe: .constant(recipeModelMock), addAttachmentCoordinator: .constant(nil))
 }

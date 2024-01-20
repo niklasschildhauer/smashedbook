@@ -81,18 +81,7 @@ struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
     
     var body: some View {
-        RecipeEditView(recipe: $coordinator.recipeModel,
-                       didTapAddAttachment: {
-            coordinator.addImageCoordinator = RecipeAddImageCoordinator(selectionCount: .multiple, didAddImageData: coordinator.addNewAttachmentData)
-        }, didTapSelectTitleImage: {
-            coordinator.addImageCoordinator = RecipeAddImageCoordinator(selectionCount: .one, didAddImageData: { data in
-                if let data = data.first {
-                    coordinator.addNewTitleImage(data: data)
-                }
-            })
-        }, didTapAddIngredient: {
-            coordinator.addNewIngredient()
-        })
+        RecipeEditView(recipe: $coordinator.recipeModel, addAttachmentCoordinator: $coordinator.addImageCoordinator)
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
             IconLabelFilledButtonView(title: "Speichern") {

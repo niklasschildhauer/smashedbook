@@ -8,21 +8,22 @@
 import SwiftUI
 
 struct RecipeEditTitleImageSectionView: View {
-    var didTapSelectTitleImage: (() -> Void)
+    @Binding var addAttachmentCoordinator: RecipeAddImageCoordinator?
+    @State var titleImage: RecipeAttachmentModel?
     
     var body: some View {
-        ListSectionView(title: "Meta Information") {
-            Button(action: {
-                didTapSelectTitleImage()
-            }, label: {
-                IconLabelListCellView(title: "Bild auswählen", image: Image(systemName: "plus"))
+        AttachmentLoaderView(attachment: $titleImage)
+        Button(action: {
+            addAttachmentCoordinator = RecipeAddImageCoordinator(selectionCount: .one, didAddRecipeAttachments: { attachments in
+                titleImage = attachments.first
+                addAttachmentCoordinator = nil
             })
-        }
+        }, label: {
+            IconLabelListCellView(title: "Bild auswählen", image: Image(systemName: "plus"))
+        })
     }
 }
 
 #Preview {
-    RecipeEditTitleImageSectionView {
-        print("Select title image")
-    }
+    RecipeEditTitleImageSectionView(addAttachmentCoordinator: .constant(nil))
 }

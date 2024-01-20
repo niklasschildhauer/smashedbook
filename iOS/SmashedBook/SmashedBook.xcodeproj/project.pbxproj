@@ -33,7 +33,7 @@
 		855617752A9A36F300DD5877 /* ListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617742A9A36F300DD5877 /* ListSectionView.swift */; };
 		855617772A9A48E800DD5877 /* RecipeEditContentSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617762A9A48E800DD5877 /* RecipeEditContentSectionView.swift */; };
 		8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */; };
-		8556177C2A9A4D8C00DD5877 /* RecipeEditImageListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556177B2A9A4D8C00DD5877 /* RecipeEditImageListCellView.swift */; };
+		8556177C2A9A4D8C00DD5877 /* RecipeEditAttachmentPreviewListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8556177B2A9A4D8C00DD5877 /* RecipeEditAttachmentPreviewListCellView.swift */; };
 		855617822A9B4F5400DD5877 /* TagView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617812A9B4F5400DD5877 /* TagView.swift */; };
 		855617842A9B507200DD5877 /* ColorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617832A9B507200DD5877 /* ColorViewModifier.swift */; };
 		855617872A9B511600DD5877 /* ColorGenerator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617862A9B511600DD5877 /* ColorGenerator.swift */; };
@@ -99,6 +99,7 @@
 		85E151462AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */; };
 		85E151482AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */; };
 		85E1514A2AF7B11A00FB55CC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151492AF7B11A00FB55CC /* ImagePicker.swift */; };
+		85EB894A2B5BD9EF00E2277C /* RecipeEditViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85EB89492B5BD9EF00E2277C /* RecipeEditViewModel.swift */; };
 		85FE69C32AFE936900CBE50E /* RecipeAttachmentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FE69C22AFE936900CBE50E /* RecipeAttachmentModel.swift */; };
 		85FE69C52AFE947E00CBE50E /* AttachmentLoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FE69C42AFE947E00CBE50E /* AttachmentLoaderView.swift */; };
 		85FE69C72AFE96B100CBE50E /* AttachmentDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85FE69C62AFE96B100CBE50E /* AttachmentDataSource.swift */; };
@@ -150,7 +151,7 @@
 		855617742A9A36F300DD5877 /* ListSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionView.swift; sourceTree = "<group>"; };
 		855617762A9A48E800DD5877 /* RecipeEditContentSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditContentSectionView.swift; sourceTree = "<group>"; };
 		855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeGestureViewModifier.swift; sourceTree = "<group>"; };
-		8556177B2A9A4D8C00DD5877 /* RecipeEditImageListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditImageListCellView.swift; sourceTree = "<group>"; };
+		8556177B2A9A4D8C00DD5877 /* RecipeEditAttachmentPreviewListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditAttachmentPreviewListCellView.swift; sourceTree = "<group>"; };
 		855617812A9B4F5400DD5877 /* TagView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagView.swift; sourceTree = "<group>"; };
 		855617832A9B507200DD5877 /* ColorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewModifier.swift; sourceTree = "<group>"; };
 		855617862A9B511600DD5877 /* ColorGenerator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorGenerator.swift; sourceTree = "<group>"; };
@@ -218,6 +219,7 @@
 		85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentsView.swift; sourceTree = "<group>"; };
 		85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentImageView.swift; sourceTree = "<group>"; };
 		85E151492AF7B11A00FB55CC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		85EB89492B5BD9EF00E2277C /* RecipeEditViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditViewModel.swift; sourceTree = "<group>"; };
 		85FE69C22AFE936900CBE50E /* RecipeAttachmentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeAttachmentModel.swift; sourceTree = "<group>"; };
 		85FE69C42AFE947E00CBE50E /* AttachmentLoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentLoaderView.swift; sourceTree = "<group>"; };
 		85FE69C62AFE96B100CBE50E /* AttachmentDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDataSource.swift; sourceTree = "<group>"; };
@@ -465,11 +467,12 @@
 		858935F42A9255A700011D7F /* RecipeEdit */ = {
 			isa = PBXGroup;
 			children = (
+				85EB89492B5BD9EF00E2277C /* RecipeEditViewModel.swift */,
 				858935F52A9255D900011D7F /* RecipeEditView.swift */,
 				858935F82A9256DF00011D7F /* RecipeEditNameLabelView.swift */,
 				858935FA2A92650F00011D7F /* RecipeEditMetaInformationSectionView.swift */,
 				855617762A9A48E800DD5877 /* RecipeEditContentSectionView.swift */,
-				8556177B2A9A4D8C00DD5877 /* RecipeEditImageListCellView.swift */,
+				8556177B2A9A4D8C00DD5877 /* RecipeEditAttachmentPreviewListCellView.swift */,
 				8521589B2AAF7FA200A354F1 /* RecipeEditDescriptionListCellView.swift */,
 				85279F422AA480210031067B /* RecipeEditPortionCounterView.swift */,
 				85FE69C82AFEA35700CBE50E /* RecipeEditAttachmentSectionView.swift */,
@@ -754,6 +757,7 @@
 				855617922A9B7CB600DD5877 /* RecipeCardView.swift in Sources */,
 				85279F452AA488540031067B /* HideViewModifier.swift in Sources */,
 				852DEEE52B3999EF0097DA36 /* RecipeDetailInformationCoordinator.swift in Sources */,
+				85EB894A2B5BD9EF00E2277C /* RecipeEditViewModel.swift in Sources */,
 				858935E82A910B0800011D7F /* RecipeModel.swift in Sources */,
 				856E230E2B3DC3A6000D32CD /* ImageFullScreenViewController.swift in Sources */,
 				859236182ACC67BF00015B41 /* Coordinator+Protocol.swift in Sources */,
@@ -774,7 +778,7 @@
 				85FE69C32AFE936900CBE50E /* RecipeAttachmentModel.swift in Sources */,
 				858935F92A9256DF00011D7F /* RecipeEditNameLabelView.swift in Sources */,
 				85D5584B2AB76147006AE155 /* LoadingDataView.swift in Sources */,
-				8556177C2A9A4D8C00DD5877 /* RecipeEditImageListCellView.swift in Sources */,
+				8556177C2A9A4D8C00DD5877 /* RecipeEditAttachmentPreviewListCellView.swift in Sources */,
 				85D479072B3DCF8600C0472D /* FullScreenAnimationController.swift in Sources */,
 				85D5583D2AB74B54006AE155 /* RecipeWebRepository.swift in Sources */,
 				85E151442AF260D200FB55CC /* FillFrameViewModifier.swift in Sources */,

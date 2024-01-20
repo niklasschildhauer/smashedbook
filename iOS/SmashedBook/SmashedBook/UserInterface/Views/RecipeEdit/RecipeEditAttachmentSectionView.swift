@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeEditAttachmentSectionView: View {
     @Binding var attachments: [RecipeAttachmentModel]
-    var didTapAddAttachment: () -> Void
+    @Binding var addAttachmentCoordinator: RecipeAddImageCoordinator?
     
     private let attachmentDataSource = FileSystemAttachmentDataSource()
     
@@ -26,7 +26,10 @@ struct RecipeEditAttachmentSectionView: View {
                 attachments.remove(atOffsets: indexSet)
             }
             Button(action: {
-                didTapAddAttachment()
+                addAttachmentCoordinator = RecipeAddImageCoordinator(didAddRecipeAttachments: { attachments in
+                    self.attachments.append(contentsOf: attachments)
+                    addAttachmentCoordinator = nil
+                })
             }, label: {
                 IconLabelListCellView(title: "Anhang hinzufügen", image: Image(systemName: "plus"))
             })
