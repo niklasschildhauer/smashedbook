@@ -59,29 +59,14 @@ import SwiftUI
         validateErrorMessage = ""
         return true
     }
-    
-    func addNewAttachmentData(data: [Data]) {
-        recipeModel.attachments.append(contentsOf: data.compactMap { attachmentData in
-            attachmentDataSource.save(attachmentData: attachmentData)
-        })
-        addImageCoordinator = nil
-    }
-    
-    func addNewTitleImage(data: Data) {
-        print(data.count)
-        addImageCoordinator = nil
-    }
-    
-    func addNewIngredient() {
-        recipeModel.ingredients.append(.init(name: "", value: "", unit: ""))
-    }
 }
 
 struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
     
     var body: some View {
-        RecipeEditView(recipe: $coordinator.recipeModel, addAttachmentCoordinator: $coordinator.addImageCoordinator)
+        RecipeEditView(recipe: $coordinator.recipeModel, 
+                       addAttachmentCoordinator: $coordinator.addImageCoordinator)
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
             IconLabelFilledButtonView(title: "Speichern") {
@@ -98,7 +83,6 @@ struct RecipeEditCoordinatorView: View {
         }
         .interactiveDismissDisabled(coordinator.isRecipeEdited)
         .scrollDismissesKeyboard(.interactively)
-        // TODO: Does this work?
     }
 }
 

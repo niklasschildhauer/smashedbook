@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct ParallaxHeader<Background: View, BottomView: View>: View {
-    private let distanceToScrollWithParallaxEffect: CGFloat = 300
+    private let distanceToScrollWithParallaxEffect: CGFloat = 200
     private let slowScrollingSpeed = 0.7
     private let noScrollingSpeed = 1.0
     private let relativeScrollingSpeedForTitle = 0.85
-    private let metaInformationHeight = 100.0
-    private let screenHeight = 600.0
+    private let bottomViewHeight = 100.0
+    private let headerHeight = 600.0
     
     let background: () -> Background
     let bottomView: () -> BottomView
@@ -32,17 +32,7 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
                                               distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect,
                                               proxy: proxy)
                 let overScrollingValue = overScrollingValue(for: proxy)
-                let scaleEffect: (CGFloat) -> CGSize = { value in
-                    let x = value
-                    let x_min = 0.0
-                    let x_max = 250.0
-                    
-                    let y_min = 1.0
-                    let y_max = 1.1
-                    
-                    let zoomFactor = ((x - x_min) / (x_max - x_min)) * (y_max - y_min) + y_min
-                    return CGSize(width: zoomFactor, height: zoomFactor)
-                }
+
                 ZStack(alignment: .top) {
                     background()
                         .frame(
@@ -50,18 +40,22 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
                             height: proxy.size.height + overScrollingValue
                         )
                         .offset(y: backgroundOffset)
-                        .clipShape(Rectangle().offset(y: -overScrollingValue))
+                        .clipShape(
+                            Rectangle()
+                                .offset(y: -overScrollingValue)
+                        )
                     VStack {
                         Spacer()
                         bottomView()
-                            .frame(height: metaInformationHeight)
+                            .frame(height: bottomViewHeight)
                             .padding(.horizontal, LayoutConstants.safeAreaSpacing)
-                            .scaleEffect(scaleEffect(overScrollingValue * 10))
+                            .scaleEffect(scaleEffect(overScrollingValue * 4))
                             .offset(y: -overScrollingValue)
                     }
                 }
             }
-            .frame(minHeight: screenHeight)
+            .listRowInsets(.init(top: -5, leading: 0, bottom: 0, trailing: 0))
+            .frame(minHeight: headerHeight)
     }
     
     private func offset(for relativeScrollingSpeed: CGFloat, distanceToScrollWithParallaxEffect: CGFloat, proxy: GeometryProxy) -> CGFloat {
@@ -72,18 +66,35 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
             -$0 * relativeScrollingSpeed
         }
         let endOffsetOfParallaxEffect = distanceToScrollWithParallaxEffect * relativeScrollingSpeed
-        
-        if isScrollingDown(frame.minY) {
-            if !isParallaxEffectActive(frame.minY) {
-                return offsetForParallaxEffectAtCurrentScrollPosition(frame.minY)
+        let relativFrameHeight = (proxy.frame(in: .local).height - proxy.frame(in: .global).height)
+        let minY = frame.minY - relativFrameHeight
+                
+        if isScrollingDown(minY) {
+            if !isParallaxEffectActive(minY) {
+                return offsetForParallaxEffectAtCurrentScrollPosition(minY)
             }
             return endOffsetOfParallaxEffect
         }
-        return -frame.minY
+        return -minY
     }
     
     private func overScrollingValue(for proxy: GeometryProxy) -> CGFloat {
         let frame = proxy.frame(in: .scrollView)
-        return max(0, frame.minY)
+        let relativFrameHeight = proxy.frame(in: .local).height - proxy.frame(in: .global).height
+        let minY = frame.minY - relativFrameHeight
+
+        return max(0, minY)
+    }
+    
+    private func  scaleEffect(_ value: CGFloat) -> CGSize {
+        let x = value
+        let x_min = 0.0
+        let x_max = 250.0
+        
+        let y_min = 1.0
+        let y_max = 1.1
+        
+        let zoomFactor = ((x - x_min) / (x_max - x_min)) * (y_max - y_min) + y_min
+        return CGSize(width: zoomFactor, height: zoomFactor)
     }
 }

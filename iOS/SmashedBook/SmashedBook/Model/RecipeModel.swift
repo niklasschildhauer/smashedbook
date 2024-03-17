@@ -17,7 +17,7 @@ public struct RecipeModel: Codable, Hashable, Identifiable {
 }
 
 public var recipeModelMock: RecipeModel {
-    .init(title: "Mockrezept",
+    .init(title: "Lachs mit Tomate",
           metaInformation: RecipeMetainformationModel())
 }
 

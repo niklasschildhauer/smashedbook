@@ -44,7 +44,6 @@ import PDFKit
         self.attachmentDataSource = attachmentDataSource
     }
     
-    // TODO: do i need the start method?
     func start() { }
     
     fileprivate func didTapSave() {
