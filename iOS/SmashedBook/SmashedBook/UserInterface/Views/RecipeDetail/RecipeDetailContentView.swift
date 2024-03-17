@@ -26,6 +26,7 @@ struct RecipeDetailContentView: View {
                     .scaledToFill()
             } bottomView: {
                 VStack(spacing: LayoutConstants.verticalSpacing) {
+                    Spacer().frame(height: 50)
                     Text(recipe.title)
                         .font(.AbrilFatface, fontStyle: .largeTitle)
                         .foregroundStyle(.white)
@@ -37,8 +38,11 @@ struct RecipeDetailContentView: View {
                     .font(.footnote)
                     .foregroundStyle(.white)
                 }
+                .fill(.width, alignment: .bottom)
                 .padding(.bottom, LayoutConstants.safeAreaSpacing)
-                .background(.black)
+                .background(
+                    LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
+                )
             }
             .listRowSeparator(.hidden)
     

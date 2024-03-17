@@ -8,24 +8,13 @@
 import SwiftUI
 
 struct ParallaxHeader<Background: View, BottomView: View>: View {
-    private let distanceToScrollWithParallaxEffect: CGFloat = 200
+    private let distanceToScrollWithParallaxEffect: CGFloat = 300
     private let slowScrollingSpeed = 0.7
-    private let noScrollingSpeed = 1.0
-    private let relativeScrollingSpeedForTitle = 0.85
-    private let bottomViewHeight = 100.0
     private let headerHeight = 600.0
     
-    let background: () -> Background
-    let bottomView: () -> BottomView
-    
-    init(
-        @ViewBuilder background: @escaping () -> Background,
-        @ViewBuilder bottomView: @escaping () -> BottomView
-    ) {
-        self.background = background
-        self.bottomView = bottomView
-    }
-    
+    @ViewBuilder var background: Background
+    @ViewBuilder var bottomView: BottomView
+        
     var body: some View {
             GeometryReader { proxy in
                 let backgroundOffset = offset(for: slowScrollingSpeed,
@@ -34,7 +23,7 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
                 let overScrollingValue = overScrollingValue(for: proxy)
 
                 ZStack(alignment: .top) {
-                    background()
+                    background
                         .frame(
                             width: proxy.size.width,
                             height: proxy.size.height + overScrollingValue
@@ -46,10 +35,7 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
                         )
                     VStack {
                         Spacer()
-                        bottomView()
-                            .frame(height: bottomViewHeight)
-                            .padding(.horizontal, LayoutConstants.safeAreaSpacing)
-                            .scaleEffect(scaleEffect(overScrollingValue * 4))
+                        bottomView
                             .offset(y: -overScrollingValue)
                     }
                 }

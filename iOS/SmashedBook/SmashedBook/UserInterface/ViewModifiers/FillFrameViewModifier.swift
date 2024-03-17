@@ -15,6 +15,7 @@ struct FillFrameViewModifier: ViewModifier {
     }
     
     let fillType: FillType
+    let alignment: Alignment
     
     func body(content: Content) -> some View {
         switch fillType {
@@ -23,14 +24,14 @@ struct FillFrameViewModifier: ViewModifier {
                 .frame(
                     minHeight: 0,
                     maxHeight: .infinity,
-                    alignment: .topLeading
+                    alignment: alignment
                 )
         case .width:
             content
                 .frame(
                     minWidth: 0,
                     maxWidth: .infinity,
-                    alignment: .topLeading
+                    alignment: alignment
                 )
         case .frame:
             content
@@ -39,14 +40,14 @@ struct FillFrameViewModifier: ViewModifier {
                     maxWidth: .infinity,
                     minHeight: 0,
                     maxHeight: .infinity,
-                    alignment: .topLeading
+                    alignment: alignment
                 )
         }
     }
 }
 
 extension View {
-    func fill(_ frame: FillFrameViewModifier.FillType) -> some View {
-        self.modifier(FillFrameViewModifier(fillType: frame))
+    func fill(_ frame: FillFrameViewModifier.FillType, alignment: Alignment = .topLeading) -> some View {
+        self.modifier(FillFrameViewModifier(fillType: frame, alignment: alignment))
     }
 }
