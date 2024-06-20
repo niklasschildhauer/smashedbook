@@ -14,9 +14,7 @@ protocol Coordinator {
     var rootViewController: UIViewController { get }
 }
 
-protocol SwiftUICoordinator: Coordinator where CoordinatorView: View {
-    func start()
-}
+protocol SwiftUICoordinator: Coordinator where CoordinatorView: View { }
 
 extension SwiftUICoordinator {
     var rootViewController: UIViewController {

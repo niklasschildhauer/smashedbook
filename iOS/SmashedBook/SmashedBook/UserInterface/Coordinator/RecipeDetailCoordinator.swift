@@ -65,6 +65,7 @@ struct RecipeDetailCoordinatorView: View {
             .sheet(item: $coordinator.recipeAttachment, content: { attachment in
                 ImageDetailView(attachment: attachment)
             })
+            .environment(coordinator)
     }
 }
 

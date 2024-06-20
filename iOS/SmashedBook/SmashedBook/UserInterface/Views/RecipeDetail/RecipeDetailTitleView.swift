@@ -1,43 +1,32 @@
 //
 //  RecipeDetailTitleView.swift
-//  MealPlan
+//  SmashedBook
 //
-//  Created by Niklas Schildhauer on 01.11.23.
+//  Created by Niklas Schildhauer on 23.05.24.
 //
 
 import SwiftUI
 
 struct RecipeDetailTitleView: View {
+    let title: String
+    
     var body: some View {
-        VStack {
-            Spacer()
-            HStack {
-                Spacer()
-                Text("Lachsrezept")
-                    .font(.largeTitle)
-                    .fontWeight(.black)
-                    .fontDesign(.monospaced)
-                    .foregroundStyle(.white)
-                Spacer()
+        VStack(spacing: LayoutConstants.verticalSpacing) {
+            Spacer().frame(height: 40)
+            Text(title)
+                .font(.AbrilFatface, fontStyle: .largeTitle)
+                .foregroundStyle(.white)
+            HStack(spacing: LayoutConstants.horizontalSpacing) {
+                Text("🔥 320kcal")
+                Text("⏲️ 20min")
+                Text("🍽️ Abendessen")
             }
-            .padding()
-            .background(
-                LinearGradient(gradient: Gradient(colors: [.clear,
-                                                           Color(red: 0, green: 0, blue: 0, opacity: 0.3),
-                                                           Color(red: 0, green: 0, blue: 0, opacity: 0.6)
-                                                          ]),
-                               startPoint: .top,
-                               endPoint: .bottom)
-            )
+            .font(.footnote)
+            .foregroundStyle(.white)
         }
-        .background(.clear)
     }
 }
 
 #Preview {
-    ZStack {
-        Image("ExampleRecipe")
-            .frame(height: 400)
-        RecipeDetailTitleView()
-    }
+    RecipeDetailTitleView(title: "Testtitel")
 }

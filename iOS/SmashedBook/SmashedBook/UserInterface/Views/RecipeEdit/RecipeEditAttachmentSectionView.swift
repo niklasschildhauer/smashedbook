@@ -25,13 +25,14 @@ struct RecipeEditAttachmentSectionView: View {
             .onDelete { indexSet in
                 attachments.remove(atOffsets: indexSet)
             }
+        }, trailingAction: {
             Button(action: {
                 addAttachmentCoordinator = RecipeAddImageCoordinator(didAddRecipeAttachments: { attachments in
                     self.attachments.append(contentsOf: attachments)
                     addAttachmentCoordinator = nil
                 })
             }, label: {
-                IconLabelListCellView(title: "Anhang hinzufügen", image: Image(systemName: "plus"))
+                Text("Hinzufügen")
             })
         })
     }

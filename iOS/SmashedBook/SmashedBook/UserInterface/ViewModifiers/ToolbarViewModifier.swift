@@ -17,7 +17,7 @@ struct BottomToolbarViewModifier<ToolbarContent: View>: ViewModifier {
                 .padding(.horizontal, LayoutConstants.safeAreaSpacing)
                 .frame(height: LayoutConstants.bottomBarHeight)
             })
-            .ignoresSafeArea(.keyboard)
+//            .ignoresSafeArea(.keyboard)
     }
 }
 

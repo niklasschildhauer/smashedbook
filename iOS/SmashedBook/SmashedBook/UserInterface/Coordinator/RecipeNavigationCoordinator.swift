@@ -16,10 +16,10 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
     let navigationController = CustomNavigationController()
     
     func start() {
-        navigationController.viewControllers = [createRecipeCoordinatorViewController()]
+        navigationController.viewControllers = [createRecipeHomeCoordinatorViewController()]
     }
     
-    func createRecipeCoordinatorViewController() -> UIViewController {
+    func createRecipeHomeCoordinatorViewController() -> UIViewController {
         let recipeHomeCoordinator = RecipeHomeCoordinator()
         recipeHomeCoordinator.delegate = self
         

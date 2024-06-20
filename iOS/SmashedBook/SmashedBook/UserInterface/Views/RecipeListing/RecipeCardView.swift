@@ -12,21 +12,20 @@ struct RecipeCardView: View {
     var recipe: RecipeModel
     
     var body: some View {
-        VStack(alignment: .leading ){
+        ZStack(alignment: .bottom ){
             Image("ExampleRecipe")
                 .resizable()
                 .scaledToFill()
-                .frame(height: 100)
-                .clipShape(RoundedRectangle(cornerRadius: 10))
-                .contentShape(RoundedRectangle(cornerRadius: 10))
-                .shadow(radius: 5)
-            Text(recipe.title)
-                .font(.title3)
-                .multilineTextAlignment(.leading)
-            HStack {
-                TagView(text: recipe.metaInformation.meal.rawValue)
-            }
+                .frame(height: 200)
+            RecipeDetailTitleView(title: recipe.title)
+                .fill(.width, alignment: .bottom)
+                .padding(.bottom, LayoutConstants.safeAreaSpacing)
+                .background(
+                    LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
+                )
         }
+        .clipShape(RoundedRectangle(cornerRadius: 10))
+        .contentShape(RoundedRectangle(cornerRadius: 10))
     }
 }
 

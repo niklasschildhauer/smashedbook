@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeListingView: View {
     @Binding var recipes: [RecipeModel]
     
-    private var twoColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 2)
+    private var oneColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 1)
     var didTapOpenRecipe: (RecipeModel) -> Void
     
     init(recipes: Binding<[RecipeModel]>, didTapOpenRecipe: @escaping (RecipeModel) -> Void) {
@@ -27,7 +27,7 @@ struct RecipeListingView: View {
                     Spacer()
                 }
             } else {
-                LazyVGrid(columns: twoColumnGrid, spacing: LayoutConstants.verticalSpacing) {
+                LazyVGrid(columns: oneColumnGrid, spacing: LayoutConstants.verticalSpacing) {
                     ForEach(recipes) { recipe in
                         Button(action: {
                             didTapOpenRecipe(recipe)

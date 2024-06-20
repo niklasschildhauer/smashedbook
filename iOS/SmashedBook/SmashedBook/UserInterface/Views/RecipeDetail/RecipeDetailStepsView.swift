@@ -9,9 +9,11 @@ import SwiftUI
 
 struct RecipeDetailStepsView: View {
     @Binding var steps: [RecipeStepModel]
+    @Environment(RecipeDetailCoordinator.self) var coordinator
     
     var body: some View {
-        ListSectionView(title: "Schritte") {
+        ListSectionView(title: "Schritte",
+                        content: {
             ForEach($steps.indices, id: \.self) { stepIndex in
                 HStack(alignment: .firstTextBaseline, spacing: LayoutConstants.horizontalSpacing) {
                     Text(stepName(for: stepIndex))
@@ -21,7 +23,7 @@ struct RecipeDetailStepsView: View {
                 }
                 .listRowSeparator(.hidden)
             }
-        }
+        })
     }
     
     func stepName(for index: Int) -> String {
@@ -32,5 +34,7 @@ struct RecipeDetailStepsView: View {
 #Preview {
     List {
         RecipeDetailStepsView(steps: .constant([.init(description: "Das ist eine Beschreibung eines Rezeptschrittes"), .init(description: "Danach kommt ein weiterer Rezeptschritt.")]))
+            .environment(RecipeDetailCoordinator(recipeModel: recipeModelMock))
     }
+
 }

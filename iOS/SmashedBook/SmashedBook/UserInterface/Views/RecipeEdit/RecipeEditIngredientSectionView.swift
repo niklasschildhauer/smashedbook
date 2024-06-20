@@ -11,7 +11,7 @@ struct RecipeEditIngredientSectionView: View {
     @Binding var ingredients: [RecipeIngredientModel]
     
     var body: some View {
-        ListSectionView (content: {
+        ListSectionView (title: "Zutaten", content: {
             ForEach($ingredients.indices, id: \.self) { ingredientIndex in
                 HStack(alignment: .top) {
                     TextField(text: $ingredients[ingredientIndex].name) {
@@ -28,7 +28,7 @@ struct RecipeEditIngredientSectionView: View {
                     }
                 }
             }
-        }, bottomAction: {
+        }, trailingAction: {
             Button(action: {
                 ingredients.append(RecipeIngredientModel(name: "", value: "", unit: ""))
             }, label: {

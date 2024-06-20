@@ -44,13 +44,6 @@ private lazy var headerImageView: UIImageView = {
     return imageView
 }()
 
-private lazy var headerContentViewController: UIHostingController = {
-    let hostingController = UIHostingController(rootView: RecipeDetailTitleView())
-    hostingController.view.translatesAutoresizingMaskIntoConstraints = false
-    hostingController.view.backgroundColor = .clear
-    return hostingController
-}()
-
 private lazy var containerStackView: UIStackView = {
     let view = UIStackView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -132,14 +125,6 @@ private func setupHeader() {
     bottomConstraint.priority = UILayoutPriority(900)
     bottomConstraint.isActive = true
     headerImageView.anchorToAllEdgesOfSuperview()
-    
-    guard let headerContentView = headerContentViewController.view else { return }
-    addChild(headerContentViewController)
-    headerView.addSubview(headerContentView)
-    headerView.bottomAnchor.constraint(equalTo: headerContentView.bottomAnchor).isActive = true
-    headerView.leadingAnchor.constraint(equalTo: headerContentView.leadingAnchor).isActive = true
-    headerView.trailingAnchor.constraint(equalTo: headerContentView.trailingAnchor).isActive = true
-    headerContentViewController.didMove(toParent: self)
 }
 
 private func setupContentView() {

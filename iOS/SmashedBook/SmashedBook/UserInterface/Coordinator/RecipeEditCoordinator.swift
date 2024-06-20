@@ -19,7 +19,6 @@ import SwiftUI
             isRecipeEdited = true
         }
     }
-    var validateErrorMessage: String?
     var addImageCoordinator: RecipeAddImageCoordinator? = nil
     // TODO: how to avoid this overhead of saving the recipe twice?
     var didEditRecipeModel: ((RecipeModel) -> Void)?
@@ -35,29 +34,13 @@ import SwiftUI
     func start() { }
     
     func save() async {
-        if isRecipeValid() {
+        if recipeModel.isValid {
             // TODO: It does not reset the binded value!
             didEditRecipeModel?(recipeModel)
         } else {
             // TODO: Handle this!
             print("I am not gonna save it!")
         }
-    }
-    
-    // TODO: Outsource to recipeValidator
-    func isRecipeValid() -> Bool {
-        guard recipeModel.title != "" else {
-            validateErrorMessage = "Rezeptname nicht ausgefüllt"
-            return false
-        }
-        
-        guard recipeModel.metaInformation.energy != nil else {
-            validateErrorMessage = "Kalorien ausfüllen"
-            return false
-        }
-        
-        validateErrorMessage = ""
-        return true
     }
 }
 

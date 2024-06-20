@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct ParallaxHeader<Background: View, BottomView: View>: View {
-    private let distanceToScrollWithParallaxEffect: CGFloat = 300
+    private let distanceToScrollWithParallaxEffect: CGFloat = 200
     private let slowScrollingSpeed = 0.7
     private let headerHeight = 600.0
     

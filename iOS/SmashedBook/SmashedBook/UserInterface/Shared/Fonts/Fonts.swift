@@ -9,6 +9,8 @@ import SwiftUI
 
 enum CustomFont {
     case AbrilFatface
+    case GeistMedium
+    case GeistBlack
     
     enum FontStyle: CGFloat {
         case body = 16
@@ -33,6 +35,8 @@ enum CustomFont {
     fileprivate func getFontDefinition() -> CustomFontDefinition {
         return switch self {
         case .AbrilFatface: AbrilFatfaceFontDefinition()
+        case .GeistMedium: GeistMediumFontDefinition()
+        case .GeistBlack: GeistBlackFontDefinition()
         }
     }
 }
@@ -65,8 +69,14 @@ extension CustomFontDefinition {
     }
 }
 
-struct AbrilFatfaceFontDefinition: CustomFontDefinition {
+class AbrilFatfaceFontDefinition: CustomFontDefinition {
     let name = "AbrilFatface-Regular"
 }
 
+class GeistMediumFontDefinition: CustomFontDefinition {
+    let name = "Geist-Medium"
+}
 
+class GeistBlackFontDefinition: CustomFontDefinition {
+    let name = "Geist-Black"
+}

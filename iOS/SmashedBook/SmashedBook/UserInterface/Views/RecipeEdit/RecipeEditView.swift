@@ -13,12 +13,11 @@ struct RecipeEditView: View {
     
     var body: some View {
         List {
-            RecipeEditNameLabelView(name: $recipe.title)
-            RecipeEditTitleImageSectionView(addAttachmentCoordinator: $addAttachmentCoordinator)
-            RecipeEditMetaInformationSectionView(metaInformationModel: $recipe.metaInformation)
+            RecipeEditNameSectionView(name: $recipe.title)
             RecipeEditIngredientSectionView(ingredients: $recipe.ingredients)
             RecipeEditAttachmentSectionView(attachments: $recipe.attachments, addAttachmentCoordinator: $addAttachmentCoordinator)
         }
+        .listStyle(.plain)
     }
 }
 

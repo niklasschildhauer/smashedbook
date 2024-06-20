@@ -32,8 +32,8 @@ struct ListSectionView<Content: View, TrailingAction: View, BottomAction: View>:
                 HStack {
                     Text(title.uppercased())
                         .fontWeight(.semibold)
-                        .font(.footnote)
-                        .foregroundStyle(.black)
+                        .font(.GeistMedium, fontStyle: .footnote)
+                        .foregroundStyle(.gray)
                         Spacer()
                         trailingAction()
                 }

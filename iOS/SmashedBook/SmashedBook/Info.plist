@@ -20,6 +20,14 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>AbrilFatface-Regular.ttf</string>
+		<string>Geist-Black.otf</string>
+		<string>Geist-Bold.otf</string>
+		<string>Geist-Light.otf</string>
+		<string>Geist-Medium.otf</string>
+		<string>Geist-Regular.otf</string>
+		<string>Geist-SemiBold.otf</string>
+		<string>Geist-UltraBlack.otf</string>
+		<string>Geist-UltraLight.otf</string>
 	</array>
 </dict>
 </plist>
