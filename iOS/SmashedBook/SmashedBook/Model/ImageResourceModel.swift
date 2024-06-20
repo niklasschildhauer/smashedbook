@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct RecipeAttachmentModel: Codable, Hashable, Identifiable {
+struct ImageResourceModel: Codable, Hashable, Identifiable {
     var id = UUID()
     let fileName: String
 }

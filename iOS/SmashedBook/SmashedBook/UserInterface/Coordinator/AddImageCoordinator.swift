@@ -10,22 +10,22 @@ import Photos
 import PDFKit
 
 
-@Observable class RecipeAddImageCoordinator: SwiftUICoordinator, Identifiable {
-    typealias CoordinatorView = RecipeAddImageCoordinatorView
+@Observable class AddImageCoordinator: SwiftUICoordinator, Identifiable {
+    typealias CoordinatorView = AddImageCoordinatorView
     
     enum SelctionCount {
         case multiple
         case one
     }
     
-    var rootView: RecipeAddImageCoordinatorView {
-        RecipeAddImageCoordinatorView(coordinator: self)
+    var rootView: AddImageCoordinatorView {
+        AddImageCoordinatorView(coordinator: self)
     }
     
-    var didAddRecipeAttachments: ([RecipeAttachmentModel]) -> Void
+    var didAddImageResources: ([ImageResourceModel]) -> Void
     private let selectionCount: SelctionCount
     fileprivate var selectedData: [Data] = []
-    private let attachmentDataSource: AttachmentDataSource
+    private let resourcesDataSource: ResourcesDataSource
     
     var maxSelection: Int {
         switch selectionCount {
@@ -37,25 +37,25 @@ import PDFKit
     }
     
     init(selectionCount: SelctionCount = .multiple,
-         didAddRecipeAttachments: @escaping ([RecipeAttachmentModel]) -> Void,
-         attachmentDataSource: AttachmentDataSource = FileSystemAttachmentDataSource()) {
+         didAddImageResources: @escaping ([ImageResourceModel]) -> Void,
+         resourcesDataSource: ResourcesDataSource = FileSystemAttachmentDataSource()) {
         self.selectionCount = selectionCount
-        self.didAddRecipeAttachments = didAddRecipeAttachments
-        self.attachmentDataSource = attachmentDataSource
+        self.didAddImageResources = didAddImageResources
+        self.resourcesDataSource = resourcesDataSource
     }
     
     func start() { }
     
     fileprivate func didTapSave() {
-        let recipeAttachments = selectedData.compactMap { data in
-            attachmentDataSource.save(attachmentData: data)
+        let imageResources = selectedData.compactMap { data in
+            resourcesDataSource.save(attachmentData: data)
         }
-        didAddRecipeAttachments(recipeAttachments)
+        didAddImageResources(imageResources)
     }
 }
 
-struct RecipeAddImageCoordinatorView: View {
-    @State var coordinator: RecipeAddImageCoordinator
+struct AddImageCoordinatorView: View {
+    @State var coordinator: AddImageCoordinator
     
     var body: some View {
         ImagePicker(selectionCount: coordinator.maxSelection, selectedImageData: $coordinator.selectedData)

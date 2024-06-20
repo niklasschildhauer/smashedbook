@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct AttachmentLoaderView: View  {
-    @Binding var attachment: RecipeAttachmentModel?
+    @Binding var attachment: ImageResourceModel?
     
     private let attachmentDataSource = FileSystemAttachmentDataSource()
     
@@ -21,7 +21,7 @@ struct AttachmentLoaderView: View  {
         }
     }
     
-    private func image(from attachment: RecipeAttachmentModel) -> Image? {
+    private func image(from attachment: ImageResourceModel) -> Image? {
         guard let data = attachmentDataSource.load(attachment: attachment),
               let uiImage = UIImage(data: data) else {
             return nil

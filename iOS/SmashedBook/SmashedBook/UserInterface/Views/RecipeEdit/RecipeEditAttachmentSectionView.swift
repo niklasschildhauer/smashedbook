@@ -8,9 +8,8 @@
 import SwiftUI
 
 struct RecipeEditAttachmentSectionView: View {
-    @Binding var attachments: [RecipeAttachmentModel]
-    @Binding var addAttachmentCoordinator: RecipeAddImageCoordinator?
-    
+    @Binding var attachments: [ImageResourceModel]
+    @Binding var addImageCoordinator: AddImageCoordinator?
     private let attachmentDataSource = FileSystemAttachmentDataSource()
     
     var body: some View {
@@ -27,9 +26,9 @@ struct RecipeEditAttachmentSectionView: View {
             }
         }, trailingAction: {
             Button(action: {
-                addAttachmentCoordinator = RecipeAddImageCoordinator(didAddRecipeAttachments: { attachments in
+                addImageCoordinator = AddImageCoordinator(didAddImageResources: { attachments in
                     self.attachments.append(contentsOf: attachments)
-                    addAttachmentCoordinator = nil
+                    addImageCoordinator = nil
                 })
             }, label: {
                 Text("Hinzufügen")
@@ -37,7 +36,7 @@ struct RecipeEditAttachmentSectionView: View {
         })
     }
     
-    private func image(from attachment: RecipeAttachmentModel) -> Image? {
+    private func image(from attachment: ImageResourceModel) -> Image? {
         guard let data = attachmentDataSource.load(attachment: attachment),
               let uiImage = UIImage(data: data) else {
             return nil

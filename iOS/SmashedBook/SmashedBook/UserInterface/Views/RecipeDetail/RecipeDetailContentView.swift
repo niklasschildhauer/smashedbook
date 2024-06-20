@@ -11,7 +11,7 @@ struct RecipeDetailContentView: View {
     @Binding var recipe: RecipeModel
     @State var open = false
     
-    var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)? = nil
+    var didTapShowAttachment: ((ImageResourceModel) -> Void)? = nil
     
     var body: some View {
         List {

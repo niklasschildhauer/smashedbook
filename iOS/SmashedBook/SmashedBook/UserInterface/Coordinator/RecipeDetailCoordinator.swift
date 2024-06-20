@@ -8,7 +8,7 @@
 import SwiftUI
 
 protocol RecipeDetailCoordinatorDelegate: AnyObject {
-    func didTapShowAttachment(attachment: RecipeAttachmentModel, in coordinator: RecipeDetailCoordinator)
+    func didTapShowAttachment(attachment: ImageResourceModel, in coordinator: RecipeDetailCoordinator)
 }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator {
@@ -23,7 +23,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     var recipesDataSource: RecipesDataSource
     var recipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
-    var recipeAttachment: RecipeAttachmentModel? = nil
+    var recipeAttachment: ImageResourceModel? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource

@@ -12,7 +12,7 @@ struct ImageDetailView: View {
     @State private var currentZoom = 0.0
     @State private var totalZoom = 1.0
     
-    var attachment: RecipeAttachmentModel
+    var attachment: ImageResourceModel
     
     // TODO: remove it?
     private let filesystem = FileSystemAttachmentDataSource()

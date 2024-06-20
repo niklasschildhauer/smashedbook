@@ -9,18 +9,19 @@ import SwiftUI
 
 struct RecipeEditView: View {
     @Binding var recipe: RecipeModel
-    @Binding var addAttachmentCoordinator: RecipeAddImageCoordinator?
+    @Binding var addImageCoordinator: AddImageCoordinator?
     
     var body: some View {
         List {
+            RecipeEditTitleImageSectionView(addImageCoordinator: $addImageCoordinator, titleImage: $recipe.titleImage)
             RecipeEditNameSectionView(name: $recipe.title)
             RecipeEditIngredientSectionView(ingredients: $recipe.ingredients)
-            RecipeEditAttachmentSectionView(attachments: $recipe.attachments, addAttachmentCoordinator: $addAttachmentCoordinator)
+            RecipeEditAttachmentSectionView(attachments: $recipe.attachments, addImageCoordinator: $addImageCoordinator)
         }
-        .listStyle(.plain)
+        .listStyle(.insetGrouped)
     }
 }
 
 #Preview {
-    RecipeEditView(recipe: .constant(recipeModelMock), addAttachmentCoordinator: .constant(nil))
+    RecipeEditView(recipe: .constant(recipeModelMock), addImageCoordinator: .constant(nil))
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 protocol RecipeDetailPresenterDelegate: AnyObject {
-    func didTapShowAttachment(attachment: RecipeAttachmentModel, in presenter: RecipeDetailPresenting)
+    func didTapShowAttachment(attachment: ImageResourceModel, in presenter: RecipeDetailPresenting)
 }
 
 protocol RecipeDetailViewing: AnyObject {
@@ -19,7 +19,7 @@ protocol RecipeDetailPresenting {
     var view: RecipeDetailViewing? { get set }
     var numberOfAttachments: Int { get }
     func didSelectAttachment(at indexPath: IndexPath)
-    func attachment(at indexPath: IndexPath) -> RecipeAttachmentModel
+    func attachment(at indexPath: IndexPath) -> ImageResourceModel
 }
 
 class RecipeDetailPresenter: RecipeDetailPresenting {
@@ -38,11 +38,11 @@ class RecipeDetailPresenter: RecipeDetailPresenting {
     
     func didSelectAttachment(at indexPath: IndexPath) {
         //let selectedAttachment = attachment(at: indexPath)
-        delegate?.didTapShowAttachment(attachment: RecipeAttachmentModel(fileName: "Test"), in: self)
+        delegate?.didTapShowAttachment(attachment: ImageResourceModel(fileName: "Test"), in: self)
         print("We tapepd")
     }
     
-    func attachment(at indexPath: IndexPath) -> RecipeAttachmentModel {
+    func attachment(at indexPath: IndexPath) -> ImageResourceModel {
         let index = indexPath.row
         return recipe.attachments[index]
     }

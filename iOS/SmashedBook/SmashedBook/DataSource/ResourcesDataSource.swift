@@ -9,18 +9,18 @@ import Foundation
 //TODO: Remove it!
 import UIKit
 
-protocol AttachmentDataSource {
-    func load(attachment: RecipeAttachmentModel) -> Data?
-    func save(attachmentData: Data) -> RecipeAttachmentModel?
+protocol ResourcesDataSource {
+    func load(attachment: ImageResourceModel) -> Data?
+    func save(attachmentData: Data) -> ImageResourceModel?
     // TODO: Implement a cache middleware here
 }
 
-class FileSystemAttachmentDataSource: AttachmentDataSource {
+class FileSystemAttachmentDataSource: ResourcesDataSource {
     private var osFileManager: FileManager {
         FileManager.default
     }
     
-    func load(attachment: RecipeAttachmentModel) -> Data? {
+    func load(attachment: ImageResourceModel) -> Data? {
         guard let fileurl = fileUrl(of: attachment.fileName) else {
             return nil
         }
@@ -28,7 +28,7 @@ class FileSystemAttachmentDataSource: AttachmentDataSource {
         return try? Data(contentsOf: fileurl)
     }
     
-    func save(attachmentData: Data) -> RecipeAttachmentModel? {
+    func save(attachmentData: Data) -> ImageResourceModel? {
         let randomFileName = UUID().uuidString
         guard let fileurl = fileUrl(of: randomFileName) else {
             return nil
@@ -40,7 +40,7 @@ class FileSystemAttachmentDataSource: AttachmentDataSource {
             return nil
         }
         
-        return RecipeAttachmentModel(fileName: randomFileName)
+        return ImageResourceModel(fileName: randomFileName)
     }
     
     private func fileUrl(of fileName: String) -> URL? {

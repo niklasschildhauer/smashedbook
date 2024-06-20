@@ -19,7 +19,7 @@ import SwiftUI
             isRecipeEdited = true
         }
     }
-    var addImageCoordinator: RecipeAddImageCoordinator? = nil
+    var addImageCoordinator: AddImageCoordinator? = nil
     // TODO: how to avoid this overhead of saving the recipe twice?
     var didEditRecipeModel: ((RecipeModel) -> Void)?
     var isRecipeEdited = false
@@ -49,7 +49,7 @@ struct RecipeEditCoordinatorView: View {
     
     var body: some View {
         RecipeEditView(recipe: $coordinator.recipeModel, 
-                       addAttachmentCoordinator: $coordinator.addImageCoordinator)
+                       addImageCoordinator: $coordinator.addImageCoordinator)
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
             IconLabelFilledButtonView(title: "Speichern") {

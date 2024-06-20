@@ -11,7 +11,7 @@ struct RecipeDetailAttachmentImageView: View {
     private static let attachmentHeight = 220.0
     private static let attachmentWidth = 125.0
     
-    @Binding var attachment: RecipeAttachmentModel
+    @Binding var attachment: ImageResourceModel
     
     // TODO: remove it?
     private let test = FileSystemAttachmentDataSource()
@@ -34,7 +34,7 @@ struct RecipeDetailAttachmentImageView: View {
 }
 
 #Preview {
-    RecipeDetailAttachmentImageView(attachment: .constant(RecipeAttachmentModel(fileName: "test")))
+    RecipeDetailAttachmentImageView(attachment: .constant(ImageResourceModel(fileName: "test")))
         .frame(width: 80, height: 200)
         .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
 }

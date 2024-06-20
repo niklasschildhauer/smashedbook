@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RecipeDetailAttachmentsView: View {
-    @Binding var attachments: [RecipeAttachmentModel]
-    var didTapShowAttachment: ((RecipeAttachmentModel) -> Void)?
+    @Binding var attachments: [ImageResourceModel]
+    var didTapShowAttachment: ((ImageResourceModel) -> Void)?
     
     var body: some View {
         ListSectionView(title: "Anhänge") {
