@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeDetailContentView: View {
+struct RecipeDetailView: View {
     @Binding var recipe: RecipeModel
     @State var open = false
     
@@ -16,7 +16,6 @@ struct RecipeDetailContentView: View {
     var body: some View {
         List {
             RecipeDetailHeaderView(title: $recipe.title)
-            RecipeDetailIngredientsView(ingredients: $recipe.ingredients)
             RecipeDetailStepsView(steps: $recipe.steps)
             RecipeDetailAttachmentsView(attachments: $recipe.attachments) { attachment in
                 didTapShowAttachment?(attachment)
@@ -32,6 +31,6 @@ struct RecipeDetailContentView: View {
 }
 
 #Preview {
-    RecipeDetailContentView(recipe: .constant(recipeModelMock))
+    RecipeDetailView(recipe: .constant(recipeModelMock))
 }
 

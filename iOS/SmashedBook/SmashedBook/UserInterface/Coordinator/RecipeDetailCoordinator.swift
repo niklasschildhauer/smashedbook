@@ -45,7 +45,7 @@ struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
 
     var body: some View {
-        RecipeDetailContentView(recipe: $coordinator.recipeModel) { attachment in
+        RecipeDetailView(recipe: $coordinator.recipeModel) { attachment in
             coordinator.recipeAttachment = attachment
         }
             .bottomToolbar {

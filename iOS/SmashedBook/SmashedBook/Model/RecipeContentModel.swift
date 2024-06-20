@@ -12,8 +12,9 @@ public struct RecipeContentModel: Codable, Hashable {
     var id = UUID()
     var type: ContentType
     
-    public enum ContentType: Codable, Hashable {
-        case text
+    enum ContentType: Codable, Hashable {
+        case step(RecipeStepModel)
+        case ingredient(RecipeIngredientModel)
     }
 }
 

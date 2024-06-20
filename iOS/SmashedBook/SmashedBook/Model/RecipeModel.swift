@@ -11,14 +11,13 @@ public struct RecipeModel: Codable, Hashable, Identifiable {
     public var id = UUID()
     var title: String = ""
     var titleImage: ImageResourceModel?
-    var metaInformation = RecipeMetainformationModel()
+    var contents: [RecipeContentModel] = []
     var attachments = [ImageResourceModel(fileName: "deleteme")]
     var ingredients = [RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"), RecipeIngredientModel(name: "Mehr", value: "500", unit: "Gramm")]
     var steps = [RecipeStepModel(description: "Test nummero uno"), .init(description: "Zeiter Eintrag")]
 }
 
 public var recipeModelMock: RecipeModel {
-    .init(title: "Lachs mit Tomate",
-          metaInformation: RecipeMetainformationModel())
+    .init(title: "Lachs mit Tomate")
 }
 
