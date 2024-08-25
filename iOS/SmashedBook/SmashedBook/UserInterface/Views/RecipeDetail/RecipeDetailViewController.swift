@@ -53,7 +53,7 @@ private lazy var containerStackView: UIStackView = {
 }()
 
 private lazy var recipeContentViewController: UIHostingController = {
-    let hostingController = UIHostingController(rootView: RecipeDetailView(recipe: .constant(recipeModelMock)))
+    let hostingController = UIHostingController(rootView: RecipeDetailView(recipe: .constant(recipeModelMock), selectedRecipeStep: .constant(nil)))
     hostingController.view.translatesAutoresizingMaskIntoConstraints = false
     hostingController.view.backgroundColor = .clear
     return hostingController

@@ -79,6 +79,7 @@
 		85AFE78B2B53FE50001F4AE9 /* RecipeDetailStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AFE78A2B53FE50001F4AE9 /* RecipeDetailStepsView.swift */; };
 		85AFE78D2B542895001F4AE9 /* RecipeIngredientModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AFE78C2B542895001F4AE9 /* RecipeIngredientModel.swift */; };
 		85AFE78F2B542903001F4AE9 /* RecipeContentsIngredientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85AFE78E2B542903001F4AE9 /* RecipeContentsIngredientView.swift */; };
+		85B8E28B2C7B1ECD0055AC6C /* RecipeEditStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B8E28A2C7B1ECD0055AC6C /* RecipeEditStepView.swift */; };
 		85BE2D0B2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */; };
 		85BE2D0D2A951AC1001E3551 /* IconLabelListCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */; };
 		85BE2D0F2A951AF0001E3551 /* ListCellWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */; };
@@ -217,6 +218,7 @@
 		85AFE78A2B53FE50001F4AE9 /* RecipeDetailStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailStepsView.swift; sourceTree = "<group>"; };
 		85AFE78C2B542895001F4AE9 /* RecipeIngredientModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeIngredientModel.swift; sourceTree = "<group>"; };
 		85AFE78E2B542903001F4AE9 /* RecipeContentsIngredientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeContentsIngredientView.swift; sourceTree = "<group>"; };
+		85B8E28A2C7B1ECD0055AC6C /* RecipeEditStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditStepView.swift; sourceTree = "<group>"; };
 		85BE2D0A2A951597001E3551 /* OneLineTitleCustomElementListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneLineTitleCustomElementListCellView.swift; sourceTree = "<group>"; };
 		85BE2D0C2A951AC1001E3551 /* IconLabelListCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconLabelListCellView.swift; sourceTree = "<group>"; };
 		85BE2D0E2A951AF0001E3551 /* ListCellWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCellWrapperView.swift; sourceTree = "<group>"; };
@@ -532,6 +534,7 @@
 		858935F72A92565900011D7F /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				85B8E2892C7B1EBF0055AC6C /* RecipeEditStep */,
 				857706132C246A4300138E72 /* RecipeContents */,
 				856869892B20ED8900856E6F /* ImageDetail */,
 				85CA5B672AB4E07100F33EB0 /* Camera */,
@@ -566,6 +569,14 @@
 				85FE69C62AFE96B100CBE50E /* ResourcesDataSource.swift */,
 			);
 			path = DataSource;
+			sourceTree = "<group>";
+		};
+		85B8E2892C7B1EBF0055AC6C /* RecipeEditStep */ = {
+			isa = PBXGroup;
+			children = (
+				85B8E28A2C7B1ECD0055AC6C /* RecipeEditStepView.swift */,
+			);
+			path = RecipeEditStep;
 			sourceTree = "<group>";
 		};
 		85CA5B632AB4CFE700F33EB0 /* RecipeDetail */ = {
@@ -826,6 +837,7 @@
 				858935EF2A92120400011D7F /* LabelButtonView.swift in Sources */,
 				858935BD2A90FEE200011D7F /* MealPlanApp.swift in Sources */,
 				85E665852B9DA4E1001DD882 /* Fonts.swift in Sources */,
+				85B8E28B2C7B1ECD0055AC6C /* RecipeEditStepView.swift in Sources */,
 				85145C782AC1FC8900219D1D /* IconLabelFilledButtonView.swift in Sources */,
 				85376D792AA4BEED003CFEDB /* RecipeInteractor.swift in Sources */,
 				85376D7C2AA4C71B003CFEDB /* DependencyInjection.swift in Sources */,

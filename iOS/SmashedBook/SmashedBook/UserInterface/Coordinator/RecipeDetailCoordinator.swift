@@ -25,6 +25,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     var originalRecipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     var recipeAttachment: ImageResourceModel? = nil
+    var selectedRecipeStep: RecipeStepModel? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
@@ -34,22 +35,29 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     
     func start() { }
     
-    func didTapSaveButton() {
+    func saveRecipe() {
         originalRecipeModel = recipeModel
         recipesDataSource.save(recipe: originalRecipeModel)
     }
     
-    func didTapCancelButton() {
+    func resetRecipe() {
         recipeModel = originalRecipeModel
     }
-        
-//    func didTapEditButton() {
-//        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: recipeModel) { updatedRecipe in
-//            self.recipeModel = updatedRecipe
-//            self.recipesDataSource.save(recipe: updatedRecipe)
-//            self.recipeEditCoordinator = nil
-//        }
-//    }
+    
+    func open(step: RecipeStepModel) {
+        selectedRecipeStep = step
+    }
+    
+    func saveRecipeStep(editedRecipeStep: RecipeStepModel) {
+        guard let editedRecipeStepIndex = recipeModel.steps.firstIndex(where: { recipeStep in
+            recipeStep.id == editedRecipeStep.id
+        }) else {
+            return
+        }
+        recipeModel.steps[editedRecipeStepIndex] = editedRecipeStep
+        saveRecipe()
+        selectedRecipeStep = nil
+    }
 }
 
 struct RecipeDetailCoordinatorView: View {
@@ -57,7 +65,8 @@ struct RecipeDetailCoordinatorView: View {
     @Environment(\.editMode) var editMode
     
     var body: some View {
-        RecipeDetailView(recipe: $coordinator.recipeModel) { attachment in
+        RecipeDetailView(recipe: $coordinator.recipeModel, 
+                         selectedRecipeStep: $coordinator.selectedRecipeStep){ attachment in
             coordinator.recipeAttachment = attachment
         }
             .bottomToolbar {
@@ -69,11 +78,11 @@ struct RecipeDetailCoordinatorView: View {
                     } else {
                         IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
                             self.editMode?.animation().wrappedValue = .inactive
-                            coordinator.didTapSaveButton()
+                            coordinator.saveRecipe()
                         }
                         IconLabelFilledButtonView(title: "Abbrechen", iconSystemName: "trash.fill") {
                             self.editMode?.animation().wrappedValue = .inactive
-                            coordinator.didTapCancelButton()
+                            coordinator.resetRecipe()
                         }
                     }
                 }
@@ -86,6 +95,12 @@ struct RecipeDetailCoordinatorView: View {
             }
             .sheet(item: $coordinator.recipeAttachment, content: { attachment in
                 ImageDetailView(attachment: attachment)
+            })
+            .sheet(item: $coordinator.selectedRecipeStep, content: { recipeStep in
+                RecipeEditStepView(recipeStep: recipeStep) { editedRecipeStep in
+                    coordinator.saveRecipeStep(editedRecipeStep: editedRecipeStep)
+                }
+                .presentationDetents([.medium, .large])
             })
             .environment(coordinator)
     }
