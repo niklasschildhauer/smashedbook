@@ -60,7 +60,7 @@ struct AddImageCoordinatorView: View {
     var body: some View {
         ImagePicker(selectionCount: coordinator.maxSelection, selectedImageData: $coordinator.selectedData)
         .bottomToolbar {
-            IconLabelFilledButtonView(title: "Speichern") {
+            IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
                 coordinator.didTapSave()
             }
         }

@@ -23,11 +23,21 @@ struct RecipeDetailStepsView: View {
                 }
                 .listRowSeparator(.hidden)
             }
+            .onDelete(perform: deleteStep)
+            .onMove(perform: moveStep)
         })
     }
     
     func stepName(for index: Int) -> String {
         return "\(index + 1)."
+    }
+    
+    func moveStep(fromOffsets source: IndexSet, toOffset destination: Int) {
+        steps.move(fromOffsets: source, toOffset: destination)
+    }
+    
+    func deleteStep(atOffsets offsets: IndexSet) {
+        steps.remove(atOffsets: offsets)
     }
 }
 

@@ -64,7 +64,7 @@ struct RecipeHomeCoordinatorView: View {
                           didTapOpenRecipe: coordinator.didRecieveNavigationDestination)
             .titleBar(title: "Meine Rezepte")
             .bottomToolbar {
-                IconLabelFilledButtonView(title: "Hinzufügen") {
+                IconLabelFilledButtonView(title: "Hinzufügen", iconSystemName: "trash.fill") {
                     coordinator.didTapAddNewRecipe()
                 }
                 .uiTestIdentifier("addRecipeButton")

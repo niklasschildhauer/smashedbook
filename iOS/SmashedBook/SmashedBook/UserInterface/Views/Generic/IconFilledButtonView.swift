@@ -28,7 +28,7 @@ struct IconFilledButtonView: View {
         IconFilledButtonView(icon: Image(systemName: "trash")) {
             print("Test")
         }
-        IconLabelFilledButtonView(title: "Titel") {
+        IconLabelFilledButtonView(title: "Titel", iconSystemName: "trash.fill") {
             print("Test2")
         }
     }

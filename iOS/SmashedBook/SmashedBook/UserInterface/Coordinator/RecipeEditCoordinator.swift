@@ -52,7 +52,7 @@ struct RecipeEditCoordinatorView: View {
                        addImageCoordinator: $coordinator.addImageCoordinator)
         .uiTestIdentifier("recipeEditCoordinator")
         .bottomToolbar {
-            IconLabelFilledButtonView(title: "Speichern") {
+            IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
                 Task {
                     await coordinator.save()
                 }

@@ -15,10 +15,9 @@ struct RecipeContentsView: View {
             ForEach(recipeContents.indices, id: \.self) { contentIndex in
                 switch recipeContents[contentIndex].type {
                 case .ingredient(let ingredient):
-                    RecipeDetailIngredientsView(ingredient: ingredient)
+                    RecipeContentsIngredientView(ingredient: ingredient)
                 case .step(let step):
-                    Text("test")
-//                    RecipeDetailStepsView(step: [step])
+                    Text(step.description)
                 }
             }
         })
@@ -27,5 +26,9 @@ struct RecipeContentsView: View {
                         
 
 #Preview {
-    RecipeContentsView(recipeContents: .constant([]))
+    RecipeContentsView(recipeContents: .constant([
+        RecipeContentModel(type: .step(RecipeStepModel(description: "Test"))),
+        RecipeContentModel(type: .step(RecipeStepModel(description: "Test2"))),
+        RecipeContentModel(type: .ingredient(RecipeIngredientModel(name: "Mehl", value: "200", unit: "Gram"))),
+    ]))
 }

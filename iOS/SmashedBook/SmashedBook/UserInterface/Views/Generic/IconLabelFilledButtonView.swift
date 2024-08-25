@@ -9,6 +9,7 @@ import SwiftUI
 
 struct IconLabelFilledButtonView: View {
     let title: String
+    let iconSystemName: String
     let action: () -> Void
     
     var body: some View {
@@ -16,13 +17,14 @@ struct IconLabelFilledButtonView: View {
             HapticFeedbackInteractor.hapticFeedback(for: .buttonClick)
             action()
         }) {
-            HStack(spacing: LayoutConstants.horizontalSpacing) {
+            HStack {
                 Text(title)
                     .font(.body)
                     .fontWeight(.semibold)
-                Spacer()
-                Image(systemName: "trash.fill")
+                Spacer(minLength: LayoutConstants.horizontalSpacing)
+                Image(systemName: iconSystemName)
             }
+            .fill(.width, alignment: .center)
         }
         .buttonStyle(ScaleAnimationFilledButtonStyle(backgroundColor: .accentColor))
     }
@@ -30,7 +32,7 @@ struct IconLabelFilledButtonView: View {
 
 
 #Preview {
-    IconLabelFilledButtonView(title: "Test") {
+    IconLabelFilledButtonView(title: "Test", iconSystemName: "trash.fill") {
         print("Test")
     }
 }

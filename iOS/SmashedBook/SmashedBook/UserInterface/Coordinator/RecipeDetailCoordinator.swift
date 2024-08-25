@@ -22,38 +22,60 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     // TODO: this recipesDataSource is only pass through. Use DI to avoid overhead
     var recipesDataSource: RecipesDataSource
     var recipeModel: RecipeModel
+    var originalRecipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     var recipeAttachment: ImageResourceModel? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
         self.recipeModel = recipeModel
+        self.originalRecipeModel = recipeModel
     }
     
     func start() { }
-        
-    func didTapEditButton() {
-        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: recipeModel) { updatedRecipe in
-            self.recipeModel = updatedRecipe
-            self.recipesDataSource.save(recipe: updatedRecipe)
-            self.recipeEditCoordinator = nil
-        }
+    
+    func didTapSaveButton() {
+        originalRecipeModel = recipeModel
+        recipesDataSource.save(recipe: originalRecipeModel)
     }
+    
+    func didTapCancelButton() {
+        recipeModel = originalRecipeModel
+    }
+        
+//    func didTapEditButton() {
+//        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: recipeModel) { updatedRecipe in
+//            self.recipeModel = updatedRecipe
+//            self.recipesDataSource.save(recipe: updatedRecipe)
+//            self.recipeEditCoordinator = nil
+//        }
+//    }
 }
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
-
+    @Environment(\.editMode) var editMode
+    
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel) { attachment in
             coordinator.recipeAttachment = attachment
         }
             .bottomToolbar {
                 HStack {
-                    IconLabelFilledButtonView(title: "Bearbeiten") {
-                        coordinator.didTapEditButton()
+                    if editMode?.wrappedValue == .inactive {
+                        IconLabelFilledButtonView(title: "Bearbeiten", iconSystemName: "trash.fill") {
+                            self.editMode?.animation().wrappedValue = .active
+                        }
+                    } else {
+                        IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
+                            self.editMode?.animation().wrappedValue = .inactive
+                            coordinator.didTapSaveButton()
+                        }
+                        IconLabelFilledButtonView(title: "Abbrechen", iconSystemName: "trash.fill") {
+                            self.editMode?.animation().wrappedValue = .inactive
+                            coordinator.didTapCancelButton()
+                        }
                     }
-                    .uiTestIdentifier("editRecipeButton")
                 }
             }
             .sheet(item: $coordinator.recipeEditCoordinator, content: { coordinator in

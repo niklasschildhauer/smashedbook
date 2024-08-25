@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeDetailIngredientsView: View {
+struct RecipeContentsIngredientView: View {
     var ingredient: RecipeIngredientModel
     
     var body: some View {
@@ -26,5 +26,5 @@ struct RecipeDetailIngredientsView: View {
 }
 
 #Preview {
-    RecipeDetailIngredientsView(ingredient: RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"))
+    RecipeContentsIngredientView(ingredient: RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"))
 }

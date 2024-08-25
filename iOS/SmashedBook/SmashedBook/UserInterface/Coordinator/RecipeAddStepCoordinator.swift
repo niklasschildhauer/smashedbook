@@ -35,7 +35,7 @@ struct RecipeAddStepCoordinatorView: View {
         TextEditor(text: $coordinator.text)
             .focused($isFocused)
         .bottomToolbar {
-            IconLabelFilledButtonView(title: "Speichern") {
+            IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
                 coordinator.save()
             }
         }
