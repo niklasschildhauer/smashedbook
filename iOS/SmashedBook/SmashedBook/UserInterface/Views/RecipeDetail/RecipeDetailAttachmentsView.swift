@@ -14,10 +14,12 @@ struct RecipeDetailAttachmentsView: View {
     var isEditedModeActive: Bool {
         editMode?.wrappedValue == .active
     }
+    // todo no function -> Binding!
     var didTapShowAttachment: ((ImageResourceModel) -> Void)?
+    var addAttachment: (() -> Void)?
     
     var body: some View {
-        ListSectionView(title: "Anhänge") {
+        ListSectionView(title: "Anhänge", content: {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: LayoutConstants.horizontalSpacing) {
                     ForEach($attachments) { attachment in
@@ -41,10 +43,17 @@ struct RecipeDetailAttachmentsView: View {
                         }
                     }
                 }
-                .padding(.leading, LayoutConstants.safeAreaSpacing)
+                .padding(.horizontal, LayoutConstants.safeAreaSpacing)
+
             }
             .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
-        }
+        }, trailingAction: {
+            Button {
+                addAttachment?()
+            } label: {
+                Text("Hinzufügen").font(.footnote)
+            }
+        })
     }
     
     func deleteAttachment(attachment: ImageResourceModel) {

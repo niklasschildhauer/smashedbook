@@ -24,6 +24,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     var recipeModel: RecipeModel
     var originalRecipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
+    var addImageCoordinator: AddImageCoordinator? = nil
     var recipeAttachment: ImageResourceModel? = nil
     var recipeStepInFocus: RecipeStepModel? = nil
     
@@ -67,9 +68,12 @@ struct RecipeDetailCoordinatorView: View {
     
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel, 
-                         selectedRecipeStep: $coordinator.recipeStepInFocus){ attachment in
-            coordinator.recipeAttachment = attachment
-        }
+                         selectedRecipeStep: $coordinator.recipeStepInFocus,
+                         didTapShowAttachment: { attachment in coordinator.recipeAttachment = attachment },
+                         addAttachment: { coordinator.addImageCoordinator = AddImageCoordinator(didAddImageResources: { images in
+            coordinator.recipeModel.attachments.append(contentsOf: images)
+            coordinator.addImageCoordinator = nil
+        })})
             .bottomToolbar {
                 HStack {
                     if editMode?.wrappedValue == .inactive {
@@ -104,6 +108,9 @@ struct RecipeDetailCoordinatorView: View {
                 .presentationDetents([.medium, .large])
 //                .presentationContentInteraction(.scrolls)
             })
+            .sheet(item: $coordinator.addImageCoordinator) { coordinator in
+                coordinator.rootView
+            }
             .environment(coordinator)
     }
 }

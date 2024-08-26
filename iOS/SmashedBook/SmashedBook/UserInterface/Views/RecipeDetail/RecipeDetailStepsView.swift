@@ -12,8 +12,7 @@ struct RecipeDetailStepsView: View {
     @Binding var selectedRecipeStep: RecipeStepModel?
 
     var body: some View {
-        ListSectionView(title: "Schritte",
-                        content: {
+        ListSectionView(title: "Schritte", content: {
             ForEach($steps.indices, id: \.self) { stepIndex in
                 Button(action: {
                     selectedRecipeStep = steps[stepIndex]
@@ -29,14 +28,13 @@ struct RecipeDetailStepsView: View {
             }
             .onDelete(perform: deleteStep)
             .onMove(perform: moveStep)
-        },
-                        trailingAction: {
+        }, trailingAction: {
             Button {
                 selectedRecipeStep = RecipeStepModel(description: "")
             } label: {
                 Text("Hinzufügen").font(.footnote)
             }
-        } )
+        })
     }
     
     func stepName(for index: Int) -> String {

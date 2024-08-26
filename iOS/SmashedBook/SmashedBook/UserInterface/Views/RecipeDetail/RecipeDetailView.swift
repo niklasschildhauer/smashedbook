@@ -12,12 +12,13 @@ struct RecipeDetailView: View {
     @Binding var selectedRecipeStep: RecipeStepModel?
     
     var didTapShowAttachment: ((ImageResourceModel) -> Void)? = nil
+    var addAttachment: (() -> Void)? = nil
     
     var body: some View {
         List {
             RecipeDetailHeaderView(title: $recipe.title)
             RecipeDetailStepsView(steps: $recipe.steps, selectedRecipeStep: $selectedRecipeStep)
-            RecipeDetailAttachmentsView(attachments: $recipe.attachments)
+            RecipeDetailAttachmentsView(attachments: $recipe.attachments, didTapShowAttachment: didTapShowAttachment, addAttachment: addAttachment)
         }
         .ignoresSafeArea(.container, edges: .top)
         .listStyle(.plain)
