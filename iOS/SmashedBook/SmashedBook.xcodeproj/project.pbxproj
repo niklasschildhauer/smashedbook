@@ -106,6 +106,7 @@
 		85E151462AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */; };
 		85E151482AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */; };
 		85E1514A2AF7B11A00FB55CC /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E151492AF7B11A00FB55CC /* ImagePicker.swift */; };
+		85E21A2E2C7C713200E29A6E /* TextEditorWithPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E21A2D2C7C713200E29A6E /* TextEditorWithPlaceholder.swift */; };
 		85E665852B9DA4E1001DD882 /* Fonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E665842B9DA4E1001DD882 /* Fonts.swift */; };
 		85E665882B9DA7BB001DD882 /* AbrilFatface-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 85E665872B9DA7BB001DD882 /* AbrilFatface-Regular.ttf */; };
 		85E665932B9E3760001DD882 /* Geist-Bold.otf in Resources */ = {isa = PBXBuildFile; fileRef = 85E6658A2B9E3760001DD882 /* Geist-Bold.otf */; };
@@ -244,6 +245,7 @@
 		85E151452AF262DF00FB55CC /* RecipeDetailAttachmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentsView.swift; sourceTree = "<group>"; };
 		85E151472AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeDetailAttachmentImageView.swift; sourceTree = "<group>"; };
 		85E151492AF7B11A00FB55CC /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		85E21A2D2C7C713200E29A6E /* TextEditorWithPlaceholder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextEditorWithPlaceholder.swift; sourceTree = "<group>"; };
 		85E665842B9DA4E1001DD882 /* Fonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fonts.swift; sourceTree = "<group>"; };
 		85E665872B9DA7BB001DD882 /* AbrilFatface-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "AbrilFatface-Regular.ttf"; sourceTree = "<group>"; };
 		85E6658A2B9E3760001DD882 /* Geist-Bold.otf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Geist-Bold.otf"; sourceTree = "<group>"; };
@@ -331,6 +333,7 @@
 				852DEEE22B398EB80097DA36 /* ZoomableScrollView.swift */,
 				85D479422B3F119E00C0472D /* SimpleParallaxHeaderView.swift */,
 				85E6659C2B9E37AF001DD882 /* StickyHeaderView.swift */,
+				85E21A2D2C7C713200E29A6E /* TextEditorWithPlaceholder.swift */,
 			);
 			path = Generic;
 			sourceTree = "<group>";
@@ -794,6 +797,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				85E151482AF2671600FB55CC /* RecipeDetailAttachmentImageView.swift in Sources */,
+				85E21A2E2C7C713200E29A6E /* TextEditorWithPlaceholder.swift in Sources */,
 				85E151422AF25C4B00FB55CC /* SectionView.swift in Sources */,
 				85145C7C2AC72AB100219D1D /* ButtonStyles.swift in Sources */,
 				85145C842AC74DF400219D1D /* ToolbarViewModifier.swift in Sources */,

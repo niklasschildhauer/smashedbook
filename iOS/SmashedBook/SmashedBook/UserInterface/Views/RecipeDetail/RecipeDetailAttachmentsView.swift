@@ -9,6 +9,11 @@ import SwiftUI
 
 struct RecipeDetailAttachmentsView: View {
     @Binding var attachments: [ImageResourceModel]
+    @Environment(\.editMode) var editMode
+    
+    var isEditedModeActive: Bool {
+        editMode?.wrappedValue == .active
+    }
     var didTapShowAttachment: ((ImageResourceModel) -> Void)?
     
     var body: some View {
@@ -16,10 +21,23 @@ struct RecipeDetailAttachmentsView: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(spacing: LayoutConstants.horizontalSpacing) {
                     ForEach($attachments) { attachment in
-                        Button {
-                            didTapShowAttachment?(attachment.wrappedValue)
-                        } label: {
-                            RecipeDetailAttachmentImageView(attachment: attachment)
+                        ZStack(alignment: .topLeading) {
+                            Button {
+                                didTapShowAttachment?(attachment.wrappedValue)
+                            } label: {
+                                RecipeDetailAttachmentImageView(attachment: attachment)
+                            }
+                            .disabled(isEditedModeActive)
+                            if isEditedModeActive {
+                                Button {
+                                    deleteAttachment(attachment: attachment.wrappedValue)
+                                } label: {
+                                    Image(systemName: "minus.circle.fill")
+                                        .imageScale(.large)
+                                        .foregroundStyle(.red)
+                                }
+                                .offset(x: 10, y: 10)
+                            }
                         }
                     }
                 }
@@ -27,6 +45,17 @@ struct RecipeDetailAttachmentsView: View {
             }
             .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
         }
+    }
+    
+    func deleteAttachment(attachment: ImageResourceModel) {
+        // todo: also remove the attachment from the cache
+        // todo: fix animation
+        withAnimation {
+            attachments.removeAll { attach in
+                attachment.id == attach.id
+            }
+        }
+
     }
 }
 

@@ -29,7 +29,14 @@ struct RecipeDetailStepsView: View {
             }
             .onDelete(perform: deleteStep)
             .onMove(perform: moveStep)
-        })
+        },
+                        trailingAction: {
+            Button {
+                selectedRecipeStep = RecipeStepModel(description: "")
+            } label: {
+                Text("Hinzufügen").font(.footnote)
+            }
+        } )
     }
     
     func stepName(for index: Int) -> String {

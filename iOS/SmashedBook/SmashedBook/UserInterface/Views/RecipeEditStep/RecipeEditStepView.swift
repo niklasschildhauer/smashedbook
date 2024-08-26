@@ -14,11 +14,8 @@ struct RecipeEditStepView: View {
     
     var body: some View {
         VStack {
-            TextEditor(text: $recipeStep.description)
-                .multilineTextAlignment(.leading)
-                .fill(.height, alignment: .top)
-                .fill(.width, alignment: .leading)
-            
+            TextEditorWithPlaceholder(text: $recipeStep.description, placeholder: .constant("Beschreibe den Rezeptschritt"))
+            Spacer(minLength: LayoutConstants.verticalSpacing)
             IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
                 onSave(recipeStep)
             }

@@ -17,9 +17,7 @@ struct RecipeDetailView: View {
         List {
             RecipeDetailHeaderView(title: $recipe.title)
             RecipeDetailStepsView(steps: $recipe.steps, selectedRecipeStep: $selectedRecipeStep)
-            RecipeDetailAttachmentsView(attachments: $recipe.attachments) { attachment in
-                didTapShowAttachment?(attachment)
-            }
+            RecipeDetailAttachmentsView(attachments: $recipe.attachments)
         }
         .ignoresSafeArea(.container, edges: .top)
         .listStyle(.plain)

@@ -25,7 +25,7 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     var originalRecipeModel: RecipeModel
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     var recipeAttachment: ImageResourceModel? = nil
-    var selectedRecipeStep: RecipeStepModel? = nil
+    var recipeStepInFocus: RecipeStepModel? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
@@ -45,18 +45,19 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     }
     
     func open(step: RecipeStepModel) {
-        selectedRecipeStep = step
+        recipeStepInFocus = step
     }
     
     func saveRecipeStep(editedRecipeStep: RecipeStepModel) {
-        guard let editedRecipeStepIndex = recipeModel.steps.firstIndex(where: { recipeStep in
+        if let editedRecipeStepIndex = recipeModel.steps.firstIndex(where: { recipeStep in
             recipeStep.id == editedRecipeStep.id
-        }) else {
-            return
+        }) {
+            recipeModel.steps[editedRecipeStepIndex] = editedRecipeStep
+        } else {
+            recipeModel.steps.append(editedRecipeStep)
         }
-        recipeModel.steps[editedRecipeStepIndex] = editedRecipeStep
         saveRecipe()
-        selectedRecipeStep = nil
+        recipeStepInFocus = nil
     }
 }
 
@@ -66,7 +67,7 @@ struct RecipeDetailCoordinatorView: View {
     
     var body: some View {
         RecipeDetailView(recipe: $coordinator.recipeModel, 
-                         selectedRecipeStep: $coordinator.selectedRecipeStep){ attachment in
+                         selectedRecipeStep: $coordinator.recipeStepInFocus){ attachment in
             coordinator.recipeAttachment = attachment
         }
             .bottomToolbar {
@@ -96,11 +97,12 @@ struct RecipeDetailCoordinatorView: View {
             .sheet(item: $coordinator.recipeAttachment, content: { attachment in
                 ImageDetailView(attachment: attachment)
             })
-            .sheet(item: $coordinator.selectedRecipeStep, content: { recipeStep in
+            .sheet(item: $coordinator.recipeStepInFocus, content: { recipeStep in
                 RecipeEditStepView(recipeStep: recipeStep) { editedRecipeStep in
                     coordinator.saveRecipeStep(editedRecipeStep: editedRecipeStep)
                 }
                 .presentationDetents([.medium, .large])
+//                .presentationContentInteraction(.scrolls)
             })
             .environment(coordinator)
     }
