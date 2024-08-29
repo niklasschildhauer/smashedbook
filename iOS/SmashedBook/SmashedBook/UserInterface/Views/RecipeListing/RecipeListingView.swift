@@ -10,14 +10,10 @@ import SwiftUI
 struct RecipeListingView: View {
     @Binding var recipes: [RecipeModel]
     
-    private var oneColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 1)
-    var didTapOpenRecipe: (RecipeModel) -> Void
+    var oneColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 1)
+    var showDetails: (RecipeModel) -> Void
     
-    init(recipes: Binding<[RecipeModel]>, didTapOpenRecipe: @escaping (RecipeModel) -> Void) {
-        self._recipes = recipes
-        self.didTapOpenRecipe = didTapOpenRecipe
-    }
-    
+
     var body: some View {
         ScrollView {
             if recipes.count == 0 {
@@ -30,7 +26,7 @@ struct RecipeListingView: View {
                 LazyVGrid(columns: oneColumnGrid, spacing: LayoutConstants.verticalSpacing) {
                     ForEach(recipes) { recipe in
                         Button(action: {
-                            didTapOpenRecipe(recipe)
+                            showDetails(recipe)
                         }, label: {
                             RecipeCardView(recipe: recipe)
                         })
@@ -44,7 +40,7 @@ struct RecipeListingView: View {
 
 #Preview {
     NavigationStack {
-        RecipeListingView(recipes: .constant([recipeModelMock]), didTapOpenRecipe: { _ in
+        RecipeListingView(recipes: .constant([recipeModelMock]), showDetails: { _ in
             print("Recipe is clicked")
         })
     }

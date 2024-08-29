@@ -9,16 +9,14 @@ import SwiftUI
 
 struct RecipeDetailView: View {
     @Binding var recipe: RecipeModel
-    @Binding var selectedRecipeStep: RecipeStepModel?
     
-    var didTapShowAttachment: ((ImageResourceModel) -> Void)? = nil
-    var addAttachment: (() -> Void)? = nil
+    var addAttachment: () -> Void
     
     var body: some View {
         List {
             RecipeDetailHeaderView(title: $recipe.title)
-            RecipeDetailStepsView(steps: $recipe.steps, selectedRecipeStep: $selectedRecipeStep)
-            RecipeDetailAttachmentsView(attachments: $recipe.attachments, didTapShowAttachment: didTapShowAttachment, addAttachment: addAttachment)
+            RecipeDetailStepsView(steps: $recipe.steps)
+            RecipeDetailAttachmentsView(attachments: $recipe.attachments, addAttachment: addAttachment)
         }
         .ignoresSafeArea(.container, edges: .top)
         .listStyle(.plain)
@@ -26,7 +24,4 @@ struct RecipeDetailView: View {
     }
 }
 
-#Preview {
-    RecipeDetailView(recipe: .constant(recipeModelMock), selectedRecipeStep: .constant(nil))
-}
 

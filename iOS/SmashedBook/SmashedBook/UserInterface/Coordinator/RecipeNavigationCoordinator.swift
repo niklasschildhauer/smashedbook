@@ -14,31 +14,22 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
     }
     
     let navigationController = CustomNavigationController()
+    let recipeDataSource = RecipesDataSource()
     
     func start() {
         navigationController.viewControllers = [createRecipeHomeCoordinatorViewController()]
     }
     
     func createRecipeHomeCoordinatorViewController() -> UIViewController {
-        let recipeHomeCoordinator = RecipeHomeCoordinator()
+        let recipeHomeCoordinator = RecipeHomeCoordinator(recipesDataSource: recipeDataSource)
         recipeHomeCoordinator.delegate = self
         
         return recipeHomeCoordinator.rootViewController
     }
     
     func createRecipeDetailViewController(recipe: RecipeModel) -> UIViewController {
-        let recipeDetailCoordinator = RecipeDetailCoordinator(recipeModel: recipe)
-        let recipeDetailViewController = recipeDetailCoordinator.rootViewController
-        recipeDetailCoordinator.delegate = self
-        
-        return recipeDetailViewController
-    }
-    
-    func createRecipeAttachmentDetailViewController(recipeAttachment: ImageResourceModel) -> UIViewController {
-        let attachmentView = ImageDetailView(attachment: recipeAttachment)
-        let uiHostingViewController = UIHostingController(rootView: attachmentView)
-        
-        return uiHostingViewController
+        let recipeDetailCoordinator = RecipeDetailCoordinator(recipesDataSource: recipeDataSource, recipeModel: recipe)
+        return recipeDetailCoordinator.rootViewController
     }
 }
 
@@ -46,11 +37,5 @@ extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
     func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator) {
         let customBackBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: nil, action: nil)
         navigationController.pushViewController(createRecipeDetailViewController(recipe: recipe), animated: true, customBackButtonItem: customBackBarButtonItem, transparentNavigationBar: true)
-    }
-}
-
-extension RecipeNavigationCoordinator: RecipeDetailCoordinatorDelegate {
-    func didTapShowAttachment(attachment: ImageResourceModel, in coordinator: RecipeDetailCoordinator) {
-        navigationController.pushViewController(createRecipeAttachmentDetailViewController(recipeAttachment: attachment), animated: true)
     }
 }

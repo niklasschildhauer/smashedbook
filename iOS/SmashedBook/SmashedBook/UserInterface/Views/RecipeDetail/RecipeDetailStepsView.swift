@@ -9,7 +9,7 @@ import SwiftUI
 
 struct RecipeDetailStepsView: View {
     @Binding var steps: [RecipeStepModel]
-    @Binding var selectedRecipeStep: RecipeStepModel?
+    @State var selectedRecipeStep: RecipeStepModel? = nil
 
     var body: some View {
         ListSectionView(title: "Schritte", content: {
@@ -35,6 +35,23 @@ struct RecipeDetailStepsView: View {
                 Text("Hinzufügen").font(.footnote)
             }
         })
+        .sheet(item: $selectedRecipeStep, content: { recipeStep in
+            RecipeEditStepView(recipeStep: recipeStep) { editedRecipeStep in
+                saveRecipeStep(editedRecipeStep: editedRecipeStep)
+            }
+            .presentationDetents([.medium, .large])
+        })
+    }
+    
+    func saveRecipeStep(editedRecipeStep: RecipeStepModel) {
+        if let editedRecipeStepIndex = steps.firstIndex(where: { recipeStep in
+            recipeStep.id == editedRecipeStep.id
+        }) {
+            steps[editedRecipeStepIndex] = editedRecipeStep
+        } else {
+            steps.append(editedRecipeStep)
+        }
+        selectedRecipeStep = nil
     }
     
     func stepName(for index: Int) -> String {
@@ -52,7 +69,7 @@ struct RecipeDetailStepsView: View {
 
 #Preview {
     List {
-        RecipeDetailStepsView(steps: .constant([.init(description: "Das ist eine Beschreibung eines Rezeptschrittes"), .init(description: "Danach kommt ein weiterer Rezeptschritt.")]), selectedRecipeStep: .constant(nil))
+        RecipeDetailStepsView(steps: .constant([.init(description: "Das ist eine Beschreibung eines Rezeptschrittes"), .init(description: "Danach kommt ein weiterer Rezeptschritt.")]))
             .environment(RecipeDetailCoordinator(recipeModel: recipeModelMock))
     }
 

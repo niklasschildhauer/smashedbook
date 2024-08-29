@@ -8,14 +8,15 @@
 import Foundation
 
 @Observable class RecipesDataSource {
-    var recipes = [RecipeModel]()
+    var recipes = [recipeModelMock]
     
     func loadRecipes() {
-        recipes = [recipeModelMock]
+        // todo
     }
     
     func save(recipe: RecipeModel) {
         saveLoacally(recipe: recipe)
+        print(recipe.attachments)
     }
     
     private func saveLoacally(recipe: RecipeModel) {
@@ -28,6 +29,7 @@ import Foundation
             print("We failed")
 
             recipes.append(recipe)
+            print(recipes)
         }
     }
 }

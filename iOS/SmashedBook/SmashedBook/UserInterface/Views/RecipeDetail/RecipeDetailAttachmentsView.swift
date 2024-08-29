@@ -7,16 +7,22 @@
 
 import SwiftUI
 
+protocol RecipeDetailAttachmentViewModel {
+
+    func delete(attachment: ImageResourceModel)
+    func addAttachment()
+}
+
 struct RecipeDetailAttachmentsView: View {
-    @Binding var attachments: [ImageResourceModel]
     @Environment(\.editMode) var editMode
+    @Binding var attachments: [ImageResourceModel]
+    @State var selectedAttachment: ImageResourceModel? = nil
     
+    var addAttachment: () -> Void
+
     var isEditedModeActive: Bool {
         editMode?.wrappedValue == .active
     }
-    // todo no function -> Binding!
-    var didTapShowAttachment: ((ImageResourceModel) -> Void)?
-    var addAttachment: (() -> Void)?
     
     var body: some View {
         ListSectionView(title: "Anhänge", content: {
@@ -25,7 +31,7 @@ struct RecipeDetailAttachmentsView: View {
                     ForEach($attachments) { attachment in
                         ZStack(alignment: .topLeading) {
                             Button {
-                                didTapShowAttachment?(attachment.wrappedValue)
+                                selectedAttachment = attachment.wrappedValue
                             } label: {
                                 RecipeDetailAttachmentImageView(attachment: attachment)
                             }
@@ -49,25 +55,20 @@ struct RecipeDetailAttachmentsView: View {
             .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
         }, trailingAction: {
             Button {
-                addAttachment?()
+                addAttachment()
             } label: {
                 Text("Hinzufügen").font(.footnote)
             }
+        })
+        .sheet(item: $selectedAttachment, content: { attachment in
+            ImageDetailView(attachment: attachment)
         })
     }
     
     func deleteAttachment(attachment: ImageResourceModel) {
         // todo: also remove the attachment from the cache
-        // todo: fix animation
         withAnimation {
-            attachments.removeAll { attach in
-                attachment.id == attach.id
-            }
+            attachments.removeAll{ $0.id == attachment.id }
         }
-
     }
-}
-
-#Preview {
-    RecipeDetailAttachmentsView(attachments: .constant([]))
 }

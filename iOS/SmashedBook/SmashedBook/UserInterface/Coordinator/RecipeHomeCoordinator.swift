@@ -32,13 +32,12 @@ class RecipeHomeCoordinator: SwiftUICoordinator {
         recipesDataSource.loadRecipes()
     }
     
-    func didTapAddNewRecipe() {
-        recipeEditCoordinator = RecipeEditCoordinator(recipeModel: RecipeModel()) { newRecipe in
-            self.recipesDataSource.save(recipe: newRecipe)
-        }
+    func addRecipe() {
+        let newRecipe = RecipeModel()
+        delegate?.didTapShowRecipeDetail(recipe: newRecipe, in: self)
     }
     
-    func didRecieveNavigationDestination(recipeModel: RecipeModel) {
+    func showDetails(of recipeModel: RecipeModel) {
         delegate?.didTapShowRecipeDetail(recipe: recipeModel, in: self)
     }
 }
@@ -48,11 +47,6 @@ struct RecipeHomeCoordinatorView: View {
     
     var body: some View {
         recipeOverviewView
-        .sheet(item: $coordinator.recipeEditCoordinator, content: { editRecipeCoordinator in
-            NavigationStack {
-                editRecipeCoordinator.rootView
-            }
-        })
         .onAppear {
             coordinator.start()
         }
@@ -61,11 +55,11 @@ struct RecipeHomeCoordinatorView: View {
     
     @ViewBuilder var recipeOverviewView: some View {
         RecipeListingView(recipes: $coordinator.recipesDataSource.recipes, 
-                          didTapOpenRecipe: coordinator.didRecieveNavigationDestination)
+                          showDetails: coordinator.showDetails)
             .titleBar(title: "Meine Rezepte")
             .bottomToolbar {
                 IconLabelFilledButtonView(title: "Hinzufügen", iconSystemName: "trash.fill") {
-                    coordinator.didTapAddNewRecipe()
+                    coordinator.addRecipe()
                 }
                 .uiTestIdentifier("addRecipeButton")
             }
