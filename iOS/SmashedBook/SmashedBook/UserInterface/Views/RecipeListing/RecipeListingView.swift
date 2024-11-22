@@ -13,7 +13,6 @@ struct RecipeListingView: View {
     var oneColumnGrid: [GridItem] = Array(repeating: GridItem(.flexible(), spacing: LayoutConstants.horizontalSpacing), count: 1)
     var showDetails: (RecipeModel) -> Void
     
-
     var body: some View {
         ScrollView {
             if recipes.count == 0 {

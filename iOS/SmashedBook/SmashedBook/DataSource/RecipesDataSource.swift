@@ -8,7 +8,7 @@
 import Foundation
 
 @Observable class RecipesDataSource {
-    var recipes = [recipeModelMock]
+    var recipes: [RecipeModel] = [recipeModelMock]
     
     func loadRecipes() {
         // todo

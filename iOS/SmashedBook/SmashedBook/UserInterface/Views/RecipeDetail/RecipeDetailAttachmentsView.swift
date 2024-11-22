@@ -18,6 +18,9 @@ struct RecipeDetailAttachmentsView: View {
     @Binding var attachments: [ImageResourceModel]
     @State var selectedAttachment: ImageResourceModel? = nil
     
+    //@Namespace private var recipeDetailAttachmentNamespace
+    //bprivate static let transitionId = "zoom"
+    
     var addAttachment: () -> Void
 
     var isEditedModeActive: Bool {
@@ -33,7 +36,7 @@ struct RecipeDetailAttachmentsView: View {
                             Button {
                                 selectedAttachment = attachment.wrappedValue
                             } label: {
-                                RecipeDetailAttachmentImageView(attachment: attachment)
+                                RecipeDetailAttachmentCellView(attachment: attachment)
                             }
                             .disabled(isEditedModeActive)
                             if isEditedModeActive {

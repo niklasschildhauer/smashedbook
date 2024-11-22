@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct RecipeDetailAttachmentImageView: View {
+struct RecipeDetailAttachmentCellView: View {
     private static let attachmentHeight = 220.0
     private static let attachmentWidth = 125.0
     
@@ -20,7 +20,7 @@ struct RecipeDetailAttachmentImageView: View {
         Image("ExamplePicture")
             .resizable()
             .scaledToFill()
-            .frame(width: RecipeDetailAttachmentImageView.attachmentWidth, height: RecipeDetailAttachmentImageView.attachmentHeight)
+            .frame(width: RecipeDetailAttachmentCellView.attachmentWidth, height: RecipeDetailAttachmentCellView.attachmentHeight)
             .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
 //        if let imageData = test.load(attachment: attachment),
 //           let uiImage = UIImage(data: imageData) {
@@ -34,7 +34,7 @@ struct RecipeDetailAttachmentImageView: View {
 }
 
 #Preview {
-    RecipeDetailAttachmentImageView(attachment: .constant(ImageResourceModel(fileName: "test")))
+    RecipeDetailAttachmentCellView(attachment: .constant(ImageResourceModel(fileName: "test")))
         .frame(width: 80, height: 200)
         .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
 }
