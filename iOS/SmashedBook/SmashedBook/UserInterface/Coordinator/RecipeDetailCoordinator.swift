@@ -28,7 +28,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
             saveRecipe()
         }
     }
-    var recipeEditCoordinator: RecipeEditCoordinator? = nil
+    var recipeEditCoordinator: RecipeEditStepCoordinator? = nil
     var addImageCoordinator: AddImageCoordinator? = nil
     var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
     
@@ -54,14 +54,14 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     }
     
     func editRecipeStep(at index: Int) {
-        recipeEditCoordinator = RecipeEditCoordinator(recipeStep:         recipeModel.steps[index]) { recipeStep in
-            self.recipeModel.steps[index] = recipeStep
+        recipeEditCoordinator = RecipeEditStepCoordinator(stepModel: recipeModel.steps[index]) { stepModel in
+                self.recipeModel.steps[index] = stepModel
         }
     }
     
     func addRecipeStep() {
-        recipeEditCoordinator = RecipeEditCoordinator(recipeStep: RecipeStepModel(description: "")) { recipeStep in
-            self.recipeModel.steps.append(recipeStep)
+        recipeEditCoordinator = RecipeEditStepCoordinator(stepModel: RecipeStepModel(description: "")) { stepModel in
+            self.recipeModel.steps.append(stepModel)
         }
     }
 

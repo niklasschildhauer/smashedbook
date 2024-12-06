@@ -22,7 +22,7 @@ class RecipeHomeCoordinator: SwiftUICoordinator {
     
     var recipesDataSource: RecipesDataSource
     
-    var recipeEditCoordinator: RecipeEditCoordinator? = nil
+    var recipeEditCoordinator: RecipeEditStepCoordinator? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource()) {
         self.recipesDataSource = recipesDataSource

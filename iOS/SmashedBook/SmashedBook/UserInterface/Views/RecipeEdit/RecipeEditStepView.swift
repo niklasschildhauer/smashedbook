@@ -19,6 +19,3 @@ struct RecipeEditStepView: View {
     }
 }
 
-#Preview {
-    RecipeEditStepView(description: .constant("Test"))
-}
