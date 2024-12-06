@@ -9,6 +9,11 @@ import SwiftUI
 
 struct RecipeDetailHeaderView: View {
     @Binding var title: String
+    @Environment(\.editMode) var editMode
+    
+    var isEditedModeActive: Bool {
+        editMode?.wrappedValue == .active
+    }
     
     var body: some View {
         ParallaxHeader() {
@@ -24,6 +29,11 @@ struct RecipeDetailHeaderView: View {
             )
         }
         .listRowSeparator(.hidden)
+        .overlay {
+            if isEditedModeActive {
+                Text("Wir editieren")
+            }
+        }
     }
 }
 

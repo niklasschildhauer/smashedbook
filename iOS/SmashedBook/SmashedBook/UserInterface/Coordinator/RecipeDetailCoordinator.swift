@@ -7,7 +7,14 @@
 
 import SwiftUI
 
-@Observable class RecipeDetailCoordinator: SwiftUICoordinator {
+protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
+    func addAttachment()
+    func showAttachment(attachment: ImageResourceModel)
+    func editRecipeStep(at index: Int)
+    func addRecipeStep()
+}
+
+@Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
     typealias CoordinatorView = RecipeDetailCoordinatorView
     
     var rootView: RecipeDetailCoordinatorView {
@@ -23,6 +30,7 @@ import SwiftUI
     }
     var recipeEditCoordinator: RecipeEditCoordinator? = nil
     var addImageCoordinator: AddImageCoordinator? = nil
+    var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
@@ -40,6 +48,23 @@ import SwiftUI
             self.addImageCoordinator = nil
         })
     }
+    
+    func showAttachment(attachment: ImageResourceModel) {
+        attachmentDetailCoordinator = AttachmentDetailCoordinator()
+    }
+    
+    func editRecipeStep(at index: Int) {
+        recipeEditCoordinator = RecipeEditCoordinator(recipeStep:         recipeModel.steps[index]) { recipeStep in
+            self.recipeModel.steps[index] = recipeStep
+        }
+    }
+    
+    func addRecipeStep() {
+        recipeEditCoordinator = RecipeEditCoordinator(recipeStep: RecipeStepModel(description: "")) { recipeStep in
+            self.recipeModel.steps.append(recipeStep)
+        }
+    }
+
 }
 
 struct RecipeDetailCoordinatorView: View {
@@ -47,7 +72,7 @@ struct RecipeDetailCoordinatorView: View {
     @Environment(\.editMode) var editMode
 
     var body: some View {
-        RecipeDetailView(recipe: $coordinator.recipeModel, addAttachment: coordinator.addAttachment)
+        RecipeDetailView<RecipeDetailCoordinator>(recipe: $coordinator.recipeModel)
         .bottomToolbar {
             HStack {
                 if editMode?.wrappedValue == .inactive {
@@ -62,8 +87,17 @@ struct RecipeDetailCoordinatorView: View {
                 }
             }
         }
-        .sheet(item: $coordinator.addImageCoordinator) { coordinator in
+        .sheet(item: $coordinator.addImageCoordinator,
+               onDismiss: {
+            $coordinator.addImageCoordinator.wrappedValue = nil
+        },
+               content:{ coordinator in
             coordinator.rootView
+        })
+        .sheet(item: $coordinator.attachmentDetailCoordinator) { coordinator in  coordinator.rootView
+        }
+        .sheet(item: $coordinator.recipeEditCoordinator) { coordinator in  coordinator.rootView
+                .presentationDetents([.medium])
         }
         .environment(coordinator)
     }

@@ -7,15 +7,15 @@
 
 import SwiftUI
 
-struct RecipeDetailStepsView: View {
+struct RecipeDetailStepsView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
+    @EnvironmentObject var coordinator:  Coordinator
     @Binding var steps: [RecipeStepModel]
-    @State var selectedRecipeStep: RecipeStepModel? = nil
 
     var body: some View {
         ListSectionView(title: "Schritte", content: {
             ForEach($steps.indices, id: \.self) { stepIndex in
                 Button(action: {
-                    selectedRecipeStep = steps[stepIndex]
+                    coordinator.editRecipeStep(at: stepIndex)
                 }, label: {
                     HStack(alignment: .firstTextBaseline, spacing: LayoutConstants.horizontalSpacing) {
                         Text(stepName(for: stepIndex))
@@ -30,28 +30,11 @@ struct RecipeDetailStepsView: View {
             .onMove(perform: moveStep)
         }, trailingAction: {
             Button {
-                selectedRecipeStep = RecipeStepModel(description: "")
+                coordinator.addRecipeStep()
             } label: {
                 Text("Hinzufügen").font(.footnote)
             }
         })
-        .sheet(item: $selectedRecipeStep, content: { recipeStep in
-            RecipeEditStepView(recipeStep: recipeStep) { editedRecipeStep in
-                saveRecipeStep(editedRecipeStep: editedRecipeStep)
-            }
-            .presentationDetents([.medium, .large])
-        })
-    }
-    
-    func saveRecipeStep(editedRecipeStep: RecipeStepModel) {
-        if let editedRecipeStepIndex = steps.firstIndex(where: { recipeStep in
-            recipeStep.id == editedRecipeStep.id
-        }) {
-            steps[editedRecipeStepIndex] = editedRecipeStep
-        } else {
-            steps.append(editedRecipeStep)
-        }
-        selectedRecipeStep = nil
     }
     
     func stepName(for index: Int) -> String {
@@ -69,7 +52,7 @@ struct RecipeDetailStepsView: View {
 
 #Preview {
     List {
-        RecipeDetailStepsView(steps: .constant([.init(description: "Das ist eine Beschreibung eines Rezeptschrittes"), .init(description: "Danach kommt ein weiterer Rezeptschritt.")]))
+        RecipeDetailStepsView<RecipeDetailCoordinator>(steps: .constant([.init(description: "Das ist eine Beschreibung eines Rezeptschrittes"), .init(description: "Danach kommt ein weiterer Rezeptschritt.")]))
             .environment(RecipeDetailCoordinator(recipeModel: recipeModelMock))
     }
 

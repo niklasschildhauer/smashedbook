@@ -7,21 +7,14 @@
 
 import SwiftUI
 
-protocol RecipeDetailAttachmentViewModel {
-
-    func delete(attachment: ImageResourceModel)
-    func addAttachment()
-}
-
-struct RecipeDetailAttachmentsView: View {
+struct RecipeDetailAttachmentsView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
     @Environment(\.editMode) var editMode
     @Binding var attachments: [ImageResourceModel]
     @State var selectedAttachment: ImageResourceModel? = nil
+    @EnvironmentObject var coordinator:  Coordinator
     
     //@Namespace private var recipeDetailAttachmentNamespace
     //bprivate static let transitionId = "zoom"
-    
-    var addAttachment: () -> Void
 
     var isEditedModeActive: Bool {
         editMode?.wrappedValue == .active
@@ -34,7 +27,7 @@ struct RecipeDetailAttachmentsView: View {
                     ForEach($attachments) { attachment in
                         ZStack(alignment: .topLeading) {
                             Button {
-                                selectedAttachment = attachment.wrappedValue
+                                coordinator.showAttachment(attachment: attachment.wrappedValue)
                             } label: {
                                 RecipeDetailAttachmentCellView(attachment: attachment)
                             }
@@ -58,13 +51,10 @@ struct RecipeDetailAttachmentsView: View {
             .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
         }, trailingAction: {
             Button {
-                addAttachment()
+                coordinator.addAttachment()
             } label: {
                 Text("Hinzufügen").font(.footnote)
             }
-        })
-        .sheet(item: $selectedAttachment, content: { attachment in
-            ImageDetailView(attachment: attachment)
         })
     }
     

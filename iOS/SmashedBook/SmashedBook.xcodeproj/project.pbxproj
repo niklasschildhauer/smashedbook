@@ -29,6 +29,7 @@
 		85376D752AA4A439003CFEDB /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D742AA4A439003CFEDB /* ImagePickerView.swift */; };
 		85376D792AA4BEED003CFEDB /* RecipeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D782AA4BEED003CFEDB /* RecipeInteractor.swift */; };
 		85376D7C2AA4C71B003CFEDB /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D7B2AA4C71B003CFEDB /* DependencyInjection.swift */; };
+		8547AF562CF9E5B500895FAF /* AttachmentDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547AF552CF9E5AD00895FAF /* AttachmentDetailCoordinator.swift */; };
 		855617752A9A36F300DD5877 /* ListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617742A9A36F300DD5877 /* ListSectionView.swift */; };
 		855617772A9A48E800DD5877 /* RecipeEditContentSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617762A9A48E800DD5877 /* RecipeEditContentSectionView.swift */; };
 		8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */; };
@@ -155,6 +156,7 @@
 		85376D742AA4A439003CFEDB /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		85376D782AA4BEED003CFEDB /* RecipeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInteractor.swift; sourceTree = "<group>"; };
 		85376D7B2AA4C71B003CFEDB /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
+		8547AF552CF9E5AD00895FAF /* AttachmentDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDetailCoordinator.swift; sourceTree = "<group>"; };
 		855617742A9A36F300DD5877 /* ListSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionView.swift; sourceTree = "<group>"; };
 		855617762A9A48E800DD5877 /* RecipeEditContentSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeEditContentSectionView.swift; sourceTree = "<group>"; };
 		855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeGestureViewModifier.swift; sourceTree = "<group>"; };
@@ -517,6 +519,7 @@
 		8592360B2ACABEC800015B41 /* Coordinator */ = {
 			isa = PBXGroup;
 			children = (
+				8547AF552CF9E5AD00895FAF /* AttachmentDetailCoordinator.swift */,
 				859236172ACC67BF00015B41 /* Coordinator+Protocol.swift */,
 				852DEEE02B383EB20097DA36 /* RecipeNavigationCoordinator.swift */,
 				8592360E2ACABEF800015B41 /* RecipeHomeCoordinator.swift */,
@@ -767,6 +770,7 @@
 				858978992C026B4E005176DC /* RecipeAddStepCoordinator.swift in Sources */,
 				8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */,
 				855617842A9B507200DD5877 /* ColorViewModifier.swift in Sources */,
+				8547AF562CF9E5B500895FAF /* AttachmentDetailCoordinator.swift in Sources */,
 				85279F432AA480210031067B /* RecipeEditPortionCounterView.swift in Sources */,
 				85AFE78D2B542895001F4AE9 /* RecipeIngredientModel.swift in Sources */,
 				85CA5B622AB4CFE300F33EB0 /* RecipeDetailView.swift in Sources */,

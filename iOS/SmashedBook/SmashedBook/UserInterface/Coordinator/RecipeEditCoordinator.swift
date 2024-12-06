@@ -13,34 +13,19 @@ import SwiftUI
     var rootView: RecipeEditCoordinatorView {
         RecipeEditCoordinatorView(coordinator: self)
     }
-    
-    var recipeModel: RecipeModel {
-        didSet {
-            isRecipeEdited = true
-        }
-    }
-    var addImageCoordinator: AddImageCoordinator? = nil
-    // TODO: how to avoid this overhead of saving the recipe twice?
-    var didEditRecipeModel: ((RecipeModel) -> Void)?
-    var isRecipeEdited = false
-    
-    private var attachmentDataSource = FileSystemAttachmentDataSource()
-    
-    init(recipeModel: RecipeModel, onSaveRecipe: ((RecipeModel) -> Void)? = nil) {
-        self._recipeModel = recipeModel
-        self.didEditRecipeModel = onSaveRecipe
+    var recipeStep: RecipeStepModel
+    var onSave: (RecipeStepModel) -> Void
+            
+    init(recipeStep: RecipeStepModel,
+         onSave: @escaping (RecipeStepModel) -> Void) {
+        self.recipeStep = recipeStep
+        self.onSave = onSave
     }
     
     func start() { }
     
-    func save() async {
-        if recipeModel.isValid {
-            // TODO: It does not reset the binded value!
-            didEditRecipeModel?(recipeModel)
-        } else {
-            // TODO: Handle this!
-            print("I am not gonna save it!")
-        }
+    func save() {
+        onSave(recipeStep)
     }
 }
 
@@ -48,27 +33,21 @@ struct RecipeEditCoordinatorView: View {
     @State var coordinator: RecipeEditCoordinator
     
     var body: some View {
-        RecipeEditView(recipe: $coordinator.recipeModel, 
-                       addImageCoordinator: $coordinator.addImageCoordinator)
-        .uiTestIdentifier("recipeEditCoordinator")
-        .bottomToolbar {
-            IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
-                Task {
-                    await coordinator.save()
+        NavigationStack {
+            RecipeEditStepView(description: $coordinator.recipeStep.description)
+                .toolbar {
+                    ToolbarItemGroup(placement: .topBarTrailing) {
+                        Button("Save") {
+                            coordinator.save()
+                        }
+                    }
                 }
-            }
         }
-        .onAppear {
-            coordinator.start()
-        }
-        .sheet(item: $coordinator.addImageCoordinator) { coordinator in
-            coordinator.rootView
-        }
-        .interactiveDismissDisabled(coordinator.isRecipeEdited)
-        .scrollDismissesKeyboard(.interactively)
     }
 }
 
 #Preview {
-    RecipeEditCoordinatorView(coordinator: .init(recipeModel: recipeModelMock))
+    RecipeEditCoordinatorView(coordinator: RecipeEditCoordinator(recipeStep: .init(description: "Test"), onSave: { _ in
+        print("Did save")
+    }))
 }

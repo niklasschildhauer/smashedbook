@@ -8,24 +8,17 @@
 import SwiftUI
 
 struct RecipeEditStepView: View {
-    
-    @State var recipeStep: RecipeStepModel
-    var onSave: (RecipeStepModel) -> Void
+    @Binding var description: String
     
     var body: some View {
         VStack {
-            TextEditorWithPlaceholder(text: $recipeStep.description, placeholder: .constant("Beschreibe den Rezeptschritt"))
+            TextEditorWithPlaceholder(text: $description, placeholder: .constant("Beschreibe den Rezeptschritt"))
             Spacer(minLength: LayoutConstants.verticalSpacing)
-            IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
-                onSave(recipeStep)
-            }
         }
         .padding(LayoutConstants.safeAreaSpacing)
     }
 }
 
 #Preview {
-    RecipeEditStepView(recipeStep: .init(description: "Test")) { stepModel in
-        print("save it")
-    }
+    RecipeEditStepView(description: .constant("Test"))
 }

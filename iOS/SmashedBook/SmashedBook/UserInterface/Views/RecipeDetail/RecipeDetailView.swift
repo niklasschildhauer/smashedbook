@@ -7,16 +7,14 @@
 
 import SwiftUI
 
-struct RecipeDetailView: View {
+struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
     @Binding var recipe: RecipeModel
-    
-    var addAttachment: () -> Void
     
     var body: some View {
         List {
             RecipeDetailHeaderView(title: $recipe.title)
-            RecipeDetailStepsView(steps: $recipe.steps)
-            RecipeDetailAttachmentsView(attachments: $recipe.attachments, addAttachment: addAttachment)
+            RecipeDetailStepsView<Coordinator>(steps: $recipe.steps)
+            RecipeDetailAttachmentsView<Coordinator>(attachments: $recipe.attachments)
         }
         .ignoresSafeArea(.container, edges: .top)
         .listStyle(.plain)
