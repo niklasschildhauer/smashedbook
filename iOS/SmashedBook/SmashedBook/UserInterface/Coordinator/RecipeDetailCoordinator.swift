@@ -12,6 +12,8 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     func showAttachment(attachment: ImageResourceModel)
     func editRecipeStep(at index: Int)
     func addRecipeStep()
+    func editRecipeIngredient(at index: Int)
+    func addRecipeIngredient()
 }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
@@ -29,7 +31,8 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
         }
     }
   
-    var recipeEditCoordinator: RecipeEditCoordinator<RecipeStepModel, RecipeEditCoordinatorView>? = nil
+    var recipeEditStepCoordinator: RecipeEditCoordinator<RecipeStepModel, RecipeEditStepCoordinatorView>? = nil
+    var recipeEditIngredientCoordinator: RecipeEditCoordinator<RecipeIngredientModel, RecipeEditIngredientsCoordinatorView>? = nil
     var addImageCoordinator: AddImageCoordinator? = nil
     var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
     
@@ -55,14 +58,34 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     }
     
     func editRecipeStep(at index: Int) {
-        recipeEditCoordinator = RecipeEditCoordinator(editModel: recipeModel.steps[index]) { stepModel in
+        recipeEditStepCoordinator = RecipeEditCoordinator(editModel: recipeModel.steps[index]) { stepModel in
                 self.recipeModel.steps[index] = stepModel
+                self.saveRecipe()
+                self.recipeEditStepCoordinator = nil
         }
     }
     
     func addRecipeStep() {
-        recipeEditCoordinator = RecipeEditCoordinator(editModel: RecipeStepModel(description: "")) { stepModel in
+        recipeEditStepCoordinator = RecipeEditCoordinator(editModel: RecipeStepModel(description: "")) { stepModel in
             self.recipeModel.steps.append(stepModel)
+            self.saveRecipe()
+            self.recipeEditStepCoordinator = nil
+        }
+    }
+    
+    func editRecipeIngredient(at index: Int) {
+        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: recipeModel.ingredients[index]) { ingredientModel in
+            self.recipeModel.ingredients[index] = ingredientModel
+            self.saveRecipe()
+            self.recipeEditIngredientCoordinator = nil
+        }
+    }
+    
+    func addRecipeIngredient() {
+        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: RecipeIngredientModel(name: "", value: "", unit: .gram)) { ingredientModel in
+            self.recipeModel.ingredients.append(ingredientModel)
+            self.saveRecipe()
+            self.recipeEditIngredientCoordinator = nil
         }
     }
 
@@ -97,8 +120,11 @@ struct RecipeDetailCoordinatorView: View {
         })
         .sheet(item: $coordinator.attachmentDetailCoordinator) { coordinator in  coordinator.rootView
         }
-        .sheet(item: $coordinator.recipeEditCoordinator) { coordinator in  coordinator.rootView
-                .presentationDetents([.medium])
+        .sheet(item: $coordinator.recipeEditStepCoordinator) { coordinator in  coordinator.rootView
+                .presentationDetents([.height(200)])
+        }
+        .sheet(item: $coordinator.recipeEditIngredientCoordinator) { coordinator in  coordinator.rootView
+                .presentationDetents([.height(150)])
         }
         .environment(coordinator)
     }

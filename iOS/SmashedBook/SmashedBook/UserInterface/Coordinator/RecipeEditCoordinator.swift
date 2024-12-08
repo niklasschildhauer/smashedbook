@@ -36,28 +36,3 @@ protocol RecipeEditView<EditModel>: View {
     }
 }
 
-struct RecipeEditCoordinatorView: RecipeEditView {
-    typealias EditModel = RecipeStepModel
-    typealias EditView = RecipeEditCoordinatorView
-    
-    @State var coordinator: RecipeEditCoordinator<RecipeStepModel, RecipeEditCoordinatorView>
-    
-    var body: some View {
-        NavigationStack {
-            RecipeEditStepView(description: $coordinator.editModel.description)
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        Button("Save") {
-                            coordinator.save()
-                        }
-                    }
-                }
-        }
-    }
-}
-
-#Preview {
-    RecipeEditCoordinatorView(coordinator: RecipeEditCoordinator(editModel: .init(description: "Test"), onSave: { _ in
-        print("Did save")
-    }))
-}

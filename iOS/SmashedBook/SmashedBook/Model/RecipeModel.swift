@@ -12,7 +12,7 @@ public struct RecipeModel: Codable, Hashable, Identifiable {
     var title: String = ""
     var titleImage: ImageResourceModel?
     var attachments: [ImageResourceModel] = []
-    var ingredients = [RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"), RecipeIngredientModel(name: "Mehr", value: "500", unit: "Gramm")]
+    var ingredients = [RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: .gram), RecipeIngredientModel(name: "Mehr", value: "500", unit: .gram)]
     var steps = [RecipeStepModel(description: "Test nummero uno"), .init(description: "Zeiter Eintrag")]
 }
 

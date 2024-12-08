@@ -1,14 +1,14 @@
 //
-//  RecipeDetailIngredientsView.swift
+//  RecipeContentsIngredientView.swift
 //  SmashedBook
 //
-//  Created by Niklas Schildhauer on 14.01.24.
+//  Created by Niklas Schildhauer on 07.12.24.
 //
 
 import SwiftUI
 
-struct RecipeContentsIngredientView: View {
-    var ingredient: RecipeIngredientModel
+struct RecipeDetailIngredientView: View {
+    @Binding var ingredient: RecipeIngredientModel
     
     var body: some View {
         HStack(alignment: .top) {
@@ -16,15 +16,11 @@ struct RecipeContentsIngredientView: View {
             Spacer()
             HStack(alignment: .firstTextBaseline, spacing: 5) {
                 Text(ingredient.value)
-                Text(ingredient.unit)
+                Text(ingredient.unit.rawValue)
                     .fontWeight(.semibold)
                     .font(.footnote)
                     .foregroundStyle(.black)
             }
         }
     }
-}
-
-#Preview {
-    RecipeContentsIngredientView(ingredient: RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: "Stück"))
 }
