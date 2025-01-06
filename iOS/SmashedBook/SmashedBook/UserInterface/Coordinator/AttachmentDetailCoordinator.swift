@@ -27,7 +27,7 @@ struct AttachmentDetailCoordinatorView: View {
     
     var body: some View {
         ZoomableScrollView {
-            ImageResourceView(imageResource: $coordinator.imageResourceModel)
+            Image.createImageFrom(imageResource: $coordinator.wrappedValue.imageResourceModel)
         }
     }
 }

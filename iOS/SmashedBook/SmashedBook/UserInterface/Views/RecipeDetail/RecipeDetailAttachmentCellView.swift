@@ -13,10 +13,12 @@ struct RecipeDetailAttachmentCellView: View {
     
     @Binding var attachment: ImageResourceModel
     
-    private let dataSource = FileSystemAttachmentDataSource()
+    private let dataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()
     
     var body: some View {
-        ImageResourceView(imageResource: $attachment)
+        Image.createImageFrom(imageResource: attachment)
+            .resizable()
+            .scaledToFill()
             .frame(width: RecipeDetailAttachmentCellView.attachmentWidth, height: RecipeDetailAttachmentCellView.attachmentHeight)
             .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
     }

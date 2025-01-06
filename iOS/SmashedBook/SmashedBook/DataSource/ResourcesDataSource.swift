@@ -9,13 +9,31 @@ import Foundation
 //TODO: Remove it!
 import UIKit
 
-protocol ResourcesDataSource {
+protocol ResourcesDataSourceProtocol {
     func load(attachment: ImageResourceModel) -> Data?
     func save(attachmentData: Data) -> ImageResourceModel?
     // TODO: Implement a cache middleware here
 }
 
-class FileSystemAttachmentDataSource: ResourcesDataSource {
+private let resourcesDataSource = ResourcesDataSource()
+
+class ResourcesDataSource: ResourcesDataSourceProtocol {
+    private let fileSystemResourcesDataSource = FileSystemResourcesDataSource()
+    
+    static func getInstance() -> ResourcesDataSourceProtocol{
+        resourcesDataSource
+    }
+    
+    func load(attachment: ImageResourceModel) -> Data? {
+        fileSystemResourcesDataSource.load(attachment: attachment)
+    }
+    
+    func save(attachmentData: Data) -> ImageResourceModel? {
+        fileSystemResourcesDataSource.save(attachmentData: attachmentData)
+    }
+}
+
+private class FileSystemResourcesDataSource: ResourcesDataSourceProtocol {
     private var osFileManager: FileManager {
         FileManager.default
     }

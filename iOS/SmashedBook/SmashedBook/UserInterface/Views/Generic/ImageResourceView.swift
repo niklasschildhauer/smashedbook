@@ -7,22 +7,15 @@
 
 import SwiftUI
 
-struct ImageResourceView: View {
-    @Binding var imageResource: ImageResourceModel
-    
-    private let dataSource = FileSystemAttachmentDataSource()
-    
-    var body: some View {
+extension Image {
+    static func createImageFrom(imageResource: ImageResourceModel,
+                                dataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) -> Image {
         if let imageData = dataSource.load(attachment: imageResource),
            let uiImage = UIImage(data: imageData) {
-            Image(uiImage: uiImage)
-                .resizable()
-                .scaledToFill()
+            return Image(uiImage: uiImage)
         } else {
             // todo: proper error handling
-            Image("BackButton")
-                .resizable()
-                .scaledToFill()
+            return Image("BackButton")
         }
     }
 }

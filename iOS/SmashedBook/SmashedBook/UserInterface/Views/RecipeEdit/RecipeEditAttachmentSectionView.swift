@@ -10,7 +10,7 @@ import SwiftUI
 struct RecipeEditAttachmentSectionView: View {
     @Binding var attachments: [ImageResourceModel]
     @Binding var addImageCoordinator: AddImageCoordinator?
-    private let attachmentDataSource = FileSystemAttachmentDataSource()
+    private let recipeDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()
     
     var body: some View {
         ListSectionView(title: "Anhänge", content: {
@@ -37,7 +37,7 @@ struct RecipeEditAttachmentSectionView: View {
     }
     
     private func image(from attachment: ImageResourceModel) -> Image? {
-        guard let data = attachmentDataSource.load(attachment: attachment),
+        guard let data = recipeDataSource.load(attachment: attachment),
               let uiImage = UIImage(data: data) else {
             return nil
         }

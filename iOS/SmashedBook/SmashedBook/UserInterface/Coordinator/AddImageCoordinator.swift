@@ -25,7 +25,7 @@ import PDFKit
     var didAddImageResources: ([ImageResourceModel]) -> Void
     private let selectionCount: SelctionCount
     fileprivate var selectedData: [Data] = []
-    private let resourcesDataSource: ResourcesDataSource
+    private let resourcesDataSource: ResourcesDataSourceProtocol
     
     var maxSelection: Int {
         switch selectionCount {
@@ -38,7 +38,7 @@ import PDFKit
     
     init(selectionCount: SelctionCount = .multiple,
          didAddImageResources: @escaping ([ImageResourceModel]) -> Void,
-         resourcesDataSource: ResourcesDataSource = FileSystemAttachmentDataSource()) {
+         resourcesDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) {
         self.selectionCount = selectionCount
         self.didAddImageResources = didAddImageResources
         self.resourcesDataSource = resourcesDataSource

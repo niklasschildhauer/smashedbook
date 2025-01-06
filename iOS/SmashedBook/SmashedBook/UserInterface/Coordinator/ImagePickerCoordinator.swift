@@ -13,12 +13,12 @@ class ImagePickerCoordinator: NSObject, UIKitCoordinator, Identifiable {
     }
     
     private let imagePickerController = UIImagePickerController()
-    private let resourcesDataSource: ResourcesDataSource
+    private let resourcesDataSource: ResourcesDataSourceProtocol
     
     private let didSelectImage: (ImageResourceModel) -> Void
 
     init(didSelectImage: @escaping (ImageResourceModel) -> Void,
-         resourcesDataSource: ResourcesDataSource = FileSystemAttachmentDataSource()) {
+         resourcesDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) {
         self.didSelectImage = didSelectImage
         self.resourcesDataSource = resourcesDataSource
         super.init()
