@@ -14,13 +14,11 @@ import SwiftUI
         AttachmentDetailCoordinatorView(coordinator: self)
     }
     
+    var imageResourceModel: ImageResourceModel
     
-    init() {
-      
+    init(imageResourceModel: ImageResourceModel) {
+        self.imageResourceModel = imageResourceModel
     }
-    
-    func start() { }
-    
 
 }
 
@@ -28,6 +26,8 @@ struct AttachmentDetailCoordinatorView: View {
     @State var coordinator: AttachmentDetailCoordinator
     
     var body: some View {
-     Text("Das ist ein Test")
+        ZoomableScrollView {
+            ImageResourceView(imageResource: $coordinator.imageResourceModel)
+        }
     }
 }

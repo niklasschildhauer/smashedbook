@@ -13,23 +13,12 @@ struct RecipeDetailAttachmentCellView: View {
     
     @Binding var attachment: ImageResourceModel
     
-    // TODO: remove it?
-    private let test = FileSystemAttachmentDataSource()
+    private let dataSource = FileSystemAttachmentDataSource()
     
     var body: some View {
-        Image("ExamplePicture")
-            .resizable()
-            .scaledToFill()
+        ImageResourceView(imageResource: $attachment)
             .frame(width: RecipeDetailAttachmentCellView.attachmentWidth, height: RecipeDetailAttachmentCellView.attachmentHeight)
             .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
-//        if let imageData = test.load(attachment: attachment),
-//           let uiImage = UIImage(data: imageData) {
-//            Image(uiImage: uiImage)
-//                .resizable()
-//                .scaledToFill()
-//        } else {
-//            Text("Not loadable")
-//        }
     }
 }
 

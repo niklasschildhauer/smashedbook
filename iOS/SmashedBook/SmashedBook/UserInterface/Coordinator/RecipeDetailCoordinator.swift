@@ -14,6 +14,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     func addRecipeStep()
     func editRecipeIngredient(at index: Int)
     func addRecipeIngredient()
+    func addImage()
 }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
@@ -35,6 +36,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     var recipeEditIngredientCoordinator: RecipeEditCoordinator<RecipeIngredientModel, RecipeEditIngredientsCoordinatorView>? = nil
     var addImageCoordinator: AddImageCoordinator? = nil
     var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
+    var imagePickerCoordinator: ImagePickerCoordinator? = nil
     
     init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
         self.recipesDataSource = recipesDataSource
@@ -54,7 +56,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     }
     
     func showAttachment(attachment: ImageResourceModel) {
-        attachmentDetailCoordinator = AttachmentDetailCoordinator()
+        attachmentDetailCoordinator = AttachmentDetailCoordinator(imageResourceModel: attachment)
     }
     
     func editRecipeStep(at index: Int) {
@@ -89,6 +91,12 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
         }
     }
 
+    func addImage() {
+        imagePickerCoordinator = ImagePickerCoordinator(didSelectImage: { imageResourceModel in
+            self.recipeModel.attachments.append(imageResourceModel)
+            self.imagePickerCoordinator = nil
+        })
+    }
 }
 
 struct RecipeDetailCoordinatorView: View {
@@ -118,6 +126,9 @@ struct RecipeDetailCoordinatorView: View {
                content:{ coordinator in
             coordinator.rootView
         })
+        .sheet(item: $coordinator.imagePickerCoordinator) { coordinator in
+            coordinator.rootView
+        }
         .sheet(item: $coordinator.attachmentDetailCoordinator) { coordinator in  coordinator.rootView
         }
         .sheet(item: $coordinator.recipeEditStepCoordinator) { coordinator in  coordinator.rootView

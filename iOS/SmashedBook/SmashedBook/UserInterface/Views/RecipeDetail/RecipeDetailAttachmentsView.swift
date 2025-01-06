@@ -51,7 +51,7 @@ struct RecipeDetailAttachmentsView<Coordinator>: View where Coordinator: RecipeD
             .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: 0, bottom: LayoutConstants.verticalSpacing/2, trailing: 0))
         }, trailingAction: {
             Button {
-                coordinator.addAttachment()
+                coordinator.addImage()
             } label: {
                 Text("Hinzufügen").font(.footnote)
             }
