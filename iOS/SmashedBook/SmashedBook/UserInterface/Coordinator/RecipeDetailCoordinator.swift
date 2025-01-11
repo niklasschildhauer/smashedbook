@@ -92,8 +92,11 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     }
 
     func addImage() {
-        imagePickerCoordinator = ImagePickerCoordinator(didSelectImage: { imageResourceModel in
-            self.recipeModel.attachments.append(imageResourceModel)
+        imagePickerCoordinator = ImagePickerCoordinator(didSelectImages: { imageResourceModel in
+            imageResourceModel.forEach { imageResourceModel in
+                self.recipeModel.attachments.append(imageResourceModel)
+            }
+
             self.imagePickerCoordinator = nil
         })
     }

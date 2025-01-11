@@ -6,42 +6,79 @@
 //
 
 import UIKit
+import PhotosUI
 
 class ImagePickerCoordinator: NSObject, UIKitCoordinator, Identifiable {
     var rootViewController: UIViewController {
-        imagePickerController
+        photoPicker
     }
     
-    private let imagePickerController = UIImagePickerController()
+    private let photoPicker: PHPickerViewController = {
+        var photoPickerConfiguration = PHPickerConfiguration(photoLibrary: .shared())
+        photoPickerConfiguration.selectionLimit = 10
+        photoPickerConfiguration.filter = .images
+        
+        return PHPickerViewController(configuration: photoPickerConfiguration)
+    }()
+    
     private let resourcesDataSource: ResourcesDataSourceProtocol
-    
-    private let didSelectImage: (ImageResourceModel) -> Void
+    private let didSelectImages: ([ImageResourceModel]) -> Void
 
-    init(didSelectImage: @escaping (ImageResourceModel) -> Void,
+    init(didSelectImages: @escaping ([ImageResourceModel]) -> Void,
          resourcesDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) {
-        self.didSelectImage = didSelectImage
+        self.didSelectImages = didSelectImages
         self.resourcesDataSource = resourcesDataSource
+
         super.init()
-        setupImagePicker()
+        
+        setupPhotoPicker()
     }
     
-    private func setupImagePicker() {
-        imagePickerController.allowsEditing = false
-        imagePickerController.delegate = self
+    private func setupPhotoPicker() {
+        photoPicker.delegate = self
+        photoPicker.modalPresentationStyle = .fullScreen
     }
     
 }
 
-extension ImagePickerCoordinator: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
-        guard let image = info[.originalImage] as? UIImage,
-            let imageData = image.pngData(),
-            let imageResource = resourcesDataSource.save(attachmentData: imageData)
-        else {
-            // todo: error handling
-            return
+extension ImagePickerCoordinator: PHPickerViewControllerDelegate {
+    func picker(_ picker: PHPickerViewController, didFinishPicking results: [PHPickerResult]) {
+        let dispatchGroup: DispatchGroup = DispatchGroup()
+        var selectedImageResources: [ImageResourceModel] = []
+
+        //todo add loading spinner
+        
+        for (index, result) in results.enumerated() {
+            dispatchGroup.enter()
+            
+            result.itemProvider.loadObject(ofClass: UIImage.self) { [weak self]
+                reading, error in
+                if let image = reading as? UIImage,
+                   error == nil,
+                   let imageData = image.pngData(),
+                   let resource = self?.resourcesDataSource.save(attachmentData: imageData) {
+                    if selectedImageResources.count > index {
+                        selectedImageResources.insert(resource, at: index)
+                    } else {
+                        selectedImageResources.append(resource)
+                    }
+                    dispatchGroup.leave()
+                } else {
+                    print("Something went wrong!")
+                    // todo: error handling
+                    dispatchGroup.leave()
+                }
+            }
         }
+        
+        dispatchGroup.notify(queue: .main) { [weak self] in
+            self?.didSelectImages(selectedImageResources)
+        }
+    }
     
-        self.didSelectImage(imageResource)
+    func presentationControllerWillDismiss(_ presentationController: UIPresentationController) {
+        DispatchQueue.main.async { [weak self] in
+            self?.didSelectImages([])
+        }
     }
 }

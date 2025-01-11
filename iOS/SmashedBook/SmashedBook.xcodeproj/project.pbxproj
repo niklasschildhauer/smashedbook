@@ -25,7 +25,6 @@
 		852DEEE32B398EB80097DA36 /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 852DEEE22B398EB80097DA36 /* ZoomableScrollView.swift */; };
 		85376D752AA4A439003CFEDB /* ImagePickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D742AA4A439003CFEDB /* ImagePickerView.swift */; };
 		85376D792AA4BEED003CFEDB /* RecipeInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D782AA4BEED003CFEDB /* RecipeInteractor.swift */; };
-		85376D7C2AA4C71B003CFEDB /* DependencyInjection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85376D7B2AA4C71B003CFEDB /* DependencyInjection.swift */; };
 		8547AF562CF9E5B500895FAF /* AttachmentDetailCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8547AF552CF9E5AD00895FAF /* AttachmentDetailCoordinator.swift */; };
 		855617752A9A36F300DD5877 /* ListSectionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617742A9A36F300DD5877 /* ListSectionView.swift */; };
 		8556177A2A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */; };
@@ -144,7 +143,6 @@
 		852DEEE22B398EB80097DA36 /* ZoomableScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		85376D742AA4A439003CFEDB /* ImagePickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePickerView.swift; sourceTree = "<group>"; };
 		85376D782AA4BEED003CFEDB /* RecipeInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInteractor.swift; sourceTree = "<group>"; };
-		85376D7B2AA4C71B003CFEDB /* DependencyInjection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DependencyInjection.swift; sourceTree = "<group>"; };
 		8547AF552CF9E5AD00895FAF /* AttachmentDetailCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttachmentDetailCoordinator.swift; sourceTree = "<group>"; };
 		855617742A9A36F300DD5877 /* ListSectionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListSectionView.swift; sourceTree = "<group>"; };
 		855617792A9A4A8900DD5877 /* DeleteSwipeGestureViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeleteSwipeGestureViewModifier.swift; sourceTree = "<group>"; };
@@ -310,14 +308,6 @@
 			path = Interactor;
 			sourceTree = "<group>";
 		};
-		85376D7A2AA4C70E003CFEDB /* Shared */ = {
-			isa = PBXGroup;
-			children = (
-				85376D7B2AA4C71B003CFEDB /* DependencyInjection.swift */,
-			);
-			path = Shared;
-			sourceTree = "<group>";
-		};
 		855617782A9A4A4F00DD5877 /* ViewModifiers */ = {
 			isa = PBXGroup;
 			children = (
@@ -368,7 +358,6 @@
 				851C7ECA2B348D8400CDD529 /* LoginView.swift */,
 				851C7EC82B348CFA00CDD529 /* AppDelegate.swift */,
 				85D5583B2AB74B42006AE155 /* Repository */,
-				85376D7A2AA4C70E003CFEDB /* Shared */,
 				859236142ACC0EDE00015B41 /* DataSource */,
 				85376D772AA4BDB2003CFEDB /* Interactor */,
 				858935E62A910AFD00011D7F /* Model */,
@@ -466,6 +455,7 @@
 				858F4A872D2BEB9500AFB7BE /* ImagePicker */,
 				85279F3D2AA33C390031067B /* Generic */,
 				8556178C2A9B7B4D00DD5877 /* RecipeListing */,
+				858935F42A9255A700011D7F /* RecipeEdit */,
 				85CA5B632AB4CFE700F33EB0 /* RecipeDetail */,
 			);
 			path = Views;
@@ -516,7 +506,6 @@
 				85E151472AF2671600FB55CC /* RecipeDetailAttachmentCellView.swift */,
 				85AFE78A2B53FE50001F4AE9 /* RecipeDetailStepsView.swift */,
 				858978962BFF4462005176DC /* RecipeDetailTitleView.swift */,
-				858935F42A9255A700011D7F /* RecipeEdit */,
 			);
 			path = RecipeDetail;
 			sourceTree = "<group>";
@@ -758,7 +747,6 @@
 				85145C782AC1FC8900219D1D /* IconLabelFilledButtonView.swift in Sources */,
 				85376D792AA4BEED003CFEDB /* RecipeInteractor.swift in Sources */,
 				858F4A842D0498D100AFB7BE /* RecipeDetailIngredientView.swift in Sources */,
-				85376D7C2AA4C71B003CFEDB /* DependencyInjection.swift in Sources */,
 				858F4A862D2BEABD00AFB7BE /* ImagePickerCoordinator.swift in Sources */,
 				85D558492AB7605B006AE155 /* RecipeStepModel.swift in Sources */,
 				8592360F2ACABEF800015B41 /* RecipeHomeCoordinator.swift in Sources */,

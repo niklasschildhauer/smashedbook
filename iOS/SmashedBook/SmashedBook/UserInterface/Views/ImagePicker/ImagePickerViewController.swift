@@ -9,13 +9,48 @@ import UIKit
 
 class ImagePickerViewController: UIViewController {
     
-    var presenter: ImagePickerPresenter!
+    var presenter: ImagePickerPresenter! {
+        didSet {
+            presenter.view = self
+            imagePickerController.delegate = presenter
+        }
+    }
     
-    override func viewDidLoad() {
+    private let imagePickerController: UIImagePickerController = {
+        let imagePicker = UIImagePickerController()
+        imagePicker.allowsEditing = false
         
+        return imagePicker
+    }()
+    
+    private let loadingViewWrapper: UIView = {
+        let view = UIView(frame: .zero)
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        view.backgroundColor = .red
+        
+        return view
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        presenter.viewDidLoad()
     }
 }
 
 extension ImagePickerViewController: ImagePickerViewing {
+    func hideLoadingSpinner() {
+        loadingViewWrapper.isHidden = true
+    }
     
+    func showLoadingSpinner() {
+        loadingViewWrapper.isHidden = false
+    }
+    
+    func presentImagePicker() {
+        view.addSubview(imagePickerController.view)
+        imagePickerController.view.translatesAutoresizingMaskIntoConstraints = false
+        imagePickerController.view.anchorToAllEdgesOfSafeArea()
+        imagePickerController.didMove(toParent: self)
+    }
 }
