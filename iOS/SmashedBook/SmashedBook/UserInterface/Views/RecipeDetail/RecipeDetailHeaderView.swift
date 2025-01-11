@@ -7,8 +7,10 @@
 
 import SwiftUI
 
-struct RecipeDetailHeaderView: View {
+struct RecipeDetailHeaderView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
+    @EnvironmentObject var coordinator:  Coordinator
     @Binding var title: String
+    @Binding var titleImage: ImageResourceModel?
     @Environment(\.editMode) var editMode
     
     var isEditedModeActive: Bool {
@@ -17,7 +19,7 @@ struct RecipeDetailHeaderView: View {
     
     var body: some View {
         ParallaxHeader() {
-            Image("ExamplePicture")
+            Image.createImageFrom(imageResource: $titleImage.wrappedValue)
                 .resizable()
                 .scaledToFill()
         } bottomView: {
@@ -31,7 +33,9 @@ struct RecipeDetailHeaderView: View {
         .listRowSeparator(.hidden)
         .overlay {
             if isEditedModeActive {
-                Text("Wir editieren")
+                Button("Edit") {
+                    coordinator.addTitleImage()
+                }
             }
         }
     }
@@ -39,6 +43,6 @@ struct RecipeDetailHeaderView: View {
 
 #Preview {
     List{
-        RecipeDetailHeaderView(title: .constant("Lachsrezept"))
+        RecipeDetailHeaderView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")))
     }
 }

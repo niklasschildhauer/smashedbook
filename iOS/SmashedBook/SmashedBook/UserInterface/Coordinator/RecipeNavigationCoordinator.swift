@@ -35,7 +35,7 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
 
 extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
     func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator) {
-        let customBackBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: nil, action: nil)
-        navigationController.pushViewController(createRecipeDetailViewController(recipe: recipe), animated: true, customBackButtonItem: customBackBarButtonItem, transparentNavigationBar: true)
+//        let customBackBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: nil, action: nil)
+        navigationController.pushViewController(createRecipeDetailViewController(recipe: recipe), animated: true, transparentNavigationBar: true)
     }
 }

@@ -8,14 +8,15 @@
 import SwiftUI
 
 extension Image {
-    static func createImageFrom(imageResource: ImageResourceModel,
+    static func createImageFrom(imageResource: ImageResourceModel?,
                                 dataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) -> Image {
-        if let imageData = dataSource.load(attachment: imageResource),
+        if let imageResource,
+           let imageData = dataSource.load(attachment: imageResource),
            let uiImage = UIImage(data: imageData) {
             return Image(uiImage: uiImage)
         } else {
             // todo: proper error handling
-            return Image("BackButton")
+            return Image("EmptyImage")
         }
     }
 }

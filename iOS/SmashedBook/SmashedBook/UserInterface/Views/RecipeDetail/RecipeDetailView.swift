@@ -12,7 +12,7 @@ struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordi
     
     var body: some View {
         List {
-            RecipeDetailHeaderView(title: $recipe.title)
+            RecipeDetailHeaderView<Coordinator>(title: $recipe.title, titleImage: $recipe.titleImage)
             RecipeDetailIngredientsView<Coordinator>(ingredients: $recipe.ingredients)
             RecipeDetailStepsView<Coordinator>(steps: $recipe.steps)
             RecipeDetailAttachmentsView<Coordinator>(attachments: $recipe.attachments)

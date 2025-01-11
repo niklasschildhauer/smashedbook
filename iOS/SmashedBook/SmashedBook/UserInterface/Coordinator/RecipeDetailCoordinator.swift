@@ -15,6 +15,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     func editRecipeIngredient(at index: Int)
     func addRecipeIngredient()
     func addImage()
+    func addTitleImage()
 }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
@@ -99,6 +100,15 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
 
             self.imagePickerCoordinator = nil
         })
+    }
+    
+    func addTitleImage() {
+        imagePickerCoordinator = ImagePickerCoordinator(didSelectImages: { imageResourceModel in
+            if let firsImageResourceModel = imageResourceModel.first {
+                self.recipeModel.titleImage = firsImageResourceModel
+            }
+            self.imagePickerCoordinator = nil
+        }, selectionLimit: 1)
     }
 }
 

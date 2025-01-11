@@ -13,9 +13,9 @@ class ImagePickerCoordinator: NSObject, UIKitCoordinator, Identifiable {
         photoPicker
     }
     
-    private let photoPicker: PHPickerViewController = {
+    private lazy var photoPicker: PHPickerViewController! = {
         var photoPickerConfiguration = PHPickerConfiguration(photoLibrary: .shared())
-        photoPickerConfiguration.selectionLimit = 10
+        photoPickerConfiguration.selectionLimit = self.selectionLimit
         photoPickerConfiguration.filter = .images
         
         return PHPickerViewController(configuration: photoPickerConfiguration)
@@ -23,11 +23,15 @@ class ImagePickerCoordinator: NSObject, UIKitCoordinator, Identifiable {
     
     private let resourcesDataSource: ResourcesDataSourceProtocol
     private let didSelectImages: ([ImageResourceModel]) -> Void
+    private let selectionLimit: Int
 
     init(didSelectImages: @escaping ([ImageResourceModel]) -> Void,
-         resourcesDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()) {
+         selectionLimit: Int = 10,
+         resourcesDataSource: ResourcesDataSourceProtocol = ResourcesDataSource.getInstance()
+    ) {
         self.didSelectImages = didSelectImages
         self.resourcesDataSource = resourcesDataSource
+        self.selectionLimit = selectionLimit
 
         super.init()
         

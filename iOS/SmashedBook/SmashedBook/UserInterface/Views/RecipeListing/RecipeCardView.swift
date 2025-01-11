@@ -13,7 +13,7 @@ struct RecipeCardView: View {
     
     var body: some View {
         ZStack(alignment: .bottom ){
-            Image("ExampleRecipe")
+            Image.createImageFrom(imageResource: recipe.titleImage)
                 .resizable()
                 .scaledToFill()
                 .frame(height: 200)
