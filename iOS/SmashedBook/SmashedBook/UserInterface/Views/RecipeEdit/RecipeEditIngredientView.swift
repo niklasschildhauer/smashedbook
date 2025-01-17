@@ -9,63 +9,59 @@ import SwiftUI
 
 struct RecipeEditIngredientsCoordinatorView: RecipeEditView {
     typealias EditModel = RecipeIngredientModel
-    typealias EditView = Self
     
-    @State var coordinator: RecipeEditCoordinator<RecipeIngredientModel, Self>
-    
+    @State var coordinator: RecipeEditCoordinator<Self>
+
     var body: some View {
         NavigationStack {
-            RecipeEditIngredientView(ingredient: $coordinator.editModel)
-                .padding(.horizontal, LayoutConstants.safeAreaSpacing)
-                .toolbar {
-                    ToolbarItemGroup(placement: .topBarTrailing) {
-                        Button("Save") {
-                            coordinator.save()
-                        }
+            RecipeEditIngredientsView(editModel: $coordinator.editModel)
+            .toolbar {
+                ToolbarItemGroup(placement: .topBarTrailing) {
+                    Button("Save") {
+                        coordinator.save()
                     }
                 }
+            }
+            .navigationTitle("Zutat hinzufügen")
+            .navigationBarTitleDisplayMode(.inline)
+            .presentationDetents([.height(300)])
         }
     }
 }
 
+
 #Preview {
-    RecipeEditIngredientsCoordinatorView(coordinator: RecipeEditCoordinator(editModel: .init(name: "Name", value: "Value", unit: .gram), onSave: { _ in
+    RecipeEditIngredientsCoordinatorView(coordinator: RecipeEditCoordinator(editModel: .init(name: "Name", value: "Value", unit: .kilogram), onSave: { _ in
         print("Did save")
     }))
 }
 
-enum RecipeEditIngredientFocus {
-    case nameField
-    case valueField
-}
-
-struct RecipeEditIngredientView: View {
-    @Binding var ingredient: RecipeIngredientModel
+struct RecipeEditIngredientsView: View {
+    @Binding var editModel: RecipeIngredientModel
     
-    @FocusState var focusedField: RecipeEditIngredientFocus?
-        
     var body: some View {
-        HStack(alignment: .firstTextBaseline) {
-            TextField("Zutat", text: $ingredient.name)
-                .focused($focusedField, equals: .nameField)
-            HStack(alignment: .firstTextBaseline, spacing: 5) {
-                TextField("Menge", text: $ingredient.value)
+        List {
+            HStack {
+                Text("Name")
+                Spacer()
+                TextField("Zutat", text: $editModel.name)
                     .multilineTextAlignment(.trailing)
-                    .frame(width: 60)
-                    .focused($focusedField, equals: .valueField)
-                Picker("Einheit", selection: $ingredient.unit) {
-                    ForEach(RecipeIngredientUnit.allCases, id: \.self) { unit in
-                        Text(unit.rawValue)
-                    }
-                }
-                .fixedSize(horizontal: true, vertical: true)
             }
-            .frame(height: 50)
-            .background(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
-                .fill(Color("shape")))
-        }
-        .onAppear {
-            focusedField = .nameField
+            Section {
+                VStack(alignment: .center) {
+                    TextField("0.0", text: $editModel.value)
+                        .keyboardType(.decimalPad)
+                        .textFieldStyle(.plain)
+                        .font(.GeistMedium, fontStyle: .largeTitle)
+                        .multilineTextAlignment(.center)
+                    Picker("Einheit", selection: $editModel.unit) {
+                        ForEach(RecipeIngredientUnit.allCases, id: \.self) { unit in
+                            Text(unit.rawValue)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                }
+            }
         }
     }
 }

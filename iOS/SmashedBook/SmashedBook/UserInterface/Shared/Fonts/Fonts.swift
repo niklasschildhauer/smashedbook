@@ -15,7 +15,7 @@ enum CustomFont {
     enum FontStyle: CGFloat {
         case body = 16
         case footnote = 12
-        case largeTitle = 28
+        case largeTitle = 36
         case title = 20
         
         fileprivate func getRelativeTextStyle() -> Font.TextStyle {

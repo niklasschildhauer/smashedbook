@@ -33,8 +33,8 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
         }
     }
   
-    var recipeEditStepCoordinator: RecipeEditCoordinator<RecipeStepModel, RecipeEditStepCoordinatorView>? = nil
-    var recipeEditIngredientCoordinator: RecipeEditCoordinator<RecipeIngredientModel, RecipeEditIngredientsCoordinatorView>? = nil
+    var recipeEditStepCoordinator: RecipeEditCoordinator< RecipeEditStepCoordinatorView>? = nil
+    var recipeEditIngredientCoordinator: RecipeEditCoordinator< RecipeEditIngredientsCoordinatorView>? = nil
     var addImageCoordinator: AddImageCoordinator? = nil
     var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
     var imagePickerCoordinator: ImagePickerCoordinator? = nil
@@ -85,7 +85,7 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     }
     
     func addRecipeIngredient() {
-        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: RecipeIngredientModel(name: "", value: "", unit: .gram)) { ingredientModel in
+        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: RecipeIngredientModel(name: "", value: "", unit: .kilogram)) { ingredientModel in
             self.recipeModel.ingredients.append(ingredientModel)
             self.saveRecipe()
             self.recipeEditIngredientCoordinator = nil
@@ -145,10 +145,8 @@ struct RecipeDetailCoordinatorView: View {
         .sheet(item: $coordinator.attachmentDetailCoordinator) { coordinator in  coordinator.rootView
         }
         .sheet(item: $coordinator.recipeEditStepCoordinator) { coordinator in  coordinator.rootView
-                .presentationDetents([.height(200)])
         }
         .sheet(item: $coordinator.recipeEditIngredientCoordinator) { coordinator in  coordinator.rootView
-                .presentationDetents([.height(150)])
         }
         .environment(coordinator)
     }

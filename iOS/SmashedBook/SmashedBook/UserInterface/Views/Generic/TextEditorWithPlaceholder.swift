@@ -9,12 +9,12 @@ import SwiftUI
 
 struct TextEditorWithPlaceholder: View {
     @Binding var text: String
-    @Binding var placeholder: String
-    
+    let placeholder: String
+
     var body: some View {
         ZStack(alignment: .leading) {
             if text.isEmpty {
-                TextEditor(text: $placeholder)
+                TextEditor(text: .constant(placeholder))
                     .fill(.height, alignment: .leading)
                     .opacity(text.isEmpty ? 0.85 : 1)
             }
@@ -26,5 +26,5 @@ struct TextEditorWithPlaceholder: View {
 }
 
 #Preview {
-    TextEditorWithPlaceholder(text: .constant(""), placeholder: .constant("Write something"))
+    TextEditorWithPlaceholder(text: .constant(""), placeholder: "Write something")
 }

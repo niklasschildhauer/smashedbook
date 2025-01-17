@@ -9,22 +9,22 @@ import SwiftUI
 
 protocol RecipeEditView<EditModel>: View {
     associatedtype EditModel
-    var coordinator: RecipeEditCoordinator<EditModel, Self> { get set }
+    var coordinator: RecipeEditCoordinator<Self> { get set }
  
-    init(coordinator: RecipeEditCoordinator<EditModel, Self>)
+    init(coordinator: RecipeEditCoordinator<Self>)
 }
 
-@Observable class RecipeEditCoordinator<EditModel, EditView>: SwiftUICoordinator, Identifiable where EditView: RecipeEditView<EditModel> {
+@Observable class RecipeEditCoordinator<EditView>: SwiftUICoordinator, Identifiable where EditView: RecipeEditView<EditView.EditModel> {
     typealias CoordinatorView = EditView
     var rootView: EditView {
         EditView(coordinator: self)
     }
     
-    var editModel: EditModel
-    var onSave: (EditModel) -> Void
+    var editModel: EditView.EditModel
+    var onSave: (EditView.EditModel) -> Void
             
-    init(editModel: EditModel,
-         onSave: @escaping (EditModel) -> Void) {
+    init(editModel: EditView.EditModel,
+         onSave: @escaping (EditView.EditModel) -> Void) {
         self.editModel = editModel
         self.onSave = onSave
     }

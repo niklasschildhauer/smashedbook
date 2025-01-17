@@ -7,15 +7,10 @@
 
 import SwiftUI
 
-enum RecipeEditStepFocus {
-    case descriptionField
-}
-
 struct RecipeEditStepCoordinatorView: RecipeEditView {
     typealias EditModel = RecipeStepModel
-    typealias EditView = Self
     
-    @State var coordinator: RecipeEditCoordinator<RecipeStepModel, Self>
+    @State var coordinator: RecipeEditCoordinator<Self>
         
     var body: some View {
         NavigationStack {
@@ -28,6 +23,7 @@ struct RecipeEditStepCoordinatorView: RecipeEditView {
                     }
                 }
         }
+        .presentationDetents([.height(250)])
     }
 }
 
@@ -40,17 +36,11 @@ struct RecipeEditStepCoordinatorView: RecipeEditView {
 
 struct RecipeEditStepView: View {
     @Binding var description: String
-    @FocusState var focusedField: RecipeEditStepFocus?
-
+    
     var body: some View {
-        VStack {
-            TextEditorWithPlaceholder(text: $description, placeholder: .constant("Beschreibe den Rezeptschritt"))
-                .focused($focusedField, equals: .descriptionField)
-            Spacer(minLength: LayoutConstants.verticalSpacing)
-        }
-        .padding(.horizontal, LayoutConstants.safeAreaSpacing)
-        .onAppear {
-            focusedField = .descriptionField
+        List {
+            TextEditorWithPlaceholder(text: $description, placeholder: "Beschreibe den Rezeptschritt")
+                .frame(minHeight: 100)
         }
     }
 }
