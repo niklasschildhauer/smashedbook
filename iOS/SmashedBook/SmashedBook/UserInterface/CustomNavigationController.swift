@@ -50,7 +50,7 @@ class CustomNavigationController: UINavigationController {
         }
         
         if transparentNavigationBar {
-            appearance.configureWithTransparentBackground()
+            //appearance.configureWithTransparentBackground()
         }
         
         viewController.navigationItem.standardAppearance = appearance

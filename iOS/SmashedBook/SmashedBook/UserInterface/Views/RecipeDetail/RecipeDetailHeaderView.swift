@@ -11,11 +11,6 @@ struct RecipeDetailHeaderView<Coordinator>: View where Coordinator: RecipeDetail
     @EnvironmentObject var coordinator:  Coordinator
     @Binding var title: String
     @Binding var titleImage: ImageResourceModel?
-    @Environment(\.editMode) var editMode
-    
-    var isEditedModeActive: Bool {
-        editMode?.wrappedValue == .active
-    }
     
     var body: some View {
         ParallaxHeader() {
@@ -24,19 +19,11 @@ struct RecipeDetailHeaderView<Coordinator>: View where Coordinator: RecipeDetail
                 .scaledToFill()
         } bottomView: {
             RecipeDetailTitleView(title: title)
-            .fill(.width, alignment: .bottom)
-            .padding(.bottom, LayoutConstants.safeAreaSpacing)
-            .background(
-                LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
-            )
-        }
-        .listRowSeparator(.hidden)
-        .overlay {
-            if isEditedModeActive {
-                Button("Edit") {
-                    coordinator.addTitleImage()
-                }
-            }
+                .fill(.width, alignment: .bottom)
+                .padding(.bottom, LayoutConstants.safeAreaSpacing)
+                .background(
+                    LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
+                )
         }
     }
 }

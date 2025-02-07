@@ -10,38 +10,39 @@ import SwiftUI
 struct ParallaxHeader<Background: View, BottomView: View>: View {
     private let distanceToScrollWithParallaxEffect: CGFloat = 200
     private let slowScrollingSpeed = 0.7
-    private let headerHeight = 600.0
+    private let headerHeight = 500.0
     
     @ViewBuilder var background: Background
     @ViewBuilder var bottomView: BottomView
         
     var body: some View {
-            GeometryReader { proxy in
-                let backgroundOffset = offset(for: slowScrollingSpeed,
-                                              distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect,
-                                              proxy: proxy)
-                let overScrollingValue = overScrollingValue(for: proxy)
+        GeometryReader { proxy in
+            let backgroundOffset = offset(for: slowScrollingSpeed,
+                                          distanceToScrollWithParallaxEffect: distanceToScrollWithParallaxEffect,
+                                          proxy: proxy)
+            let overScrollingValue = overScrollingValue(for: proxy)
 
-                ZStack(alignment: .top) {
-                    background
-                        .frame(
-                            width: proxy.size.width,
-                            height: proxy.size.height + overScrollingValue
-                        )
-                        .offset(y: backgroundOffset)
-                        .clipShape(
-                            Rectangle()
-                                .offset(y: -overScrollingValue)
-                        )
-                    VStack {
-                        Spacer()
-                        bottomView
+            ZStack(alignment: .top) {
+                background
+                    .frame(
+                        width: proxy.size.width,
+                        height: proxy.size.height + overScrollingValue
+                    )
+                    .offset(y: backgroundOffset)
+                    .clipShape(
+                        Rectangle()
                             .offset(y: -overScrollingValue)
-                    }
+                    )
+                VStack {
+                    Spacer()
+                    bottomView
+                        .offset(y: -overScrollingValue)
                 }
             }
-            .listRowInsets(.init(top: -5, leading: 0, bottom: 0, trailing: 0))
-            .frame(minHeight: headerHeight)
+        }
+        .frame(minHeight: headerHeight)
+        .listRowInsets(.init(top: 0, leading: 0, bottom: 0, trailing: 0))
+        .listRowSeparator(.hidden)
     }
     
     private func offset(for relativeScrollingSpeed: CGFloat, distanceToScrollWithParallaxEffect: CGFloat, proxy: GeometryProxy) -> CGFloat {
