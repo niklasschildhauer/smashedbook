@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
+protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDelegate {
     func addAttachment()
     func showAttachment(attachment: ImageResourceModel)
     func editRecipeStep(at index: Int)
@@ -15,7 +15,6 @@ protocol RecipeDetailCoordinating: AnyObject, ObservableObject {
     func editRecipeIngredient(at index: Int)
     func addRecipeIngredient()
     func addImage()
-    func addTitleImage()
 }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
