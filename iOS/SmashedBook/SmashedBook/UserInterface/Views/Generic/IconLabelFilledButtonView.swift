@@ -24,7 +24,7 @@ struct IconLabelFilledButtonView: View {
                 Spacer(minLength: LayoutConstants.horizontalSpacing)
                 Image(systemName: iconSystemName)
             }
-            .fill(.width, alignment: .center)
+            //.fill(.width, alignment: .center)
         }
         .buttonStyle(ScaleAnimationFilledButtonStyle(backgroundColor: .accentColor))
     }

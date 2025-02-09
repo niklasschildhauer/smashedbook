@@ -21,6 +21,8 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
         editMode?.wrappedValue == .active
     }
     
+    @State var selectedFont: CustomFont = .AbrilFatface
+    
     var body: some View {
         if isEditModeActive {
             VStack {
@@ -34,10 +36,32 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
                     .buttonStyle(.bordered)
                 TextField("Rezeptname", text: $title)
                     .multilineTextAlignment(.center)
-                    .font(.GeistMedium, fontStyle: .largeTitle)
+                    .font($selectedFont.wrappedValue, fontStyle: .largeTitle)
                     .listRowSeparator(.hidden)
+                    .frame(height: 75)
+                
+                HStack(spacing: LayoutConstants.horizontalSpacing) {
+                    ForEach(CustomFont.allCases, id: \.self) { font in
+                        Button {
+                            selectedFont = font
+                        } label: {
+                            ZStack(alignment: .center) {
+                                RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
+                                    .stroke(.blue, lineWidth: 3)
+                                    .frame(width: 40)
+                                    .isHidden {
+                                        font != selectedFont
+                                    }
+                                Text("Ab")
+                                    .font(font, fontStyle: .title)
+                            }
+                        }
+                        .buttonStyle(.plain)
+                    }
+                }
             }
             .listRowSeparator(.hidden)
+            .selectionDisabled()
         } else {
             ParallaxHeader() {
                 Image.createImageFrom(imageResource: $titleImage.wrappedValue)
@@ -56,8 +80,5 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
 }
 
 #Preview {
-    List{
-        RecipeDetailGeneralInfoView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")))
-    }
-    .listStyle(.plain)
+    RecipeDetailGeneralInfoView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")))
 }

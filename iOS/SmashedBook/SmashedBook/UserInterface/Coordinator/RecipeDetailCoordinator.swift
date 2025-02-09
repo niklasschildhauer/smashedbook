@@ -38,7 +38,10 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
     var imagePickerCoordinator: ImagePickerCoordinator? = nil
     
-    init(recipesDataSource: RecipesDataSource = RecipesDataSource(), recipeModel: RecipeModel) {
+    init(
+        recipesDataSource: RecipesDataSource = RecipesDataSource(),
+        recipeModel: RecipeModel
+    ) {
         self.recipesDataSource = recipesDataSource
         self.recipeModel = recipeModel
     }
@@ -56,19 +59,25 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     }
     
     func showAttachment(attachment: ImageResourceModel) {
-        attachmentDetailCoordinator = AttachmentDetailCoordinator(imageResourceModel: attachment)
+        attachmentDetailCoordinator = AttachmentDetailCoordinator(
+            imageResourceModel: attachment
+        )
     }
     
     func editRecipeStep(at index: Int) {
-        recipeEditStepCoordinator = RecipeEditCoordinator(editModel: recipeModel.steps[index]) { stepModel in
-                self.recipeModel.steps[index] = stepModel
-                self.saveRecipe()
-                self.recipeEditStepCoordinator = nil
+        recipeEditStepCoordinator = RecipeEditCoordinator(
+            editModel: recipeModel.steps[index]
+        ) { stepModel in
+            self.recipeModel.steps[index] = stepModel
+            self.saveRecipe()
+            self.recipeEditStepCoordinator = nil
         }
     }
     
     func addRecipeStep() {
-        recipeEditStepCoordinator = RecipeEditCoordinator(editModel: RecipeStepModel(description: "")) { stepModel in
+        recipeEditStepCoordinator = RecipeEditCoordinator(
+            editModel: RecipeStepModel(description: "")
+        ) { stepModel in
             self.recipeModel.steps.append(stepModel)
             self.saveRecipe()
             self.recipeEditStepCoordinator = nil
@@ -76,7 +85,9 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     }
     
     func editRecipeIngredient(at index: Int) {
-        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: recipeModel.ingredients[index]) { ingredientModel in
+        recipeEditIngredientCoordinator = RecipeEditCoordinator(
+            editModel: recipeModel.ingredients[index]
+        ) { ingredientModel in
             self.recipeModel.ingredients[index] = ingredientModel
             self.saveRecipe()
             self.recipeEditIngredientCoordinator = nil
@@ -84,7 +95,13 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     }
     
     func addRecipeIngredient() {
-        recipeEditIngredientCoordinator = RecipeEditCoordinator(editModel: RecipeIngredientModel(name: "", value: "", unit: .kilogram)) { ingredientModel in
+        recipeEditIngredientCoordinator = RecipeEditCoordinator(
+            editModel: RecipeIngredientModel(
+                name: "",
+                value: "",
+                unit: .kilogram
+            )
+        ) { ingredientModel in
             self.recipeModel.ingredients.append(ingredientModel)
             self.saveRecipe()
             self.recipeEditIngredientCoordinator = nil
@@ -116,21 +133,29 @@ struct RecipeDetailCoordinatorView: View {
     @Environment(\.editMode) var editMode
 
     var body: some View {
-        RecipeDetailView<RecipeDetailCoordinator>(recipe: $coordinator.recipeModel)
-        .bottomToolbar {
-            HStack {
+        RecipeDetailView<RecipeDetailCoordinator>(
+            recipe: $coordinator.recipeModel
+        )
+        .toolbar {
+            ToolbarItem(id: "editButton", placement: .primaryAction) {
                 if editMode?.wrappedValue == .inactive {
-                    IconLabelFilledButtonView(title: "Bearbeiten", iconSystemName: "trash.fill") {
+                    Button(action: {
                         self.editMode?.animation().wrappedValue = .active
-                    }
+                    }, label: {
+                        Text("Bearbeiten")
+                    })
+                    .buttonStyle(.bordered)
                 } else {
-                    IconLabelFilledButtonView(title: "Speichern", iconSystemName: "trash.fill") {
+                    Button(action: {
                         self.editMode?.animation().wrappedValue = .inactive
                         coordinator.saveRecipe()
-                    }
+                    }, label: {
+                        Text("Fertig")
+                    })
                 }
             }
         }
+        .toolbarBackground(.hidden, for: .navigationBar)
         .sheet(item: $coordinator.addImageCoordinator,
                onDismiss: {
             $coordinator.addImageCoordinator.wrappedValue = nil
@@ -141,16 +166,26 @@ struct RecipeDetailCoordinatorView: View {
         .sheet(item: $coordinator.imagePickerCoordinator) { coordinator in
             coordinator.rootView
         }
-        .sheet(item: $coordinator.attachmentDetailCoordinator) { coordinator in  coordinator.rootView
+        .sheet(
+            item: $coordinator.attachmentDetailCoordinator
+        ) { coordinator in  coordinator.rootView
         }
-        .sheet(item: $coordinator.recipeEditStepCoordinator) { coordinator in  coordinator.rootView
+        .sheet(
+            item: $coordinator.recipeEditStepCoordinator
+        ) { coordinator in  coordinator.rootView
         }
-        .sheet(item: $coordinator.recipeEditIngredientCoordinator) { coordinator in  coordinator.rootView
+        .sheet(
+            item: $coordinator.recipeEditIngredientCoordinator
+        ) { coordinator in  coordinator.rootView
         }
         .environment(coordinator)
     }
 }
 
 #Preview {
-    RecipeDetailCoordinatorView(coordinator: RecipeDetailCoordinator(recipeModel: recipeModelMock))
+    NavigationStack {
+        RecipeDetailCoordinatorView(
+            coordinator: RecipeDetailCoordinator(recipeModel: recipeModelMock)
+        )
+    }
 }

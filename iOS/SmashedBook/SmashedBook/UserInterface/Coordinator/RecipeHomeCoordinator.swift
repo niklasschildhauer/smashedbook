@@ -45,25 +45,32 @@ struct RecipeHomeCoordinatorView: View {
     
     var body: some View {
         recipeOverviewView
-        .onAppear {
-            coordinator.start()
-        }
-        .uiTestIdentifier("recipeCoordinatorView")
+            .onAppear {
+                coordinator.start()
+            }
+            .uiTestIdentifier("recipeCoordinatorView")
     }
     
     @ViewBuilder var recipeOverviewView: some View {
         RecipeListingView(recipes: $coordinator.recipesDataSource.recipes, 
                           showDetails: coordinator.showDetails)
-            .titleBar(title: "Meine Rezepte")
-            .bottomToolbar {
-                IconLabelFilledButtonView(title: "Hinzufügen", iconSystemName: "trash.fill") {
+        .toolbar {
+            ToolbarItem(id: "addButton", placement: .primaryAction) {
+                Button(action: {
                     coordinator.addRecipe()
-                }
-                .uiTestIdentifier("addRecipeButton")
+                }, label: {
+                    Text("Hinzufügen")
+                })
+                .buttonStyle(.bordered)
             }
+        }
+        .titleBar(title: "Meine Rezepte")
+        
     }
 }
 
 #Preview {
-    RecipeHomeCoordinatorView(coordinator: RecipeHomeCoordinator())
+    NavigationStack {
+        RecipeHomeCoordinatorView(coordinator: RecipeHomeCoordinator())
+    }
 }

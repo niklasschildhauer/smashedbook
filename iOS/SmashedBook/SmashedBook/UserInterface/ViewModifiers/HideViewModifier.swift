@@ -19,8 +19,24 @@ struct HideViewModifier: ViewModifier {
     }
 }
 
+struct HideViewModifier2: ViewModifier {
+    var isHidden: () -> Bool
+    
+    func body(content: Content) -> some View {
+        if isHidden() {
+            content.hidden()
+        } else {
+            content
+        }
+    }
+}
+
 extension View {
     func isHidden(_ hidden: Binding<Bool>) -> some View {
         self.modifier(HideViewModifier(isHidden: hidden))
+    }
+    
+    func isHidden(_ hideFunction: @escaping () -> Bool) -> some View {
+        self.modifier(HideViewModifier2(isHidden: hideFunction))
     }
 }

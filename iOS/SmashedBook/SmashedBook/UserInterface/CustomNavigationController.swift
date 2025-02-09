@@ -53,7 +53,7 @@ class CustomNavigationController: UINavigationController {
             //appearance.configureWithTransparentBackground()
         }
         
-        viewController.navigationItem.standardAppearance = appearance
+//        viewController.navigationItem.standardAppearance = appearance
         pushViewController(viewController, animated: true)
     }
     

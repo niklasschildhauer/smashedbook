@@ -25,5 +25,6 @@ struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordi
 #Preview {
     RecipeDetailView<RecipeDetailCoordinator>(recipe: .constant(recipeModelMock))
         .environment(RecipeDetailCoordinator(recipeModel: recipeModelMock))
+        .environment(\.editMode, .constant(EditMode.active))
 }
 
