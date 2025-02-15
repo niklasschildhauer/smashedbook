@@ -27,11 +27,11 @@ struct RecipeListingView: View {
                         Button(action: {
                             showDetails(recipe)
                         }, label: {
-                            RecipeCardView(recipe: recipe)
+                            RecipeCardView(recipe: .constant(recipe))
+                                .padding(.horizontal)
                         })
                     }
                 }
-                .padding(.horizontal, LayoutConstants.safeAreaSpacing)
             }
         }
     }

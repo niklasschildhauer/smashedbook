@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-enum CustomFont: CaseIterable {
+enum CustomFont: CaseIterable, Codable {
     case AbrilFatface
     case GeistMedium
     case GeistBlack

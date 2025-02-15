@@ -8,13 +8,14 @@
 import SwiftUI
 
 struct RecipeDetailTitleView: View {
-    let title: String
+    @Binding var title: String
+    @Binding var selectedFont: CustomFont
     
     var body: some View {
         VStack(spacing: LayoutConstants.verticalSpacing) {
             Spacer().frame(height: 40)
             Text(title)
-                .font(.AbrilFatface, fontStyle: .largeTitle)
+                .font(selectedFont, fontStyle: .largeTitle)
                 .foregroundStyle(.white)
             HStack(spacing: LayoutConstants.horizontalSpacing) {
                 Text("🔥 320kcal")
@@ -28,5 +29,5 @@ struct RecipeDetailTitleView: View {
 }
 
 #Preview {
-    RecipeDetailTitleView(title: "Testtitel")
+    RecipeDetailTitleView(title: .constant("Testtitel"), selectedFont: .constant(.AbrilFatface))
 }

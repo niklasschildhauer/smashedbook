@@ -22,8 +22,10 @@ struct RecipeEditStepCoordinatorView: RecipeEditView {
                         }
                     }
                 }
+                .navigationTitle("Rezeptschritt")
+                .navigationBarTitleDisplayMode(.inline)
+                .scrollDismissesKeyboard(.interactively)
         }
-        .presentationDetents([.height(250)])
     }
 }
 
@@ -40,7 +42,7 @@ struct RecipeEditStepView: View {
     var body: some View {
         List {
             TextEditorWithPlaceholder(text: $description, placeholder: "Beschreibe den Rezeptschritt")
-                .frame(minHeight: 100)
+                .frame(minHeight: 200)
         }
     }
 }

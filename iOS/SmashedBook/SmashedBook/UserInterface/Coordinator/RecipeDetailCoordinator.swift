@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+protocol RecipeDetailCoordinatorDelegate: AnyObject {
+    func didCancelCreationOfRecipe(in coordinator: any RecipeDetailCoordinating)
+}
+
 protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDelegate {
     func addAttachment()
     func showAttachment(attachment: ImageResourceModel)
@@ -25,29 +29,66 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     }
     
     // TODO: this recipesDataSource is only pass through. Use DI to avoid overhead
-    var recipesDataSource: RecipesDataSource
+    let recipesDataSource: RecipesDataSource
+    let recipeSnapshotService: RecipeSnapshotService
+    let recipeValidatorService: RecipeValidatorService
+    
     var recipeModel: RecipeModel {
         didSet {
             saveRecipe()
         }
     }
+    
+    var delegate: RecipeDetailCoordinatorDelegate?
   
-    var recipeEditStepCoordinator: RecipeEditCoordinator< RecipeEditStepCoordinatorView>? = nil
-    var recipeEditIngredientCoordinator: RecipeEditCoordinator< RecipeEditIngredientsCoordinatorView>? = nil
-    var addImageCoordinator: AddImageCoordinator? = nil
-    var attachmentDetailCoordinator: AttachmentDetailCoordinator? = nil
-    var imagePickerCoordinator: ImagePickerCoordinator? = nil
+    var recipeEditStepCoordinator: RecipeEditCoordinator< RecipeEditStepCoordinatorView>?
+    var recipeEditIngredientCoordinator: RecipeEditCoordinator< RecipeEditIngredientsCoordinatorView>?
+    var addImageCoordinator: AddImageCoordinator?
+    var attachmentDetailCoordinator: AttachmentDetailCoordinator?
+    var imagePickerCoordinator: ImagePickerCoordinator?
+    
+    var editMode = EditMode.inactive
     
     init(
         recipesDataSource: RecipesDataSource = RecipesDataSource(),
-        recipeModel: RecipeModel
+        recipeModel: RecipeModel,
+        recipeSnapshotService: RecipeSnapshotService = RecipeSnapshotService(),
+        recipeValidatorService: RecipeValidatorService = RecipeValidatorService()
+
     ) {
         self.recipesDataSource = recipesDataSource
         self.recipeModel = recipeModel
+        self.recipeSnapshotService = recipeSnapshotService
+        self.recipeValidatorService = recipeValidatorService
     }
+            
+    func editRecipe() {
+        recipeSnapshotService.saveSnapshot(of: recipeModel)
+        editMode = .active
+    }
+    
+    func cancelEdit() {
+        if let recipeSnapshot = recipeSnapshotService.getSnapshot() {
+            recipeModel = recipeSnapshot
+        }
         
+        guard recipeValidatorService.isRecipeValid(recipeModel) else {
+            delegate?.didCancelCreationOfRecipe(in: self)
+            return
+        }
+        
+        editMode = .inactive
+    }
+    
+    func saveEdit() {
+        saveRecipe()
+        editMode = .inactive
+    }
+    
     func saveRecipe() {
-        recipesDataSource.save(recipe: recipeModel)
+        if recipeValidatorService.isRecipeValid(recipeModel) {
+            recipesDataSource.save(recipe: recipeModel)
+        }
     }
     
     func addAttachment() {
@@ -130,7 +171,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
 
 struct RecipeDetailCoordinatorView: View {
     @State var coordinator: RecipeDetailCoordinator
-    @Environment(\.editMode) var editMode
 
     var body: some View {
         RecipeDetailView<RecipeDetailCoordinator>(
@@ -138,24 +178,41 @@ struct RecipeDetailCoordinatorView: View {
         )
         .toolbar {
             ToolbarItem(id: "editButton", placement: .primaryAction) {
-                if editMode?.wrappedValue == .inactive {
+                if coordinator.editMode == .inactive {
                     Button(action: {
-                        self.editMode?.animation().wrappedValue = .active
+                        withAnimation {
+                            coordinator.editRecipe()
+                        }
                     }, label: {
-                        Text("Bearbeiten")
+                        Image(systemName: "pencil")
+                            .bold()
                     })
+                    .buttonBorderShape(.circle)
                     .buttonStyle(.bordered)
                 } else {
                     Button(action: {
-                        self.editMode?.animation().wrappedValue = .inactive
-                        coordinator.saveRecipe()
+                        withAnimation {
+                            coordinator.saveEdit()
+                        }
                     }, label: {
                         Text("Fertig")
+                    })
+                    .disabled(!coordinator.recipeValidatorService.isRecipeValid(coordinator.recipeModel))
+                }
+            }
+            if coordinator.editMode == .active {
+                ToolbarItem(placement: .topBarLeading) {
+                    Button(action: {
+                        withAnimation {
+                            coordinator.cancelEdit()
+                        }
+                    }, label: {
+                        Text("Abbrechen")
                     })
                 }
             }
         }
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationBarBackButtonHidden($coordinator.editMode.wrappedValue == .active)
         .sheet(item: $coordinator.addImageCoordinator,
                onDismiss: {
             $coordinator.addImageCoordinator.wrappedValue = nil
@@ -168,17 +225,23 @@ struct RecipeDetailCoordinatorView: View {
         }
         .sheet(
             item: $coordinator.attachmentDetailCoordinator
-        ) { coordinator in  coordinator.rootView
+        ) { coordinator in
+            coordinator.rootView
         }
         .sheet(
             item: $coordinator.recipeEditStepCoordinator
-        ) { coordinator in  coordinator.rootView
+        ) { coordinator in
+            coordinator.rootView
+                .presentationDetents([.height(400), .large])
         }
         .sheet(
             item: $coordinator.recipeEditIngredientCoordinator
-        ) { coordinator in  coordinator.rootView
+        ) { coordinator in
+            coordinator.rootView
+                .presentationDetents([.height(400), .large])
         }
         .environment(coordinator)
+        .environment(\.editMode, $coordinator.editMode)
     }
 }
 

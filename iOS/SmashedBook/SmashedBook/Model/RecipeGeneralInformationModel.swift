@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct RecipeMetainformationModel: Codable, Hashable {
+public struct RecipeGeneralInformationModel: Codable, Hashable {
     enum Meal: String, Codable, PickerValue {
         case breakfast
         case lunch

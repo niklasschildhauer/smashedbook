@@ -16,12 +16,11 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
     @Environment(\.editMode) var editMode
     @Binding var title: String
     @Binding var titleImage: ImageResourceModel?
+    @Binding var selectedFont: CustomFont
     
     var isEditModeActive: Bool {
         editMode?.wrappedValue == .active
     }
-    
-    @State var selectedFont: CustomFont = .AbrilFatface
     
     var body: some View {
         if isEditModeActive {
@@ -68,7 +67,7 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
                     .resizable()
                     .scaledToFill()
             } bottomView: {
-                RecipeDetailTitleView(title: title)
+                RecipeDetailTitleView(title: $title, selectedFont: $selectedFont)
                     .fill(.width, alignment: .bottom)
                     .padding(.bottom, LayoutConstants.safeAreaSpacing)
                     .background(
@@ -80,5 +79,5 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
 }
 
 #Preview {
-    RecipeDetailGeneralInfoView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")))
+    RecipeDetailGeneralInfoView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")), selectedFont: .constant(.AbrilFatface))
 }

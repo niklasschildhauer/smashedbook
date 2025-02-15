@@ -22,9 +22,9 @@ struct RecipeEditIngredientsCoordinatorView: RecipeEditView {
                     }
                 }
             }
-            .navigationTitle("Zutat hinzufügen")
+            .navigationTitle("Zutat")
             .navigationBarTitleDisplayMode(.inline)
-            .presentationDetents([.height(300)])
+            .scrollDismissesKeyboard(.interactively)
         }
     }
 }
@@ -46,21 +46,24 @@ struct RecipeEditIngredientsView: View {
                 Spacer()
                 TextField("Zutat", text: $editModel.name)
                     .multilineTextAlignment(.trailing)
+                    .bold()
             }
             Section {
-                VStack(alignment: .center) {
+                HStack {
+                    Text("Menge")
+                    Spacer()
                     TextField("0.0", text: $editModel.value)
                         .keyboardType(.decimalPad)
                         .textFieldStyle(.plain)
-                        .font(.GeistMedium, fontStyle: .largeTitle)
-                        .multilineTextAlignment(.center)
-                    Picker("Einheit", selection: $editModel.unit) {
-                        ForEach(RecipeIngredientUnit.allCases, id: \.self) { unit in
-                            Text(unit.rawValue)
-                        }
-                    }
-                    .pickerStyle(.segmented)
+                        .multilineTextAlignment(.trailing)
+                        .bold()
                 }
+                Picker("Einheit", selection: $editModel.unit) {
+                    ForEach(RecipeIngredientUnit.allCases, id: \.self) { unit in
+                        Text(unit.rawValue)
+                    }
+                }
+                .pickerStyle(.menu)
             }
         }
     }

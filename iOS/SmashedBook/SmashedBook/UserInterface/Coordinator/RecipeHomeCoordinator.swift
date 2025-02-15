@@ -9,6 +9,7 @@ import SwiftUI
 
 protocol RecipeHomeCoordinatorDelegate: AnyObject {
     func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator)
+    func didTapCreateRecipe(in coordinator: RecipeHomeCoordinator)
 }
 
 @Observable
@@ -31,8 +32,7 @@ class RecipeHomeCoordinator: SwiftUICoordinator {
     }
     
     func addRecipe() {
-        let newRecipe = RecipeModel()
-        delegate?.didTapShowRecipeDetail(recipe: newRecipe, in: self)
+        delegate?.didTapCreateRecipe(in: self)
     }
     
     func showDetails(of recipeModel: RecipeModel) {
@@ -59,8 +59,9 @@ struct RecipeHomeCoordinatorView: View {
                 Button(action: {
                     coordinator.addRecipe()
                 }, label: {
-                    Text("Hinzufügen")
+                    Image(systemName: "square.and.pencil")
                 })
+                .buttonBorderShape(.circle)
                 .buttonStyle(.bordered)
             }
         }

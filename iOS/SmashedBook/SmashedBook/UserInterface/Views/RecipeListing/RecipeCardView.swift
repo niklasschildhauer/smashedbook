@@ -9,7 +9,7 @@ import SwiftUI
 import Combine
 
 struct RecipeCardView: View {
-    var recipe: RecipeModel
+    @Binding var recipe: RecipeModel
     
     var body: some View {
         ZStack(alignment: .bottom ){
@@ -17,7 +17,7 @@ struct RecipeCardView: View {
                 .resizable()
                 .scaledToFill()
                 .frame(height: 200)
-            RecipeDetailTitleView(title: recipe.title)
+            RecipeDetailTitleView(title: $recipe.title, selectedFont: $recipe.metaInformation.font)
                 .fill(.width, alignment: .bottom)
                 .padding(.bottom, LayoutConstants.safeAreaSpacing)
                 .background(
@@ -31,6 +31,6 @@ struct RecipeCardView: View {
 
 struct RecipeCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeCardView(recipe: recipeModelMock)
+        RecipeCardView(recipe: .constant(recipeModelMock))
     }
 }

@@ -29,13 +29,34 @@ class RecipeNavigationCoordinator: UIKitCoordinator {
     
     func createRecipeDetailViewController(recipe: RecipeModel) -> UIViewController {
         let recipeDetailCoordinator = RecipeDetailCoordinator(recipesDataSource: recipeDataSource, recipeModel: recipe)
+        recipeDetailCoordinator.delegate = self
+        
+        return recipeDetailCoordinator.rootViewController
+    }
+    
+    func createNewRecipeDetailViewController() -> UIViewController {
+        let newRecipe = RecipeModel()
+        let recipeDetailCoordinator = RecipeDetailCoordinator(recipesDataSource: recipeDataSource, recipeModel: newRecipe)
+        recipeDetailCoordinator.editMode = .active
+        recipeDetailCoordinator.delegate = self
+        
         return recipeDetailCoordinator.rootViewController
     }
 }
 
 extension RecipeNavigationCoordinator: RecipeHomeCoordinatorDelegate {
+    func didTapCreateRecipe(in coordinator: RecipeHomeCoordinator) {
+        navigationController.pushViewController(createNewRecipeDetailViewController(), animated: true, transparentNavigationBar: true)
+    }
+    
     func didTapShowRecipeDetail(recipe: RecipeModel, in coordinator: RecipeHomeCoordinator) {
-//        let customBackBarButtonItem = UIBarButtonItem(image: UIImage(named: "BackButton"), style: .plain, target: nil, action: nil)
         navigationController.pushViewController(createRecipeDetailViewController(recipe: recipe), animated: true, transparentNavigationBar: true)
+    }
+}
+
+extension RecipeNavigationCoordinator: RecipeDetailCoordinatorDelegate {
+    func didCancelCreationOfRecipe(in coordinator: any RecipeDetailCoordinating) {
+        print("we are here")
+        navigationController.popViewController(animated: true)
     }
 }
