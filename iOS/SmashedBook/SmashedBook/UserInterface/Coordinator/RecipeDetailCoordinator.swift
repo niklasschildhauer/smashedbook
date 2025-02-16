@@ -91,7 +91,9 @@ protocol RecipeDetailCoordinating: ObservableObject,
     
     func showAttachment(attachment: ImageResourceModel) {
         attachmentDetailCoordinator = AttachmentDetailCoordinator(
-            imageResourceModel: attachment
+            imageResourceModel: attachment, didTapDone: {
+                self.attachmentDetailCoordinator = nil
+            }
         )
     }
     
@@ -161,6 +163,8 @@ struct RecipeDetailCoordinatorView: View {
         RecipeDetailView<RecipeDetailCoordinator>(
             recipe: $coordinator.recipeModel
         )
+        .environment(coordinator)
+        .environment(\.editMode, $coordinator.editMode)
         .toolbar {
             ToolbarItem(id: "editButton", placement: .primaryAction) {
                 if coordinator.editMode == .inactive {
@@ -218,8 +222,6 @@ struct RecipeDetailCoordinatorView: View {
             coordinator.rootView
                 .presentationDetents([.height(400), .large])
         }
-        .environment(coordinator)
-        .environment(\.editMode, $coordinator.editMode)
     }
 }
 

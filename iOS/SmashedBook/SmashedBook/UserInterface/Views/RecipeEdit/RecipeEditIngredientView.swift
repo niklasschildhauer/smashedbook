@@ -17,7 +17,7 @@ struct RecipeEditIngredientsCoordinatorView: RecipeEditView {
             RecipeEditIngredientsView(editModel: $coordinator.editModel)
             .toolbar {
                 ToolbarItemGroup(placement: .topBarTrailing) {
-                    Button("Save") {
+                    Button("Fertig") {
                         coordinator.save()
                     }
                 }
