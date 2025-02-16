@@ -11,15 +11,11 @@ protocol RecipeDetailCoordinatorDelegate: AnyObject {
     func didCancelCreationOfRecipe(in coordinator: any RecipeDetailCoordinating)
 }
 
-protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDelegate {
-    func addAttachment()
-    func showAttachment(attachment: ImageResourceModel)
-    func editRecipeStep(at index: Int)
-    func addRecipeStep()
-    func editRecipeIngredient(at index: Int)
-    func addRecipeIngredient()
-    func addImage()
-}
+protocol RecipeDetailCoordinating: ObservableObject,
+                                    RecipeDetailGeneralInfoDelegate,
+                                    RecipeDetailAttachmentDelegate,
+                                    RecipeDetailStepsDelegate,
+                                    RecipeDetailIngredientDelegate { }
 
 @Observable class RecipeDetailCoordinator: SwiftUICoordinator, RecipeDetailCoordinating {
     typealias CoordinatorView = RecipeDetailCoordinatorView
@@ -28,7 +24,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
         RecipeDetailCoordinatorView(coordinator: self)
     }
     
-    // TODO: this recipesDataSource is only pass through. Use DI to avoid overhead
     let recipesDataSource: RecipesDataSource
     let recipeSnapshotService: RecipeSnapshotService
     let recipeValidatorService: RecipeValidatorService
@@ -43,7 +38,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
   
     var recipeEditStepCoordinator: RecipeEditCoordinator< RecipeEditStepCoordinatorView>?
     var recipeEditIngredientCoordinator: RecipeEditCoordinator< RecipeEditIngredientsCoordinatorView>?
-    var addImageCoordinator: AddImageCoordinator?
     var attachmentDetailCoordinator: AttachmentDetailCoordinator?
     var imagePickerCoordinator: ImagePickerCoordinator?
     
@@ -72,7 +66,7 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             recipeModel = recipeSnapshot
         }
         
-        guard recipeValidatorService.isRecipeValid(recipeModel) else {
+        guard isRecipeValid else {
             delegate?.didCancelCreationOfRecipe(in: self)
             return
         }
@@ -86,17 +80,13 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
     }
     
     func saveRecipe() {
-        if recipeValidatorService.isRecipeValid(recipeModel) {
+        if isRecipeValid {
             recipesDataSource.save(recipe: recipeModel)
         }
     }
     
-    func addAttachment() {
-        addImageCoordinator = AddImageCoordinator(didAddImageResources: { images in
-            self.recipeModel.attachments.append(contentsOf: images)
-            self.saveRecipe()
-            self.addImageCoordinator = nil
-        })
+    var isRecipeValid: Bool {
+        return recipeValidatorService.isRecipeValid(recipeModel)
     }
     
     func showAttachment(attachment: ImageResourceModel) {
@@ -110,7 +100,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             editModel: recipeModel.steps[index]
         ) { stepModel in
             self.recipeModel.steps[index] = stepModel
-            self.saveRecipe()
             self.recipeEditStepCoordinator = nil
         }
     }
@@ -120,7 +109,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             editModel: RecipeStepModel(description: "")
         ) { stepModel in
             self.recipeModel.steps.append(stepModel)
-            self.saveRecipe()
             self.recipeEditStepCoordinator = nil
         }
     }
@@ -130,7 +118,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             editModel: recipeModel.ingredients[index]
         ) { ingredientModel in
             self.recipeModel.ingredients[index] = ingredientModel
-            self.saveRecipe()
             self.recipeEditIngredientCoordinator = nil
         }
     }
@@ -144,7 +131,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             )
         ) { ingredientModel in
             self.recipeModel.ingredients.append(ingredientModel)
-            self.saveRecipe()
             self.recipeEditIngredientCoordinator = nil
         }
     }
@@ -154,7 +140,6 @@ protocol RecipeDetailCoordinating: ObservableObject, RecipeDetailGeneralInfoDele
             imageResourceModel.forEach { imageResourceModel in
                 self.recipeModel.attachments.append(imageResourceModel)
             }
-
             self.imagePickerCoordinator = nil
         })
     }
@@ -197,7 +182,7 @@ struct RecipeDetailCoordinatorView: View {
                     }, label: {
                         Text("Fertig")
                     })
-                    .disabled(!coordinator.recipeValidatorService.isRecipeValid(coordinator.recipeModel))
+                    .disabled(!coordinator.isRecipeValid)
                 }
             }
             if coordinator.editMode == .active {
@@ -213,13 +198,6 @@ struct RecipeDetailCoordinatorView: View {
             }
         }
         .navigationBarBackButtonHidden($coordinator.editMode.wrappedValue == .active)
-        .sheet(item: $coordinator.addImageCoordinator,
-               onDismiss: {
-            $coordinator.addImageCoordinator.wrappedValue = nil
-        },
-               content:{ coordinator in
-            coordinator.rootView
-        })
         .sheet(item: $coordinator.imagePickerCoordinator) { coordinator in
             coordinator.rootView
         }

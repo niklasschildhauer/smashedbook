@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct RecipeDetailAttachmentsView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
+protocol RecipeDetailAttachmentDelegate: ObservableObject  {
+    func addImage()
+    func showAttachment(attachment: ImageResourceModel)
+}
+
+struct RecipeDetailAttachmentsView<Coordinator>: View where Coordinator: RecipeDetailAttachmentDelegate {
     @Environment(\.editMode) var editMode
     @Binding var attachments: [ImageResourceModel]
     @EnvironmentObject var coordinator:  Coordinator

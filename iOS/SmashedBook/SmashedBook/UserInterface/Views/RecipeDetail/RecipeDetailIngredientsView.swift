@@ -7,7 +7,12 @@
 
 import SwiftUI
 
-struct RecipeDetailIngredientsView<Coordinator>: View where Coordinator: RecipeDetailCoordinating {
+protocol RecipeDetailIngredientDelegate: ObservableObject {
+    func editRecipeIngredient(at index: Int)
+    func addRecipeIngredient()
+}
+
+struct RecipeDetailIngredientsView<Coordinator>: View where Coordinator: RecipeDetailIngredientDelegate {
     @EnvironmentObject var coordinator:  Coordinator
     @Binding var ingredients: [RecipeIngredientModel]
 
