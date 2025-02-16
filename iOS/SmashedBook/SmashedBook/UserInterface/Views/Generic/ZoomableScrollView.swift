@@ -9,19 +9,17 @@ import SwiftUI
 
 struct ZoomableScrollView<Content: View>: UIViewRepresentable {
     private var content: Content
-    private let coordinator: Coordinator
     
     init(@ViewBuilder content: () -> Content) {
         self.content = content()
-        self.coordinator = Coordinator(hostingController: UIHostingController(rootView: self.content))
     }
     
     func makeUIView(context: Context) -> UIScrollView {
-        return coordinator.scrollView
+        return context.coordinator.scrollView
     }
     
-    func makeCoordinator() -> Coordinator {
-        return coordinator
+    func makeCoordinator() -> UIScrollViewSwiftUICoordinator {
+        return UIScrollViewSwiftUICoordinator(hostingController: UIHostingController(rootView: self.content))
     }
     
     func updateUIView(_ uiView: UIScrollView, context: Context) {
@@ -29,12 +27,18 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
         assert(context.coordinator.hostingController.view.superview == uiView)
     }
         
-    class Coordinator: NSObject, UIScrollViewDelegate {
+    class UIScrollViewSwiftUICoordinator: NSObject, UIScrollViewDelegate {
         private let maxZoomValue = 20.0
         
         var hostingController: UIHostingController<Content>
         
-        private var doubleTapGesture: UITapGestureRecognizer?
+        private lazy var doubleTapGesture: UITapGestureRecognizer = {
+            let doubleTapGesture = UITapGestureRecognizer(target: self,
+                                                          action: #selector(didDoubleTap))
+            doubleTapGesture.numberOfTapsRequired = 2
+    
+            return doubleTapGesture
+        }()
         
         lazy var scrollView = {
             let scrollView = UIScrollView()
@@ -43,12 +47,6 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             scrollView.minimumZoomScale = 1
             scrollView.bouncesZoom = true
             
-            let hostedView = hostingController.view!
-            hostedView.translatesAutoresizingMaskIntoConstraints = true
-            hostedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-            hostedView.frame = scrollView.bounds
-            scrollView.addSubview(hostedView)
-            
             return scrollView
         }()
         
@@ -56,23 +54,24 @@ struct ZoomableScrollView<Content: View>: UIViewRepresentable {
             self.hostingController = hostingController
             super.init()
             
-            let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(didDoubleTap))
-           
-            doubleTapGesture.numberOfTapsRequired = 2
-            hostingController.view.addGestureRecognizer(doubleTapGesture)
-            self.doubleTapGesture = doubleTapGesture
+            setupScrollView()
+        }
+        
+        private func setupScrollView() {
+            scrollView.addGestureRecognizer(doubleTapGesture)
+            
+            let hostedView = hostingController.view!
+            hostedView.translatesAutoresizingMaskIntoConstraints = true
+            hostedView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+            hostedView.frame = scrollView.bounds
+            scrollView.addSubview(hostedView)
         }
         
         func viewForZooming(in scrollView: UIScrollView) -> UIView? {
             return hostingController.view
         }
         
-        @objc func didDoubleTap() {        
-            guard let doubleTapGesture = doubleTapGesture else {
-                print("There went something wrong")
-                return
-            }
-            
+        @objc func didDoubleTap() {
             let zoomRect = zoomRectForScale(scale: maxZoomValue / 5.0, center: doubleTapGesture.location(in: doubleTapGesture.view))
             scrollView.zoom(to: zoomRect, animated: true)
         }
