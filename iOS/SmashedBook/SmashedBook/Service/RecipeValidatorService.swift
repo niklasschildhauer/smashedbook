@@ -7,7 +7,7 @@
 
 class RecipeValidatorService {
     func isRecipeValid(_ recipe: RecipeModel) -> Bool {
-        if recipe.title == "" {
+        if recipe.generalInformation.title == "" {
             return false
         }
         

@@ -8,26 +8,30 @@
 import SwiftUI
 
 struct RecipeDetailTitleView: View {
-    @Binding var title: String
-    @Binding var selectedFont: CustomFont
+    @Binding var generalInformation: RecipeGeneralInformationModel
     
     var body: some View {
         VStack(spacing: LayoutConstants.verticalSpacing) {
             Spacer().frame(height: 40)
-            Text(title)
-                .font(selectedFont, fontStyle: .largeTitle)
+            Text(generalInformation.title)
+                .font(generalInformation.font, fontStyle: .largeTitle)
                 .foregroundStyle(.white)
-            HStack(spacing: LayoutConstants.horizontalSpacing) {
-                Text("🔥 320kcal")
-                Text("⏲️ 20min")
-                Text("🍽️ Abendessen")
+            if generalInformation.energy != nil || generalInformation.duration != nil || generalInformation.meal != nil {
+                HStack(spacing: LayoutConstants.horizontalSpacing) {
+                    if let energy = generalInformation.energy {
+                        Text("🔥 \(energy)kcal")
+                    }
+                    if let duration = generalInformation.duration {
+                        Text("⏲️ \(String(describing: duration))min")
+                    }
+                    if let meal = generalInformation.meal?.rawValue {
+                        Text("🍽️ \(meal)")
+                    }
+                }
+                .font(.footnote)
+                .foregroundStyle(.white)
             }
-            .font(.footnote)
-            .foregroundStyle(.white)
         }
     }
 }
 
-#Preview {
-    RecipeDetailTitleView(title: .constant("Testtitel"), selectedFont: .constant(.AbrilFatface))
-}

@@ -27,7 +27,7 @@ struct RecipeListingView: View {
                         Button(action: {
                             showDetails(recipe)
                         }, label: {
-                            RecipeCardView(recipe: .constant(recipe))
+                            RecipeCardView(generalInfo: .constant(recipe.generalInformation))
                                 .padding(.horizontal)
                         })
                     }

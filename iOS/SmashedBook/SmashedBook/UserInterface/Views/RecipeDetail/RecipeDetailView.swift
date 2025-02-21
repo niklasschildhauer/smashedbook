@@ -13,7 +13,7 @@ struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordi
     
     var body: some View {
         List {
-            RecipeDetailGeneralInfoView<Coordinator>(title: $recipe.title, titleImage: $recipe.titleImage, selectedFont: $recipe.metaInformation.font)
+            RecipeDetailGeneralInfoView<Coordinator>(generalInfo: $recipe.generalInformation)
             RecipeDetailIngredientsView<Coordinator>(ingredients: $recipe.ingredients)
             RecipeDetailStepsView<Coordinator>(steps: $recipe.steps)
             RecipeDetailAttachmentsView<Coordinator>(attachments: $recipe.attachments)
@@ -25,6 +25,6 @@ struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordi
 #Preview {
     RecipeDetailView<RecipeDetailCoordinator>(recipe: .constant(recipeModelMock))
         .environment(RecipeDetailCoordinator(recipeModel: recipeModelMock))
-        .environment(\.editMode, .constant(EditMode.active))
+        .environment(\.editMode, .constant(EditMode.inactive))
 }
 

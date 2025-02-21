@@ -15,11 +15,14 @@ public struct RecipeGeneralInformationModel: Codable, Hashable {
         var id: String { self.rawValue }
     }
     
-    typealias Calories = String
-    typealias DurationTime = Int
+    typealias Calories = Int
+    typealias DurationTimeInMinutes = Int
     
-    // TODO: Should this be an array?
-    var meal: Meal = .lunch
-    var energy: Calories = ""
-    var duration: DurationTime?
+    var title: String = ""
+    var titleImage: ImageResourceModel?
+    var font: CustomFont = .AbrilFatface
+    
+    var meal: Meal?
+    var energy: Calories? 
+    var duration: DurationTimeInMinutes?
 }

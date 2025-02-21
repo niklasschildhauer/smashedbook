@@ -149,7 +149,7 @@ protocol RecipeDetailCoordinating: ObservableObject,
     func addTitleImage() {
         imagePickerCoordinator = ImagePickerCoordinator(didSelectImages: { imageResourceModel in
             if let firsImageResourceModel = imageResourceModel.first {
-                self.recipeModel.titleImage = firsImageResourceModel
+                self.recipeModel.generalInformation.titleImage = firsImageResourceModel
             }
             self.imagePickerCoordinator = nil
         }, selectionLimit: 1)
@@ -175,6 +175,7 @@ struct RecipeDetailCoordinatorView: View {
                     }, label: {
                         Image(systemName: "pencil")
                             .bold()
+                            .foregroundStyle(.white)
                     })
                     .buttonBorderShape(.circle)
                     .buttonStyle(.bordered)

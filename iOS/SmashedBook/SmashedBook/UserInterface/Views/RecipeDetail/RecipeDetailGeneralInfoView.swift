@@ -14,9 +14,7 @@ protocol RecipeDetailGeneralInfoDelegate: ObservableObject {
 struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeDetailGeneralInfoDelegate {
     @EnvironmentObject var coordinator:  Coordinator
     @Environment(\.editMode) var editMode
-    @Binding var title: String
-    @Binding var titleImage: ImageResourceModel?
-    @Binding var selectedFont: CustomFont
+    @Binding var generalInfo: RecipeGeneralInformationModel
     
     var isEditModeActive: Bool {
         editMode?.wrappedValue == .active
@@ -24,50 +22,14 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
     
     var body: some View {
         if isEditModeActive {
-            VStack {
-                Image.createImageFrom(imageResource: $titleImage.wrappedValue)
-                    .resizable()
-                    .scaledToFill()
-                    .frame(width: 150, height: 250)
-                    .clipShape(RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius))
-                    .listRowSeparator(.hidden)
-                Button("Bearbeiten", action: coordinator.addTitleImage)
-                    .buttonStyle(.bordered)
-                TextField("Rezeptname", text: $title)
-                    .multilineTextAlignment(.center)
-                    .font($selectedFont.wrappedValue, fontStyle: .largeTitle)
-                    .listRowSeparator(.hidden)
-                    .frame(height: 75)
-                
-                HStack(spacing: LayoutConstants.horizontalSpacing) {
-                    ForEach(CustomFont.allCases, id: \.self) { font in
-                        Button {
-                            selectedFont = font
-                        } label: {
-                            ZStack(alignment: .center) {
-                                RoundedRectangle(cornerRadius: LayoutConstants.cornerRadius)
-                                    .stroke(.blue, lineWidth: 3)
-                                    .frame(width: 40)
-                                    .isHidden {
-                                        font != selectedFont
-                                    }
-                                Text("Ab")
-                                    .font(font, fontStyle: .title)
-                            }
-                        }
-                        .buttonStyle(.plain)
-                    }
-                }
-            }
-            .listRowSeparator(.hidden)
-            .selectionDisabled()
+            RecipeDetailGeneralInfoEditView(title: $generalInfo.title, titleImage: $generalInfo.titleImage, selectedFont: $generalInfo.font, addTitleImage: coordinator.addTitleImage)
         } else {
             ParallaxHeader() {
-                Image.createImageFrom(imageResource: $titleImage.wrappedValue)
+                Image.createImageFrom(imageResource: $generalInfo.titleImage.wrappedValue)
                     .resizable()
                     .scaledToFill()
             } bottomView: {
-                RecipeDetailTitleView(title: $title, selectedFont: $selectedFont)
+                RecipeDetailTitleView(generalInformation: $generalInfo)
                     .fill(.width, alignment: .bottom)
                     .padding(.bottom, LayoutConstants.safeAreaSpacing)
                     .background(
@@ -76,8 +38,4 @@ struct RecipeDetailGeneralInfoView<Coordinator>: View where Coordinator: RecipeD
             }
         }
     }
-}
-
-#Preview {
-    RecipeDetailGeneralInfoView<RecipeDetailCoordinator>(title: .constant("Lachsrezept"), titleImage: .constant(ImageResourceModel(fileName: "Test")), selectedFont: .constant(.AbrilFatface))
 }

@@ -24,10 +24,12 @@ struct ListSectionView<Content: View, TrailingAction: View, BottomAction: View>:
     }
     
     var body: some View {
-        Section {
+        Section(
+            content: {
             content()
             bottomAction()
-        } header: {
+        },
+            header: {
             if let title {
                 HStack {
                     Text(title.uppercased())
@@ -36,9 +38,10 @@ struct ListSectionView<Content: View, TrailingAction: View, BottomAction: View>:
                         .foregroundStyle(.gray)
                         Spacer()
                         trailingAction()
+                    }
                 }
             }
-        }
+        )
         .listRowInsets(.init(top: LayoutConstants.verticalSpacing/2, leading: LayoutConstants.safeAreaSpacing, bottom: LayoutConstants.verticalSpacing/2, trailing: LayoutConstants.safeAreaSpacing))
         .listSectionSeparator(.hidden)
         .uiTestIdentifierForStackWrapper("listSection")

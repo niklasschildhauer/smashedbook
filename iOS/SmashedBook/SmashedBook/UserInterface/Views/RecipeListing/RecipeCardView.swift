@@ -9,15 +9,15 @@ import SwiftUI
 import Combine
 
 struct RecipeCardView: View {
-    @Binding var recipe: RecipeModel
+    @Binding var generalInfo: RecipeGeneralInformationModel
     
     var body: some View {
         ZStack(alignment: .bottom ){
-            Image.createImageFrom(imageResource: recipe.titleImage)
+            Image.createImageFrom(imageResource: generalInfo.titleImage)
                 .resizable()
                 .scaledToFill()
                 .frame(height: 200)
-            RecipeDetailTitleView(title: $recipe.title, selectedFont: $recipe.metaInformation.font)
+            RecipeDetailTitleView(generalInformation: $generalInfo)
                 .fill(.width, alignment: .bottom)
                 .padding(.bottom, LayoutConstants.safeAreaSpacing)
                 .background(
@@ -31,6 +31,6 @@ struct RecipeCardView: View {
 
 struct RecipeCardView_Previews: PreviewProvider {
     static var previews: some View {
-        RecipeCardView(recipe: .constant(recipeModelMock))
+        RecipeCardView(generalInfo: .constant(recipeModelMock.generalInformation))
     }
 }

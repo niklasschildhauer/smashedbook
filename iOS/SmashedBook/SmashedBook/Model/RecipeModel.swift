@@ -9,15 +9,18 @@ import Foundation
 
 public struct RecipeModel: Codable, Hashable, Identifiable {
     public var id = UUID()
-    var title: String = ""
-    var titleImage: ImageResourceModel?
-    var metaInformation: RecipeMetaInformationModel = .init(font: .AbrilFatface)
+    var generalInformation: RecipeGeneralInformationModel = .init()
     var attachments: [ImageResourceModel] = []
-    var ingredients = [RecipeIngredientModel(name: "Ingwer", value: "1/2", unit: .kilogram), RecipeIngredientModel(name: "Mehr", value: "500", unit: .kilogram)]
-    var steps = [RecipeStepModel(description: "Test nummero uno"), .init(description: "Zeiter Eintrag")]
+    var ingredients: [RecipeIngredientModel] = []
+    var steps: [RecipeStepModel] = []
 }
 
 public var recipeModelMock: RecipeModel {
-    .init(title: "Lachs mit Tomate")
+    var recipe = RecipeModel()
+    recipe.generalInformation.energy = 300
+    recipe.generalInformation.duration = 30
+    recipe.generalInformation.meal = .lunch
+    
+    return recipe
 }
 
