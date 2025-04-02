@@ -34,6 +34,7 @@ struct AttachmentDetailCoordinatorView: View {
                 Image.createImageFrom(imageResource: $coordinator.wrappedValue.imageResourceModel)
                     .resizable()
                     .scaledToFit()
+                    .clipShape(.rect(cornerRadius: LayoutConstants.cornerRadius))
             }
             .toolbar(content: {
                 ToolbarItem(placement: .topBarTrailing) {

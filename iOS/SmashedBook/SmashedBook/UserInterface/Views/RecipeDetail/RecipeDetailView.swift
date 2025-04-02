@@ -18,6 +18,7 @@ struct RecipeDetailView<Coordinator>: View where Coordinator: RecipeDetailCoordi
             RecipeDetailStepsView<Coordinator>(steps: $recipe.steps)
             RecipeDetailAttachmentsView<Coordinator>(attachments: $recipe.attachments)
         }
+        .scrollDismissesKeyboard(.interactively)
         .listStyle(.plain)
     }
 }

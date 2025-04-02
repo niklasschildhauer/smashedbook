@@ -22,5 +22,6 @@ struct RecipeDetailIngredientView: View {
                     .foregroundStyle(.black)
             }
         }
+        .frame(minHeight: LayoutConstants.listCellHeight)
     }
 }

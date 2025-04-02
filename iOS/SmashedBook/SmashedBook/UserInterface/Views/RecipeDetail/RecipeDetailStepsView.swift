@@ -29,6 +29,7 @@ struct RecipeDetailStepsView<Coordinator>: View where Coordinator: RecipeDetailS
                         Text(steps[stepIndex].description)
                     }
                 })
+                .frame(minHeight: LayoutConstants.listCellHeight)
                 .listRowSeparator(.hidden)
             }
             .onDelete(perform: deleteStep)

@@ -13,34 +13,7 @@ class CustomNavigationController: UINavigationController {
     
     private var interactionController: UIPercentDrivenInteractiveTransition?
     private var edgeSwipeGestureRecognizer: UIScreenEdgePanGestureRecognizer?
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        delegate = self
-//
-//        edgeSwipeGestureRecognizer = UIScreenEdgePanGestureRecognizer(target: self, action: #selector(handleSwipe(_:)))
-//        edgeSwipeGestureRecognizer!.edges = .left
-//        view.addGestureRecognizer(edgeSwipeGestureRecognizer!)
-//    }
-//
-//    @objc func handleSwipe(_ gestureRecognizer: UIScreenEdgePanGestureRecognizer) {
-//        let percent = gestureRecognizer.translation(in: gestureRecognizer.view!).x / gestureRecognizer.view!.bounds.size.width
-//
-//        if gestureRecognizer.state == .began {
-//            interactionController = UIPercentDrivenInteractiveTransition()
-//            popViewController(animated: true)
-//        } else if gestureRecognizer.state == .changed {
-//            interactionController?.update(percent)
-//        } else if gestureRecognizer.state == .ended {
-//            if percent > 0.5 && gestureRecognizer.state != .cancelled {
-//                interactionController?.finish()
-//            } else {
-//                interactionController?.cancel()
-//            }
-//            interactionController = nil
-//        }
-//    }
-    
+        
     func pushViewController(_ viewController: UIViewController, animated: Bool, customBackButtonItem: UIBarButtonItem? = nil, transparentNavigationBar: Bool = false) {
         let appearance = UINavigationBarAppearance()
 
@@ -52,8 +25,7 @@ class CustomNavigationController: UINavigationController {
         if transparentNavigationBar {
             //appearance.configureWithTransparentBackground()
         }
-        
-//        viewController.navigationItem.standardAppearance = appearance
+
         pushViewController(viewController, animated: true)
     }
     

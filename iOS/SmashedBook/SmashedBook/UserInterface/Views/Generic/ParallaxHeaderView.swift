@@ -36,6 +36,11 @@ struct ParallaxHeader<Background: View, BottomView: View>: View {
                 VStack {
                     Spacer()
                     bottomView
+                        .fill(.width, alignment: .bottom)
+                        .padding(.bottom, LayoutConstants.safeAreaSpacing)
+                        .background(
+                            LinearGradient(gradient: Gradient(colors: [.clear, .black]), startPoint: .top, endPoint: .bottom)
+                        )
                         .offset(y: -overScrollingValue)
                 }
             }
